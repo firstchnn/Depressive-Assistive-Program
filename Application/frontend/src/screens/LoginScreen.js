@@ -5,6 +5,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Login Screen</Text>
+      {/* <TouchableOpacity/> */}
       <Button
         title="Continue as guest"
         onPress={() => navigation.navigate('Home')}

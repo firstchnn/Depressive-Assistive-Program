@@ -9,8 +9,12 @@ function AuthNavigator() {
     console.log(Stack)
   return (
     <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={BottomTabNavigator}/>
+        <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
+        <Stack.Screen 
+        name="Home" 
+        component={BottomTabNavigator}
+        options={{headerShown: false}}
+        />
     </Stack.Navigator>
   )
 }
