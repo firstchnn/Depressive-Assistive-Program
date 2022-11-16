@@ -6,10 +6,7 @@ function HomeScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Home Screen</Text>
-      <Button
-        title="Logout"
-        onPress={() => navigation.navigate('Login')}
-      />
+      
       {/* <BottomTabNav/> */}
     </View>
   );

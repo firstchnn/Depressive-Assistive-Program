@@ -5,6 +5,10 @@ function SettingScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Setting Screen</Text>
+      <Button
+        title="Logout"
+        onPress={() => navigation.navigate('Login')}
+      />
     </View>
   );
 }

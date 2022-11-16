@@ -9,10 +9,6 @@ import AuthNavigator from './src/navigations/AuthNavigator';
 function App() {
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator> */}
       <AuthNavigator />
     </NavigationContainer>
   );
