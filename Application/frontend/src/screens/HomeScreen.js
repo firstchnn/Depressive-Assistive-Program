@@ -4,11 +4,15 @@ import { SearchBar } from '@rneui/base';
 import { useNavigation } from "@react-navigation/native"
 // import BottomTabNav from '../components/BottomTabNav';
 
-function HomeScreen({navigation}) {
+function HomeScreen({navigation,route}) {
   const [search,setSearch] = useState('');
+  const [userData, setUserData] = useState({});
   const updateSearch = () => {
     setSearch(search)
   }
+  useEffect(() => {
+    setUserData(route.params)
+  },[])
   return (
     <><View>
       <SearchBar placeholder='Type Here...' 
@@ -24,7 +28,8 @@ function HomeScreen({navigation}) {
       <Button
         title='More+'
         onPress={() => navigation.navigate('DoctorList')} />
-
+      <Text>Welcome {userData.displayName}</Text>
+      <Text>Email : {userData.email}</Text>
       {/* <BottomTabNav/> */}
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginTop:50}}>
       <Button

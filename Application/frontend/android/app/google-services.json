@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "243886581222",
+    "project_id": "cep-authen",
+    "storage_bucket": "cep-authen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243886581222:android:fec646976abc6a11a3a227",
+        "android_client_info": {
+          "package_name": "com.frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243886581222-2ptdn1qaaou34kqjkgr8vo8tnt01q998.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frontend",
+            "certificate_hash": "3eb8c3552974715bba1f5a90e4ab3a89ee200a85"
+          }
+        },
+        {
+          "client_id": "243886581222-u51vuh9dkq8c39hru7qh4v12detq1q29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYW5chdKXz4vApU7aY8uAO4c04OI3877Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243886581222-u51vuh9dkq8c39hru7qh4v12detq1q29.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
