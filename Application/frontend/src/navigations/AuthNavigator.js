@@ -2,6 +2,7 @@ import React from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
 import LoginScreen from '../screens/LoginScreen'
 import BottomTabNavigator from './BottomTabNavigator';
+import DoctorDetail from '../screens/DoctorDetail';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ function AuthNavigator() {
         component={BottomTabNavigator}
         options={{headerShown: false}}
         />
+        <Stack.Screen name="DoctorDetail" component={DoctorDetail}/>
     </Stack.Navigator>
   )
 }

@@ -1,7 +1,8 @@
 import React, {useEffect, useState}from 'react';
 import { Button, View, Text, ScrollView } from 'react-native';
-import { SearchBar } from '@rneui/base';
+import { Card, SearchBar } from '@rneui/base';
 import { useNavigation } from "@react-navigation/native"
+import CardHome from '../components/CardHome';
 // import BottomTabNav from '../components/BottomTabNav';
 
 function HomeScreen({navigation,route}) {
@@ -20,79 +21,92 @@ function HomeScreen({navigation,route}) {
       value = {search}/>
     </View>
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', margin:20}}>
-      <Text>Home Screen</Text>
-      <Button
+      <View style={{alignItems: 'center', flexDirection:'row',margin:10,borderColor:'red',borderWidth:3}}>
+      <Text style={{margin:4}}>Picture here</Text>
+        <Button
         title='Start Chatting'
         onPress={() => navigation.navigate('UserChat')} />
-      <Text>Doctor List</Text>
-      <Button
-        title='More+'
-        onPress={() => navigation.navigate('DoctorList')} />
+        </View>
+        <View style={{alignItems: 'center', flexDirection:'row',margin:10,borderColor:'blue',borderWidth:3}}>
+          <Text style={{marginRight:20,fontSize:20}}>ปรึกษาแพทย์</Text>
+      <Text 
+        style={{color:'blue',textDecorationLine:'underline',fontSize:16}} 
+        onPress={() => navigation.navigate('DoctorList')}
+        // onPress={() => navigation.navigate('TestPage')}
+        >
+        เพิ่มเติม+
+      </Text>
+        </View>
+      {/* <Button 
+        Text style={{color:'black'}}
+        title='More+' 
+        color="#ffffff"
+        // onPress={() => navigation.navigate('DoctorList')} 
+        /> */}
+
       <Text>Welcome {userData.displayName}</Text>
       <Text>Email : {userData.email}</Text>
       {/* <BottomTabNav/> */}
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginTop:50}}>
-      <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+      
+      {/* <CardHome></CardHome> */}
+
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginTop:0}}>
+        
+      <CardHome>
+        <Text style={{marginRight:8}}>Doc Picture</Text>
         <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        title='Doctor Detail'
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}
+        onPress={() => navigation.navigate('DoctorDetail')}
+        />
+        </CardHome>
+        <CardHome>
         <Button
-        title='Doctor Doctor'
+        title='Doctor Detail'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        <CardHome>
         <Button
-        title='Doctor Doctor'
+        title='Doctor Detail'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        <CardHome>
         <Button
-        title='Doctor Doctor'
+        title='Doctor Detail'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        <CardHome>
         <Button
-        title='Doctor Doctor'
+        title='Doctor Detail'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        <CardHome>
         <Button
-        title='Doctor Doctor'
+        title='Doctor Detail'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        <CardHome>
         <Button
-        title='Doctor Doctor'
+        title='Doctor Detail'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        <CardHome>
         <Button
-        title='Doctor Doctor'
+        title='Doctor Detail'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        <CardHome>
         <Button
+        title='Doctor Detail'
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        </CardHome>
+        {/* <Button
         title='Doctor Doctor'
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
-        <Button
-        title='Doctor Doctor'
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:50}}/>
+        
+       */}
       </ScrollView>
+      
     </View></>
   );
 }
