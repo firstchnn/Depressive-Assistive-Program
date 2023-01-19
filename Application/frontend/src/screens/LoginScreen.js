@@ -39,13 +39,18 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Login Screen</Text>
+      <Text
+      style={{paddingBottom:20}}
+      >Login Screen</Text>
       {/* <TouchableOpacity/> */}
+      <View style={{paddingBottom:20}}>
       <Button
         title="Continue as guest"
         onPress={() => navigation.navigate('Home')}
       />
+      </View>
       <Button
+      style={{paddingTop:20}}
         title="Continue with gmail"
         onPress={() =>
           googleSignIn()

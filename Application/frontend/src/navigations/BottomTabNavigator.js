@@ -13,21 +13,6 @@ import DoctorDetail from '../screens/DoctorDetail';
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator({route, navigation}) {
-  // useEffect(() => {
-  //   console.log('from bottom-tabNavigator navigate to home with ',route.params)
-  //   navigation.navigate('Home')
-  // },[navigation])
-  // console.log('this is a bottom tab ',route.params);
-  // const [userData, setUserData] = useState({});
-  // const getData = async data => {
-  // await console.log('this is a bottom tab');
-  //   const loginParam = data.params;
-  //   await setUserData(loginParam);
-  //   await console.log(userData);
-  // };
-  // useEffect(() => {
-  //   getData(route);
-  // });
 
   return (
     // เพิ่ม Tab ลงไปที่ Navbar ด้านล่าง
