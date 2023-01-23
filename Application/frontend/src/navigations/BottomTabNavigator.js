@@ -9,17 +9,17 @@ import EvaluationScreen from '../screens/EvaluationScreen';
 import SettingScreen from '../screens/SettingScreen';
 import test from '../screens/DoctorDetail';
 import DoctorDetail from '../screens/DoctorDetail';
+import MainChatScreen from '../screens/MainChatScreen';
  
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator({route, navigation}) {
 
   return (
-    // เพิ่ม Tab ลงไปที่ Navbar ด้านล่าง
     <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
       <Tab.Screen name="DoctorList" component={DoctorListScreen} />
       {/* <Tab.Screen name="DoctorDetail" component={DoctorDetail}/> */}
-      <Tab.Screen name="UserChat" component={UserChatScreen} />
+      <Tab.Screen name="MainChat" component={MainChatScreen} />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
