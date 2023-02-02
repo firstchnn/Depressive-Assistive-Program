@@ -11,7 +11,7 @@ function UserChatScreen({navigation,route}) {
 
   useEffect(() => {
     // Connect to socket.io server
-    const newSocket = io('http://192.168.1.5:3000');
+    const newSocket = io('https://ce22.onrender.com/');
     setSocket(newSocket);
     console.log('Connected to socket');
 
@@ -25,7 +25,7 @@ function UserChatScreen({navigation,route}) {
   useEffect(() => {
     if (socket) {
       socket.on('chat message', (response) => {
-        if(response.role !== role)
+        if(response.role === role)
         setMessages(prevMessages => [
           ...prevMessages,
           {text: response.message, fromSender: false},
