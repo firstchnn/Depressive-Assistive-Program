@@ -25,7 +25,7 @@ function UserChatScreen({navigation,route}) {
   useEffect(() => {
     if (socket) {
       socket.on('chat message', (response) => {
-        if(response.role === role)
+        if(response.role !== role)
         setMessages(prevMessages => [
           ...prevMessages,
           {text: response.message, fromSender: false},
