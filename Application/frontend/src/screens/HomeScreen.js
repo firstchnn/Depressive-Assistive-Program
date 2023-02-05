@@ -10,6 +10,7 @@ import {
 import {Card, SearchBar} from '@rneui/base';
 import {useNavigation} from '@react-navigation/native';
 import CardHome from '../components/CardHome';
+import ArrowButton  from '../components/TouchableOpacity';
 // import BottomTabNav from '../components/BottomTabNav';
 
 function HomeScreen({navigation, route}) {
@@ -60,11 +61,17 @@ function HomeScreen({navigation, route}) {
             borderWidth: 3,
           }}>
           <Text style={{margin: 4}}>Picture here</Text>
+
+          <View style={{flexDirection: 'column'}}>
+            <Text style={{ alignSelf: 'center'}}>เริ่มต้นการสนทนา</Text>
           <Button
             title="Start Chatting"
             onPress={() => navigation.navigate('MainChat')}
           />
+          {/* <ArrowButton onPress={() => navigation.navigate('MainChat')} /> */}
         </View>
+</View>
+
         <View
           style={{
             alignItems: 'center',
@@ -74,6 +81,7 @@ function HomeScreen({navigation, route}) {
             borderWidth: 3,
           }}>
           <Text style={{marginRight: 20, fontSize: 20}}>ปรึกษาแพทย์</Text>
+          <View style={{width: '30%'}}></View>
           <Text
             style={{
               color: 'blue',
@@ -83,12 +91,12 @@ function HomeScreen({navigation, route}) {
             onPress={() => navigation.navigate('DoctorList')}
             // onPress={() => navigation.navigate('TestPage')}
           >
-            เพิ่มเติม+
+            ดูเพิ่มเติม+
           </Text>
         </View>
 
-        <Text>Welcome {userData.displayName}</Text>
-        <Text>Email : {userData.email}</Text>
+        {/* <Text>Welcome {userData.displayName}</Text>
+        <Text>Email : {userData.email}</Text> */}
 
         <View
           style={{
@@ -97,7 +105,12 @@ function HomeScreen({navigation, route}) {
             justifyContent: 'center',
             margin: 20,
           }}>
+<View style={{flexDirection:'row'}}>
           <Button title="Fetch Data" onPress={fetchData} />
+          
+          <Text style={{alignSelf:'center'}}>Test</Text>
+
+</View>
           {isLoading ? (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
