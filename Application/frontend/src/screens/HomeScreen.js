@@ -6,11 +6,16 @@ import {
   ScrollView,
   ActivityIndicator,
   FlatList,
+  Icon,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import {Card, SearchBar} from '@rneui/base';
 import {useNavigation} from '@react-navigation/native';
 import CardHome from '../components/CardHome';
-import ArrowButton  from '../components/TouchableOpacity';
+// import arrow_right from '../../asset/'
+// import ArrowButton  from '../components/TouchableOpacity';
+// import { Button,Icon } from 'semantic-ui-react'
 // import BottomTabNav from '../components/BottomTabNav';
 
 function HomeScreen({navigation, route}) {
@@ -52,25 +57,27 @@ function HomeScreen({navigation, route}) {
           justifyContent: 'center',
           margin: 20,
         }}>
-        <View
+        <TouchableOpacity
           style={{
             alignItems: 'center',
             flexDirection: 'row',
             margin: 10,
             borderColor: 'red',
             borderWidth: 3,
-          }}>
+          }}
+          onPress={() => navigation.navigate('MainChat')}
+          >
           <Text style={{margin: 4}}>Picture here</Text>
 
           <View style={{flexDirection: 'column'}}>
-            <Text style={{ alignSelf: 'center'}}>เริ่มต้นการสนทนา</Text>
-          <Button
-            title="Start Chatting"
-            onPress={() => navigation.navigate('MainChat')}
-          />
-          {/* <ArrowButton onPress={() => navigation.navigate('MainChat')} /> */}
-        </View>
-</View>
+            <Text style={{alignSelf: 'center'}}>เริ่มต้นการสนทนา</Text>
+            <Image style={{alignSelf: 'center'}} source={require('../../asset/arrow_right.png')}></Image>
+            {/* <Button
+              title="Start Chatting"
+              
+            /> */}
+          </View>
+        </TouchableOpacity>
 
         <View
           style={{
@@ -105,12 +112,11 @@ function HomeScreen({navigation, route}) {
             justifyContent: 'center',
             margin: 20,
           }}>
-<View style={{flexDirection:'row'}}>
-          <Button title="Fetch Data" onPress={fetchData} />
-          
-          <Text style={{alignSelf:'center'}}>Test</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Button title="Fetch Data" onPress={fetchData} />
 
-</View>
+            <Text style={{alignSelf: 'center'}}>Test</Text>
+          </View>
           {isLoading ? (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
