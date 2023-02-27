@@ -17,9 +17,6 @@ function BottomTabNavigator({route, navigation}) {
 
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-      <Tab.Screen name="DoctorList" component={DoctorListScreen} />
-      {/* <Tab.Screen name="DoctorDetail" component={DoctorDetail}/> */}
-      <Tab.Screen name="MainChat" component={MainChatScreen} />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -30,6 +27,10 @@ function BottomTabNavigator({route, navigation}) {
           uid: route.params.uid,
         }}
       />
+      <Tab.Screen name="DoctorList" component={DoctorListScreen} />
+      {/* <Tab.Screen name="DoctorDetail" component={DoctorDetail}/> */}
+      <Tab.Screen name="MainChat" component={MainChatScreen} />
+      
       <Tab.Screen name="EvaluationScreen" component={EvaluationScreen} />
       <Tab.Screen name="SettingScreen" component={SettingScreen} />
     </Tab.Navigator>
