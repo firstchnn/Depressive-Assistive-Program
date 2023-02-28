@@ -1,20 +1,28 @@
-import React from "react";
-import {StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-export default function CardHome(props){
-  return(
-    <View style={style.CardHome}>
-      <View style={style.cardContent}>
+export default function CardHome(props) {
+  const nav = useNavigation();
+
+  return (
+    <View style={styles.CardHome}>
+      <View style={styles.cardContent}>
         {props.children}
+        <TouchableOpacity
+          style={styles.Button_to_Doc_Detail}
+          onPress={() => nav.navigate('DoctorDetail')}>
+          <Text>Button</Text>
+        </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   CardHome: {
     borderRadius: 8,
-    elevation:3,
+    elevation: 3,
     backgroundColor: '#fff',
     shadowOffset: {width: 1, height: 1},
     shadowColor: '#333',
@@ -22,16 +30,21 @@ const style = StyleSheet.create({
     shadowRadius: 2,
     marginHorizontal: 4,
     marginVertical: 6,
-    borderColor:'green',
-    borderWidth:3,
-    
+    borderColor: 'green',
+    borderWidth: 3,
   },
-  cardContent:{
+  cardContent: {
     marginHorizontal: 18,
     marginVertical: 10,
-    flexDirection:'row',
-    padding:0,
-    alignItems:'center',
-    
-  }
+    flexDirection: 'column',
+    padding: 0,
+    alignItems: 'center',
+  },
+  Button_to_Doc_Detail: {
+    backgroundColor: 'gray',
+    width: 'auto',
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
 });
