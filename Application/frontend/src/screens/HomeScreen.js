@@ -71,9 +71,11 @@ function HomeScreen({navigation, route}) {
       const response = await fetch('https://ce22.onrender.com/all-doctor');
       const json = await response.json();
       setData(json);
+      console.log(json);
     } catch (error) {
       console.error(error);
     }
+    
     setIsLoading(false);
   };
   useEffect(() => {
@@ -217,8 +219,13 @@ function HomeScreen({navigation, route}) {
               data={data}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
-                <CardHome>
+                <TouchableOpacity
+                onPress={() => navigation.navigate('DoctorDetail',{id:item._id})}
+                
+                >
+                  <CardHome>
                   <View style={{flexDirection: 'column'}}>
+                    {/* <Text>{item._id}</Text> */}
                     <Text>{item.name}</Text>
                     <Text>{item.tel}</Text>
                     <Text>{item.workplace}</Text>
@@ -227,6 +234,7 @@ function HomeScreen({navigation, route}) {
                     <Text>{item.consultantNumber}</Text>
                   </View>
                 </CardHome>
+                </TouchableOpacity>
               )}
             />
           )}
