@@ -56,13 +56,13 @@ function HomeScreen({navigation, route}) {
       paddingRight: 13 * vw,
       marginTop: 1 * vh,
     },
-    search_Icon:{
+    search_Icon: {
       position: 'absolute',
-            right: 50,
-            top: 15,
-            height: 20,
-            width: 20,
-    }
+      right: 50,
+      top: 15,
+      height: 20,
+      width: 20,
+    },
   });
 
   const fetchData = async () => {
@@ -75,7 +75,7 @@ function HomeScreen({navigation, route}) {
     } catch (error) {
       console.error(error);
     }
-    
+
     setIsLoading(false);
   };
   useEffect(() => {
@@ -102,8 +102,7 @@ function HomeScreen({navigation, route}) {
   return (
     <>
       <View style={styles.Search_Bar}>
-        <TextInput
-          style={styles.Text_Input}></TextInput>
+        <TextInput style={styles.Text_Input}></TextInput>
         <Image
           style={styles.search_Icon}
           source={require('../asset/Search.png')}></Image>
@@ -169,17 +168,19 @@ function HomeScreen({navigation, route}) {
             ปรึกษาแพทย์
           </Text>
           <View style={{width: '30%'}}></View>
-          <Text
-            style={{
-              color: 'black',
-              textDecorationLine: 'underline',
-              fontSize: 14,
-            }}
-            onPress={() => navigation.navigate('DoctorList')}
-            // onPress={() => navigation.navigate('TestPage')}
-          >
-            ดูเพิ่มเติม+
-          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('DoctorList')}>
+            <Text
+              style={{
+                color: 'black',
+                textDecorationLine: 'underline',
+                fontSize: 14,
+              }}
+
+              // onPress={() => navigation.navigate('TestPage')}
+            >
+              ดูเพิ่มเติม+
+            </Text>
+          </TouchableOpacity>
         </View>
         {/* <Switch value={colorScheme==="dark"} onChange={toggleColorScheme}></Switch> */}
         {/* <Text>Welcome {userData.displayName}</Text>
@@ -193,21 +194,21 @@ function HomeScreen({navigation, route}) {
             margin: 20,
           }}>
           {/* <View style={{flexDirection: 'row'}}> */}
-            {/* <TouchableOpacity
+          {/* <TouchableOpacity
               style={{borderRadius: 5, backgroundColor: '#A3E4D7', padding: 10}}
               onPress={fetchData}>
               <Text style={{fontWeight: 'bold', fontFamily: 'sans-serif'}}>
                 Fetch Data
               </Text>
             </TouchableOpacity> */}
-            {/* <TouchableOpacity
+          {/* <TouchableOpacity
               style={{borderRadius: 5, backgroundColor: '#A3E4D7', padding: 10}}
               onPress={fetchData}> */}
-            {/* <Text style={{fontWeight: 'bold', fontFamily: 'Gloock-serif'}}> */}
-            {/* <Text style={[GlobalStyle.CustomFont]}> */}
-            {/* Fetch Data */}
-            {/* </Text> */}
-            {/* </TouchableOpacity> */}
+          {/* <Text style={{fontWeight: 'bold', fontFamily: 'Gloock-serif'}}> */}
+          {/* <Text style={[GlobalStyle.CustomFont]}> */}
+          {/* Fetch Data */}
+          {/* </Text> */}
+          {/* </TouchableOpacity> */}
           {/* </View> */}
           {isLoading ? (
             <View
@@ -220,20 +221,20 @@ function HomeScreen({navigation, route}) {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <TouchableOpacity
-                onPress={() => navigation.navigate('DoctorDetail',{id:item._id})}
-                
-                >
+                  onPress={() =>
+                    navigation.navigate('DoctorDetail', {id: item._id})
+                  }>
                   <CardHome>
-                  <View style={{flexDirection: 'column'}}>
-                    {/* <Text>{item._id}</Text> */}
-                    <Text>{item.name}</Text>
-                    <Text>{item.tel}</Text>
-                    <Text>{item.workplace}</Text>
-                    <Text>{item.expertise}</Text>
-                    <Text>{item.ovr_rating}</Text>
-                    <Text>{item.consultantNumber}</Text>
-                  </View>
-                </CardHome>
+                    <View style={{flexDirection: 'column'}}>
+                      {/* <Text>{item._id}</Text> */}
+                      <Text>{item.name}</Text>
+                      <Text>{item.tel}</Text>
+                      <Text>{item.workplace}</Text>
+                      <Text>{item.expertise}</Text>
+                      <Text>{item.ovr_rating}</Text>
+                      <Text>{item.consultantNumber}</Text>
+                    </View>
+                  </CardHome>
                 </TouchableOpacity>
               )}
             />

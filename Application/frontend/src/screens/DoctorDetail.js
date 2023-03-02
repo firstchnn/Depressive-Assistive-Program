@@ -56,7 +56,7 @@ function DoctorDetail({navigation, route}) {
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.goBack()}>
         <Text>Go Back</Text>
       </TouchableOpacity>
     </View>

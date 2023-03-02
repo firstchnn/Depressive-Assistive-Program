@@ -9,11 +9,11 @@ export default function CardHome(props) {
     <View style={styles.CardHome}>
       <View style={styles.cardContent}>
         {props.children}
-        <TouchableOpacity
-          style={styles.Button_to_Doc_Detail}
-          onPress={() => nav.navigate('DoctorDetail')}>
-          <Text>Button</Text>
-        </TouchableOpacity>
+        {/* <TouchableOpacity */}
+          {/* // style={styles.Button_to_Doc_Detail} */}
+          {/* onPress={() => nav.navigate('DoctorDetail')}> */}
+          {/* <Text>Button</Text> */}
+        {/* </TouchableOpacity> */}
       </View>
     </View>
   );

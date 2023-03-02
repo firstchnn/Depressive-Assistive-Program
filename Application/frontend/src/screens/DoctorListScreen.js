@@ -59,6 +59,10 @@ function DoctorListScreen({navigation, route}) {
               data={data}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
+                <TouchableOpacity
+                onPress={() => navigation.navigate('DoctorDetail',{id:item._id})}
+                
+                >
                 <CardHome>
                   <View style={{flexDirection: 'column'}}>
                     <Text>{item.name}</Text>
@@ -69,6 +73,7 @@ function DoctorListScreen({navigation, route}) {
                     <Text>{item.consultantNumber}</Text>
                   </View>
                 </CardHome>
+                </TouchableOpacity>
               )}
             />
           )}
