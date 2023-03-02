@@ -12,7 +12,7 @@ import DoctorDetail from '../screens/DoctorDetail';
 import MainChatScreen from '../screens/MainChatScreen';
  
 const Tab = createBottomTabNavigator();
-const highlightColor = '#55dab8'; // replace with your desired color
+const highlightColor = '#4ec1a3'; // replace with your desired color
 
 
 function BottomTabNavigator({route, navigation}) {
@@ -23,6 +23,7 @@ function BottomTabNavigator({route, navigation}) {
     screenOptions={{
       headerShown: false,
       tabBarActiveTintColor:highlightColor,
+      tabBarActiveBackgroundColor:'black',
     }}
     
     >
@@ -30,11 +31,11 @@ function BottomTabNavigator({route, navigation}) {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Home', // ชื่อบน Tabbar
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('../asset/home-icon.png')}
-              style={{ width: size, height: size, tintColor: color }}
+              style={{ width: size, height: size, tintColor: color }} // ตั้งค่าต่างๆตรงนี้ เช่น กว้าง สูง ฯลฯ
             />
           ),
         }}
@@ -49,11 +50,40 @@ function BottomTabNavigator({route, navigation}) {
       name="DoctorList" 
       component={DoctorListScreen} 
       // options={{ tabBarBadge:0}}
+      options={{
+        tabBarLabel: 'DoctorList',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../asset/List_Icon.png')}
+            style={{ width: size, height: size, tintColor: color }}
+          />
+        ),
+      }}
       />
       {/* <Tab.Screen name="DoctorDetail" component={DoctorDetail}/> */}
-      <Tab.Screen name="MainChat" component={MainChatScreen} />
+      <Tab.Screen name="MainChat" component={MainChatScreen} 
+      options={{
+        tabBarLabel: 'MainChat',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../asset/Chat_Icon.png')}
+            style={{ width: size, height: size, tintColor: color }}
+          />
+        ),
+      }}
+      />
       <Tab.Screen name="EvaluationScreen" component={EvaluationScreen} />
-      <Tab.Screen name="SettingScreen" component={SettingScreen} />
+      <Tab.Screen name="SettingScreen" component={SettingScreen} 
+      options={{
+        tabBarLabel: 'SettingScreen',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../asset/Setting.png')}
+            style={{ width: size, height: size, tintColor: color }}
+          />
+        ),
+      }}
+      />
     </Tab.Navigator>
   );
 }
