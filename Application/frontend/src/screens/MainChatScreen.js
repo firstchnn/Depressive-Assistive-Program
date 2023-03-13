@@ -14,6 +14,40 @@ import {useNavigation} from '@react-navigation/native';
 
 function MainChatScreen({navigation}) {
   const nav = useNavigation();
+
+  const textSets = [
+    'Text set 1',
+    'Text set 2',
+    'Text set 3',
+    'Text set 4',
+    'Text set 5',
+  ];
+
+  const [currentTextSet, setCurrentTextSet] = useState('');
+  const [previousTextSetIndex, setPreviousTextSetIndex] = useState(null);
+  const generateRandomTextSet = () => {
+    let randomIndex = Math.floor(Math.random() * textSets.length);
+    while (randomIndex === previousTextSetIndex) {
+      randomIndex = Math.floor(Math.random() * textSets.length);
+    }
+    setCurrentTextSet(textSets[randomIndex]);
+    setPreviousTextSetIndex(randomIndex);
+    console.log(currentTextSet);
+  }
+
+  useEffect(() => {
+    generateRandomTextSet();
+  }, []);
+  
+  useEffect(() => {    //get navigation state if focus or enter this screen app will random text set
+    const unsubscribe = navigation.addListener('focus', () => {
+      generateRandomTextSet();
+    });
+  
+    return unsubscribe;
+  }, [navigation]);
+
+
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <View style={{}}>
@@ -35,12 +69,7 @@ function MainChatScreen({navigation}) {
             paddingStart: 50,
             paddingEnd: 50,
           }}>
-          อะวิกกระดี๊กระด๊าสหัสวรรษ เป่ายิงฉุบซินโดรม สเปก เฟอร์รี่ แฟนตาซี
-          จิตพิสัยออร์แกน ลาเต้อัตลักษณ์ บร็อกโคลีโปรเจคท์อัลบั้ม เสือโคร่งบรา
-          ฮากกาฟิวเจอร์อพาร์ทเมนท์ เปราะบางคลาสสิกรามาธิบดีโฮลวีต
-          เช็กวอร์รูมเสกสรรค์แบรนด์ดีไซน์เนอร์
-          เพทนาการซาดิสต์โอวัลตินละอ่อนเอเซีย ฮีโร่ดิสเครดิตสวีทคอนเซ็ปต์
-          สหัสวรรษนายแบบดีพาร์ทเมนต์ เวอร์เก๊ะโปรเจ็คตี๋ลิสต์
+          {currentTextSet}
         </Text>
       </View>
       <View
@@ -66,10 +95,6 @@ function MainChatScreen({navigation}) {
             }}>
             Button 1
           </Text>
-          {/* <Button
-            title="Speaker"
-            onPress={() => nav.navigate('UserChat', {role: 'Speaker'})}
-          /> */}
           <TouchableOpacity
             style={{
               borderRadius: 5,

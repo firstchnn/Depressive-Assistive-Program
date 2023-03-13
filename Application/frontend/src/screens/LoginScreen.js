@@ -89,6 +89,16 @@ const LoginScreen = ({navigation}) => {
     });
   };
 
+  const guestLogin = async() => {
+
+    await navigation.navigate('BottomNav', {
+      displayName: "guest",
+      email: "guest",
+      photo: "guest",
+      uid: "guest",
+    });
+  };
+
   return (
     <View
       style={{
@@ -152,7 +162,7 @@ const LoginScreen = ({navigation}) => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.buttonGuest}>
+      <TouchableOpacity style={styles.buttonGuest} >
         <Text style={styles.buttonText}>Continue as guest</Text>
       </TouchableOpacity>
 
