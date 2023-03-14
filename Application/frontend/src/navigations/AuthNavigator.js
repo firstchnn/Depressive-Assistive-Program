@@ -5,6 +5,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import DoctorDetail from '../screens/DoctorDetail';
 import UserChatScreen from '../screens/UserChatScreen';
 import VideoCall from '../screens/VideoCall';
+import ScoreScreen from '../screens/ScoreScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ function AuthNavigator() {
         <Stack.Screen name="DoctorDetail" component={DoctorDetail}/>
         <Stack.Screen name="UserChat" component={UserChatScreen}/>
         <Stack.Screen name="VideoCall" component={VideoCall}/>
+        <Stack.Screen name="ScoreScreen" component={ScoreScreen}/>
     </Stack.Navigator>
   )
 }
