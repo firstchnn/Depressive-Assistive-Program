@@ -2,8 +2,20 @@ import * as React from 'react';
 import {useState} from 'react';
 import {Button, View, Text, TouchableOpacity} from 'react-native';
 
+function calculateScore(questions, selectedAnswers) {
+  return Object.values(selectedAnswers).reduce((acc, selectedAnswerId) => {
+    const answer = questions.flatMap(q => q.answers).find(a => a.id === selectedAnswerId);
+    if (answer) {
+      acc += answer.score;
+    }
+    return acc;
+  }, 0);
+}
+
 function EvaluationScreen({ navigation,route }) {
   
+  // const { score } = route.params;
+
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [questionIndex, setQuestionIndex] = useState(0); // Initialize the current question index to 0
   const questions = [
@@ -51,11 +63,23 @@ function EvaluationScreen({ navigation,route }) {
       ...prevState,
       [questionId]: answerId,
     }));
-
-    // Move to the next question
-    setQuestionIndex((prevState) => prevState + 1);
+  
+    // Check if this is the last question and an answer is selected for it, then navigate to the ScoreScreen
+    if (questionIndex === questions.length - 1 && answerId) {
+      const lastQuestionScore = questions[questionIndex].answers.find(a => a.id === answerId)?.score || 0;
+      const totalScore = Object.values(selectedAnswers).reduce((acc, selectedAnswerId) => {
+        const answer = questions.flatMap(q => q.answers).find(a => a.id === selectedAnswerId);
+        if (answer) {
+          acc += answer.score;
+        }
+        return acc;
+      }, 0) + lastQuestionScore;
+      navigation.navigate('ScoreScreen', { score: totalScore });
+    } else {
+      // Move to the next question
+      setQuestionIndex((prevState) => prevState + 1);
+    }
   };
-
   const handleBack = () => {
     // Move to the previous question
     setQuestionIndex((prevState) => prevState - 1);
@@ -71,18 +95,6 @@ function EvaluationScreen({ navigation,route }) {
     return acc;
   }, 0);
 
-  const submitQuiz = () => {
-    const totalScore = Object.values(selectedAnswers).reduce((acc, selectedAnswerId) => {
-      const answer = questions.flatMap(q => q.answers).find(a => a.id === selectedAnswerId);
-      if (answer) {
-        acc += answer.score;
-      }
-      return acc;
-    }, 0);
-
-    navigation.navigate('ScoreScreen', { score: totalScore });
-  }
-
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       
@@ -94,6 +106,7 @@ function EvaluationScreen({ navigation,route }) {
               <Text>{answer.text}</Text>
             </TouchableOpacity>
           ))}
+          
         </View>
       )}
 
@@ -102,10 +115,6 @@ function EvaluationScreen({ navigation,route }) {
           <Button title="Back" onPress={handleBack} />
         )}
       </View>
-
-      {questionIndex === questions.length-1 ? (
-        <Button title="Submit" onPress={submitQuiz} />
-      ) : null}
 
     </View>
   );
