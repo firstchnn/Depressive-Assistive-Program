@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 function ScoreScreen({ route }) {
@@ -13,9 +13,9 @@ function ScoreScreen({ route }) {
     <View style={styles.container}>
       <Text style={styles.header}>Quiz Score</Text>
       <Text style={styles.score}>Your score: {score}</Text>
-      {/* <TouchableOpacity style={styles.button} onPress={handleBackPress}>
+      <TouchableOpacity style={styles.button} onPress={handleBackPress}>
         <Text style={styles.buttonText}>Back to Home</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 }

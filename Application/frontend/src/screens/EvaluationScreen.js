@@ -64,22 +64,38 @@ function EvaluationScreen({ navigation,route }) {
       [questionId]: answerId,
     }));
   
-    // Check if this is the last question and an answer is selected for it, then navigate to the ScoreScreen
     if (questionIndex === questions.length - 1 && answerId) {
-      const lastQuestionScore = questions[questionIndex].answers.find(a => a.id === answerId)?.score || 0;
-      const totalScore = Object.values(selectedAnswers).reduce((acc, selectedAnswerId) => {
-        const answer = questions.flatMap(q => q.answers).find(a => a.id === selectedAnswerId);
-        if (answer) {
-          acc += answer.score;
-        }
-        return acc;
-      }, 0) + lastQuestionScore;
-      navigation.navigate('ScoreScreen', { score: totalScore });
+      navigation.navigate('ScoreScreen', { score: calculateScore(questions, selectedAnswers) });
     } else {
-      // Move to the next question
       setQuestionIndex((prevState) => prevState + 1);
     }
   };
+
+  
+  // const handleAnswerSelect = (questionId, answerId) => {
+  //   setSelectedAnswers((prevState) => ({
+  //     ...prevState,
+  //     [questionId]: answerId,
+  //   }));
+  
+  //   // Check if this is the last question and an answer is selected for it, then navigate to the ScoreScreen
+  //   if (questionIndex === questions.length - 1 && answerId) {
+  //     // const lastQuestionScore = questions[questionIndex].answers.find(a => a.id === answerId)?.score || 0;
+  //     const lastQuestionScore = questions[questions.length - 1].answers.find(a => a.id === selectedAnswers[questions.length - 1])?.score || 0;
+  //     // const totalScore = Object.values(selectedAnswers).reduce((acc, selectedAnswerId) => {
+  //     //   const answer = questions.flatMap(q => q.answers).find(a => a.id === selectedAnswerId);
+  //     //   if (answer) {
+  //     //     acc += answer.score;
+  //     //   }
+  //     //   return acc;
+  //     // }, 0) + lastQuestionScore;
+  //     // navigation.navigate('ScoreScreen', { score: totalScore });
+  //     navigation.navigate('ScoreScreen', { score: calculateScore(questions, selectedAnswers) });
+  //   } else {
+  //     // Move to the next question
+  //     setQuestionIndex((prevState) => prevState + 1);
+  //   }
+  // };
   const handleBack = () => {
     // Move to the previous question
     setQuestionIndex((prevState) => prevState - 1);

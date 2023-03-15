@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useLayoutEffect } from 'react';
 import {
   Button,
   View,
@@ -85,6 +85,12 @@ function HomeScreen({navigation, route}) {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+    });
+  }, [navigation]);
 
   const backgroundStyle = 'bg-neutral-300 dark:bg-slate-900';
   // const {colorScheme, toggleColorScheme} = useColorScheme();

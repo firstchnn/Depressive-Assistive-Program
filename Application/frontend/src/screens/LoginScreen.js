@@ -162,9 +162,9 @@ const LoginScreen = ({navigation}) => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.buttonGuest} >
+      {/* <TouchableOpacity style={styles.buttonGuest} >
         <Text style={styles.buttonText}>Continue as guest</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* <Button
         style={{paddingTop: 20}}
