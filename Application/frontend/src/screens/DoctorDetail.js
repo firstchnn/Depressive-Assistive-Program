@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 function DoctorDetail({navigation, route}) {
   // const DoctorDetail1 = () => {
@@ -7,6 +14,15 @@ function DoctorDetail({navigation, route}) {
   const [doctorID, setDoctorID] = useState({});
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [popupVisible, setPopupVisible] = useState(false);
+  const togglePopup = () => {
+    setPopupVisible(!popupVisible);
+  };
+  const paymentContinue = () => {
+    setPopupVisible(!popupVisible);
+    navigation.navigate('PaymentScreen');
+  }
   // const onPress = () => setCount(prevCount => prevCount + 1);
   const showData = () => {
     console.log(data._id);
@@ -54,11 +70,26 @@ function DoctorDetail({navigation, route}) {
           <Text>Loading...</Text>
         )}
       </View>
+      <TouchableOpacity style={styles.button} 
+      onPress={togglePopup}>
+        <Text>Make Apppoinment</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.goBack()}>
         <Text>Go Back</Text>
       </TouchableOpacity>
+      <Modal visible={popupVisible} animationType="slide">
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding:10}}>
+          <Text style={{marginBottom:'6%'}}>Choose appointment time</Text>
+          <TouchableOpacity style={styles.button} onPress={paymentContinue}>
+            <Text>Continue</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={togglePopup}>
+            <Text>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
 
     // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -77,6 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
+    marginBottom: '6%',
   },
   countContainer: {
     alignItems: 'center',

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { View, Text, StyleSheet,TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-function ScoreScreen({ route }) {
-  const { score } = route.params;
+function ScoreScreen({}) {
+  // const { score } = route.params;
   const navigation = useNavigation();
 
   const handleBackPress = () => {
@@ -12,7 +12,7 @@ function ScoreScreen({ route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Quiz Score</Text>
-      <Text style={styles.score}>Your score: {score}</Text>
+      <Text style={styles.score}>Your score:</Text> 
       <TouchableOpacity style={styles.button} onPress={handleBackPress}>
         <Text style={styles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
