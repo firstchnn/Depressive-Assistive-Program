@@ -128,7 +128,7 @@ function EvaluationScreen({navigation, route}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>This is Evaluation Screen</Text>
-      <TouchableOpacity style={styles.button} onPress={togglePopup}>
+      <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
         <Text>Start</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
@@ -137,7 +137,7 @@ function EvaluationScreen({navigation, route}) {
             <Text>{currentQuestion.question}</Text>
             {currentQuestion.answers.map(answer => (
               <TouchableOpacity
-              style = {styles.button}
+              style = {styles.buttonAnswer}
                 key={answer.id}
                 onPress={() =>
                   handleAnswerSelect(currentQuestion.id, answer.id)
@@ -146,7 +146,7 @@ function EvaluationScreen({navigation, route}) {
               </TouchableOpacity>
             ))}
             {questionIndex > 0 && (
-              <TouchableOpacity style={styles.button} onPress={handleBack}>
+              <TouchableOpacity style={styles.buttonBack} onPress={handleBack}>
                 <Text>Back</Text>
               </TouchableOpacity>
             )}
@@ -157,7 +157,7 @@ function EvaluationScreen({navigation, route}) {
           <View style={styles.container}>
           <Text style={styles.header}>Quiz Score</Text>
           <Text style={styles.score}>Your score: {totalScore}</Text> 
-          <TouchableOpacity style={styles.button} onPress={handleBackPress}>
+          <TouchableOpacity style={styles.buttonHome} onPress={handleBackPress}>
             <Text style={styles.buttonText}>Back to Home</Text>
           </TouchableOpacity>
         </View>
@@ -173,7 +173,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button: {
+  buttonAnswer: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+    marginBottom: 6,
+    paddingBottom:10
+  },
+  buttonBack: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
@@ -192,11 +199,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 20,
   },
-  button: {
+  buttonStart: {
     backgroundColor: '#008CBA',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    paddingBottom:10
+  },
+  buttonHome: {
+    backgroundColor: '#008CBA',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    paddingTop:10
   },
   buttonText: {
     color: '#FFFFFF',
