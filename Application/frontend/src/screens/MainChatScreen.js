@@ -16,9 +16,9 @@ function MainChatScreen({navigation}) {
   const nav = useNavigation();
 
   const textSets = [
-    'Text set 1',
-    'Text set 2',
-    'Text set 3',
+    'สนทนาด้วยความเคารพ',
+    'รับฟัง/พูดคุย ด้วยความเข้าใจ',
+    'เห็นใจซึ่งกันและกัน',
     'Text set 4',
     'Text set 5',
   ];
@@ -54,9 +54,9 @@ function MainChatScreen({navigation}) {
         <Image
           style={{
             alignSelf: 'center',
-            marginBottom: 70,
+            marginBottom: 35,
             // paddingTop:10,
-            borderWidth: 3,
+            borderWidth: 0,
             borderColor: 'red',
           }}
           source={require('../asset/Mainchat.png')}></Image>
@@ -75,7 +75,7 @@ function MainChatScreen({navigation}) {
       <View
         style={{
           flexDirection: 'row',
-          borderWidth: 3,
+          borderWidth: 0,
           borderColor: 'blue',
           // marginTop: 15,
           // marginBottom:25
@@ -86,19 +86,21 @@ function MainChatScreen({navigation}) {
         <View
           style={{
             flexDirection: 'column',
-            borderWidth: 3,
+            borderWidth: 0,
             borderColor: 'lightblue',
           }}>
           <Text
             style={{
               alignSelf: 'center',
+              textAlign:'center',
+              marginBottom:80,
             }}>
-            Button 1
+            ฉันมีเรื่องที่ {'\n'}อยากจะระบาย
           </Text>
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: '#A3E4D7',
+              backgroundColor: '#F8C5F9',
               paddingRight: 30,
               paddingLeft: 30,
               paddingBottom: 10,
@@ -111,19 +113,21 @@ function MainChatScreen({navigation}) {
                 fontFamily: 'sans-serif',
                 color: '#242424',
               }}>
-              Speaker
+              ระบาย
             </Text>
           </TouchableOpacity>
         </View>
         <View style={{width: '10%'}}></View>
-        <View style={{width: 1.5, backgroundColor: '#00C7D4'}} />
+        <View style={{width: 1.2, backgroundColor: '#00C7D4'}} />
         <View style={{width: '10%'}}></View>
         <View style={{flexDirection: 'column'}}>
           <Text
             style={{
               alignSelf: 'center',
+              textAlign:'center',
+              marginBottom:80,
             }}>
-            Button 2
+            ฉันพร้อม{'\n'}ที่จะรับฟังผู้อื่น
           </Text>
           {/* <Button
             title="Listener"
@@ -132,7 +136,7 @@ function MainChatScreen({navigation}) {
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: '#A3E4D7',
+              backgroundColor: '#cae1fb',
               paddingRight: 30,
               paddingLeft: 30,
               paddingBottom: 10,
@@ -145,7 +149,7 @@ function MainChatScreen({navigation}) {
                 fontFamily: 'sans-serif',
                 color: '#242424',
               }}>
-              Listener
+              รับฟัง
             </Text>
           </TouchableOpacity>
         </View>

@@ -127,14 +127,15 @@ function EvaluationScreen({navigation, route}) {
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>This is Evaluation Screen</Text>
+      <Text style={styles.EvaluateText}>
+        Take this depression test. It’s quick, free and you’ll get your confidential results instantly. It may be the first step to getting the help you need. Although not every day will be easy, once you can take inventory of what is going on with a quiz, and give yourself the space to heal and find support, there will likely be improvements.</Text>
       <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
         <Text>Start</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
         {!resultVisible && (
           <View key={currentQuestion.id}>
-            <Text>{currentQuestion.question}</Text>
+            <Text style={styles.textQuestion}>{currentQuestion.question}</Text>
             {currentQuestion.answers.map(answer => (
               <TouchableOpacity
               style = {styles.buttonAnswer}
@@ -155,8 +156,8 @@ function EvaluationScreen({navigation, route}) {
 
         {resultVisible && (
           <View style={styles.container}>
-          <Text style={styles.header}>Quiz Score</Text>
-          <Text style={styles.score}>Your score: {totalScore}</Text> 
+          <Text style={styles.header}>Quiz results</Text>
+          <Text style={styles.score}>Your score on the PHQ-9 Depression test was: {totalScore}</Text> 
           <TouchableOpacity style={styles.buttonHome} onPress={handleBackPress}>
             <Text style={styles.buttonText}>Back to Home</Text>
           </TouchableOpacity>
@@ -168,6 +169,10 @@ function EvaluationScreen({navigation, route}) {
 }
 
 const styles = StyleSheet.create({
+  textQuestion:{
+    marginVertical:20,
+    marginLeft:15
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -176,9 +181,11 @@ const styles = StyleSheet.create({
   buttonAnswer: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    padding: 10,
+    padding: 20,
     marginBottom: 6,
-    paddingBottom:10
+    // paddingBottom:10,
+    marginHorizontal:18,
+    borderRadius:8,
   },
   buttonBack: {
     alignItems: 'center',
@@ -196,8 +203,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   score: {
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 20,
+    marginHorizontal:12,
+    textAlign:'center',
+  },
+  textStart:{
+
   },
   buttonStart: {
     backgroundColor: '#008CBA',
@@ -218,6 +230,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  EvaluateText:{
+    paddingHorizontal:30,
+    paddingBottom:15,
+    textAlign:'center'
+  }
 });
 
 export default EvaluationScreen;
