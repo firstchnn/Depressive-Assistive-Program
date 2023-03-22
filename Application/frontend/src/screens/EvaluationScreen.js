@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
+  // ProgressBarAndroid,
 } from 'react-native';
 
 function calculateScore(questions, selectedAnswers) {
@@ -166,30 +167,18 @@ function EvaluationScreen({navigation, route}) {
 
   const currentQuestion = questions[questionIndex];
 
-  // const totalScore = Object.values(selectedAnswers).reduce(
-  //   (acc, selectedAnswerId) => {
-  //     const answer = currentQuestion.answers.find(
-  //       a => a.id === selectedAnswerId,
-  //     );
-  //     if (answer) {
-  //       acc += answer.score;
-  //     }
-  //     return acc;
-  //   },
-  //   0,
-  // );
-
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text style={styles.EvaluateText}>
         แบบทดสอบ PHQ-9
       </Text>
       <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
-        <Text>Start</Text>
+        <Text style={styles.textStart}>Start</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
         {!resultVisible && (
           <View key={currentQuestion.id}>
+            <Text style={styles.IndexNumber}>{currentQuestion.id}/{questions.length}</Text>
             <Text style={styles.textQuestion}>{currentQuestion.question}</Text>
             {currentQuestion.answers.map(answer => (
               <TouchableOpacity
@@ -203,7 +192,7 @@ function EvaluationScreen({navigation, route}) {
             ))}
             {questionIndex > 0 && (
               <TouchableOpacity style={styles.buttonBack} onPress={handleBack}>
-                <Text>Back</Text>
+                <Text style={{color:'white'}}>Back</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -244,7 +233,7 @@ const styles = StyleSheet.create({
   },
   buttonBack: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#2986cc',
     padding: 20,
     marginTop: 16,
     // paddingBottom:10,
@@ -267,7 +256,9 @@ const styles = StyleSheet.create({
     textAlign:'center',
   },
   textStart:{
-
+    color:'white',
+    fontWeight:'bold',
+    letterSpacing:1.1
   },
   buttonStart: {
     backgroundColor: '#008CBA',
@@ -292,7 +283,13 @@ const styles = StyleSheet.create({
     paddingHorizontal:30,
     paddingBottom:15,
     textAlign:'center'
-  }
+  },
+  IndexNumber:{
+    marginLeft:15,
+    paddingBottom:0,
+    paddingTop:20,
+    textAlign:'left'
+  },
 });
 
 export default EvaluationScreen;
