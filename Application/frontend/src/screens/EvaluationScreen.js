@@ -40,45 +40,99 @@ function EvaluationScreen({navigation, route}) {
     // questions data
     {
       id: 1,
-      question: 'What is your favorite color?',
+      question: 'เบื่อ ทำอะไร ๆ ก็ไม่เพลิดเพลิน',
       answers: [
-        {id: 1, text: 'Red', score: 0},
-        {id: 2, text: 'Blue', score: 1},
-        {id: 3, text: 'Green', score: 2},
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
       ],
     },
     {
       id: 2,
-      question: 'What is your favorite animal?',
+      question: 'ไม่สบายใจ ซึมเศร้า หรือท้อแท้',
       answers: [
-        {id: 1, text: 'Dog', score: 0},
-        {id: 2, text: 'Cat', score: 1},
-        {id: 3, text: 'Fish', score: 2},
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
       ],
     },
     {
       id: 3,
-      question: 'What is your favorite animal?',
+      question: ' หลับยาก หรือหลับ ๆ ตื่น ๆ หรือหลับมากไป',
       answers: [
-        {id: 1, text: 'Kangaroo', score: 0},
-        {id: 2, text: 'Frog', score: 1},
-        {id: 3, text: 'Owl', score: 2},
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
       ],
     },
     {
       id: 4,
-      question: 'What is your favorite animal?',
+      question: 'เหนื่อยง่าย หรือไม่ค่อยมีแรง',
       answers: [
-        {id: 1, text: 'UwU', score: 0},
-        {id: 2, text: ':)', score: 1},
-        {id: 3, text: 'O_o', score: 2},
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
       ],
     },
     {
       id: 5,
+      question: 'เบื่ออาหาร หรือกินมากเกินไป',
+      answers: [
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+      ],
+    },
+    {
+      id: 6,
+      question: 'รู้สึกไม่ดีกับตัวเอง คิดว่าตัวเองล้มเหลว หรือเป็นคนทำให้ตัวเอง หรือครอบครัวผิดหวัง',
+      answers: [
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+      ],
+    },
+    {
+      id: 7,
+      question: 'สมาธิไม่ดีเวลาทำอะไร เช่น ดูโทรทัศน์ ฟังวิทยุ หรือทำงานท่ีต้องใช้ความตั้งใจ',
+      answers: [
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+      ],
+    },
+    {
+      id: 8,
+      question: ' พูดหรือทำอะไรช้าจนคนอื่นมองเห็น หรือกระสับกระส่ายจนท่านอยู่ไม่นิ่งเหมือนเคย',
+      answers: [
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+      ],
+    },
+    {
+      id: 9,
+      question: 'คิดทำร้ายตนเอง หรือคิดว่าถ้าตาย ๆ ไปเสียคงจะดี',
+      answers: [
+        {id: 1, text: 'ไม่เลย', score: 0},
+        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
+        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
+        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+      ],
+    },
+    {
+      id: 10,
       question: 'lazy stuff',
       answers: [
-        {id: 1, text: 'UwU', score: 0},
+        {id: 1, text: 'ยืนยัน', score: 0},
       ],
     },
   ];
@@ -128,7 +182,8 @@ function EvaluationScreen({navigation, route}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text style={styles.EvaluateText}>
-        Take this depression test. It’s quick, free and you’ll get your confidential results instantly. It may be the first step to getting the help you need. Although not every day will be easy, once you can take inventory of what is going on with a quiz, and give yourself the space to heal and find support, there will likely be improvements.</Text>
+        แบบทดสอบ PHQ-9
+      </Text>
       <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
         <Text>Start</Text>
       </TouchableOpacity>
@@ -156,7 +211,7 @@ function EvaluationScreen({navigation, route}) {
 
         {resultVisible && (
           <View style={styles.container}>
-          <Text style={styles.header}>Quiz results</Text>
+          <Text style={styles.header}>Results</Text>
           <Text style={styles.score}>Your score on the PHQ-9 Depression test was: {totalScore}</Text> 
           <TouchableOpacity style={styles.buttonHome} onPress={handleBackPress}>
             <Text style={styles.buttonText}>Back to Home</Text>
@@ -190,8 +245,11 @@ const styles = StyleSheet.create({
   buttonBack: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    padding: 10,
-    marginBottom: '6%',
+    padding: 20,
+    marginTop: 16,
+    // paddingBottom:10,
+    marginHorizontal:18,
+    borderRadius:8,
   },
   countContainer: {
     alignItems: 'center',

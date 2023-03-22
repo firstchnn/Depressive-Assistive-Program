@@ -72,7 +72,17 @@ function BottomTabNavigator({route, navigation}) {
         ),
       }}
       />
-      <Tab.Screen name="EvaluationScreen" component={EvaluationScreen} />
+      <Tab.Screen name="PHQ-9" component={EvaluationScreen} 
+      options={{
+        tabBarLabel: 'PHQ-9',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../asset/PHQ9.png')}
+            style={{ width: size, height: size, tintColor: color }}
+          />
+        ),
+      }}
+      />
       <Tab.Screen name="SettingScreen" component={SettingScreen} 
       options={{
         tabBarLabel: 'SettingScreen',
