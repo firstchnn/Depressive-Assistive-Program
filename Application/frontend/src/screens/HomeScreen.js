@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useLayoutEffect } from 'react';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
 import {
   Button,
   View,
@@ -31,6 +31,19 @@ function HomeScreen({navigation, route}) {
   const {height: viewportHeight} = Dimensions.get('window');
   const vw = viewportWidth / 100;
   const vh = viewportHeight / 100;
+  const [searchText, setSearchText] = useState('');
+  // const filteredData = data.filtered((item) =>
+  //   item.name.toLowerCase().includes(searchText.toLowerCase())
+  // );
+  const filteredData = data && data.filter((item) =>
+  item.name.toLowerCase().includes(searchText.toLowerCase())
+);
+  const renderItem = ({ item }) => (
+    <View>
+      <Text>{item.name}</Text>
+    </View>
+  );
+
 
   const [search, setSearch] = useState('');
   const [userData, setUserData] = useState({});
@@ -108,7 +121,12 @@ function HomeScreen({navigation, route}) {
   return (
     <>
       <View style={styles.Search_Bar}>
-        <TextInput style={styles.Text_Input}></TextInput>
+        <TextInput
+          style={styles.Text_Input}
+          placeholder="ค้นหา"
+          onChangeText={text => setSearchText(text)}
+          value={searchText}>
+        </TextInput>
         <Image
           style={styles.search_Icon}
           source={require('../asset/Search.png')}></Image>
