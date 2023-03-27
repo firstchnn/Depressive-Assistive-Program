@@ -15,7 +15,6 @@ import {
   StyleSheet,
 } from 'react-native';
 // import GlobalStyle from '../utils/GlobalStyle';
-import {Card, SearchBar} from '@rneui/base';
 import {useNavigation} from '@react-navigation/native';
 import CardHome from '../components/CardHome';
 // import {useColorScheme} from 'nativewind';
@@ -31,10 +30,21 @@ function HomeScreen({navigation, route}) {
   const {height: viewportHeight} = Dimensions.get('window');
   const vw = viewportWidth / 100;
   const vh = viewportHeight / 100;
+
   const [searchText, setSearchText] = useState('');
   // const filteredData = data.filtered((item) =>
   //   item.name.toLowerCase().includes(searchText.toLowerCase())
   // );
+  const handleTextChange = (text) => {
+    setSearchText(text);
+    let temp = [];
+    for(let i = 0; i < data.length ; i++){
+      if (data[i].name.includes(text)){
+        temp.push(data[i]);
+      }
+    }
+    setCurrData(temp);
+  }
   const filteredData = data && data.filter((item) =>
   item.name.toLowerCase().includes(searchText.toLowerCase())
 );
@@ -43,14 +53,14 @@ function HomeScreen({navigation, route}) {
       <Text>{item.name}</Text>
     </View>
   );
-
-
   const [search, setSearch] = useState('');
+  
   const [userData, setUserData] = useState({});
   const updateSearch = () => {
     setSearch(search);
   };
   const [data, setData] = useState(null);
+  const [currData, setCurrData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const styles = StyleSheet.create({
@@ -84,6 +94,7 @@ function HomeScreen({navigation, route}) {
       const response = await fetch('https://ce22.onrender.com/all-doctor');
       const json = await response.json();
       setData(json);
+      setCurrData(json);
       console.log(json);
     } catch (error) {
       console.error(error);
@@ -124,7 +135,7 @@ function HomeScreen({navigation, route}) {
         <TextInput
           style={styles.Text_Input}
           placeholder="ค้นหา"
-          onChangeText={text => setSearchText(text)}
+          onChangeText={text => handleTextChange(text)}
           value={searchText}>
         </TextInput>
         <Image
@@ -146,6 +157,7 @@ function HomeScreen({navigation, route}) {
             // borderColor: 'red',
             // borderWidth: 3,
           }}
+          
           onPress={() => navigation.navigate('MainChat')}>
           <Image
             style={{
@@ -241,7 +253,7 @@ function HomeScreen({navigation, route}) {
             </View>
           ) : (
             <FlatList
-              data={data}
+              data={currData}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <TouchableOpacity
