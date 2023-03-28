@@ -12,6 +12,7 @@ import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {MaterialIcons} from 'react-native-vector-icons/MaterialIcons';
 import {Icon} from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
 // import { MdGoogle } from "react-icons/md";
 // import { FaFacebook } from 'react-icons/fa';
 
@@ -25,16 +26,61 @@ const LoginScreen = ({navigation}) => {
   }, []);
 
   const googleSignIn = async () => {
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
+    try {
+      // Check if your device supports Google Play
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+      // Get the users ID token
+      const {idToken} = await GoogleSignin.signIn();
 
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
+      // Sign-in the user with the credential
+      return auth().signInWithCredential(googleCredential);
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+      throw error; // re-throw the error to be caught by the outer catch statement
+    }
+  };
+
+  const postUser = async userData => {
+    await console.log('displayName:', userData.displayName);
+    await console.log('email: ', userData.email);
+    await console.log('emailVerified:', userData.emailVerified);
+    await console.log('metadata:', userData.metadata);
+    await console.log('phoneNumber:', userData.phoneNumber);
+    await console.log('photoURL:', userData.photoURL);
+    await console.log('uid:', userData.uid);
+    await fetch('https://ce22.onrender.com/users', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        displayName: userData.displayName,
+        email: userData.email,
+        emailVerified: userData.emailVerified,
+        // metadata: userData.metadata,
+        phoneNumber: userData.phoneNumber,
+        photoURL: userData.photoURL,
+        uid: userData.uid,
+        role: 'user',
+      }),
+    })
+      .then(res => {
+        console.log(res.status);
+        console.log(res.headers);
+        console.log('response = ',res);
+        console.log('response body:',res.text());
+        return res.json();
+      })
+      .then(
+        result => {
+          console.log('result = ', result);
+        },
+        error => {
+          console.log('error = ', error);
+        },
+      );
+    await successLogin(userData.email);
   };
 
   const styles = StyleSheet.create({
@@ -52,7 +98,6 @@ const LoginScreen = ({navigation}) => {
       height: '5.5%',
       marginBottom: 20,
       flexDirection: 'row',
-      // flex: 1,
     },
     buttonGuest: {
       backgroundColor: '#353535',
@@ -67,9 +112,6 @@ const LoginScreen = ({navigation}) => {
       width: '50%',
       height: '5.5%',
       marginBottom: 20,
-      // flexDirection: 'row',
-      // alignItems:'center'
-      // flex: 1,
     },
     buttonText: {
       color: '#fff',
@@ -78,24 +120,26 @@ const LoginScreen = ({navigation}) => {
     },
   });
 
-  const successLogin = async data => {
+  const successLogin = async userData => {
     // console.log(userData)
     // await console.log(data)
     await navigation.navigate('BottomNav', {
-      displayName: data.displayName,
-      email: data.email,
-      photo: data.photoURL,
-      uid: data.uid,
+      displayName: userData.displayName,
+      email: userData.email,
+      emailVerified: userData.emailVerified,
+      metadata: userData.metadata,
+      phoneNumber: userData.phoneNumber,
+      photoURL: userData.photoURL,
+      uid: userData.uid,
     });
   };
 
-  const guestLogin = async() => {
-
+  const guestLogin = async () => {
     await navigation.navigate('BottomNav', {
-      displayName: "guest",
-      email: "guest",
-      photo: "guest",
-      uid: "guest",
+      displayName: 'guest',
+      email: 'guest',
+      photo: 'guest',
+      uid: 'guest',
     });
   };
 
@@ -116,71 +160,61 @@ const LoginScreen = ({navigation}) => {
       {/* <TouchableOpacity/> */}
       <View style={{paddingBottom: 20}}></View>
 
-      {/* <TouchableOpacity
-        style={{borderRadius: 5, backgroundColor: '#A3E4D7', padding: 10}}
-        onPress={() => navigation.navigate('Home')}>
-          
-        <Text style={{fontWeight: 'bold', fontFamily: 'sans-serif'}}>
-          Fetch Data
-        </Text>
-      </TouchableOpacity> */}
-      {/* <Button
-      style={{paddingBottom: 20}}
-        title="Continue as guest"
-        onPress={() => navigation.navigate('Home')}
-      /> */}
-
       <TouchableOpacity
-        // style={{
-        //   borderRadius: 10,
-        //   backgroundColor: '#FFFFFF',
-        //   padding: 10,
-        //   width:'auto',
-        // }}
         style={styles.buttonGoogle}
         onPress={() =>
           googleSignIn()
-            .then(res => {
-              data = res;
-              console.log(data.user);
-              console.log(data.user.displayName);
-              setUserData(data.user);
-              successLogin(data.user);
+            .then(async res => {
+              const userData = res.user;
+              setUserData(userData);
+              postUser(userData);
+              // try {
+              //   const response = await fetch(
+              //     'https://ce22.onrender.com/users',
+              //     {
+              //       method: 'POST',
+              //       headers: {
+              //         'Content-Type': 'application/json',
+              //       },
+              //       body: JSON.stringify({
+              //         displayName: userData.displayName,
+              //         email: userData.email,
+              //         emailVerified: userData.emailVerified,
+              //         metadata: userData.metadata,
+              //         phoneNumber: userData.phoneNumber,
+              //         photoURL: userData.photoURL,
+              //         uid: userData.uid,
+              //       }),
+              //     },
+              //   );
+
+              //   if (response.ok) {
+              //     console.log('User data posted to server');
+              //     successLogin(userData);
+              //   } else {
+              //     const data = await response.json();
+              //     console.log('Failed to post user data to server:', data);
+              //   }
+              // } catch (error) {
+              //   console.error('Error posting user data to server:', error);
+              // }
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+              console.log(error);
+            })
         }>
-        <View style={{flex:1}}>
+        <View style={{flex: 1}}>
           <Image
-            style={{width: 20, height: 20,marginRight:10}}
+            style={{width: 20, height: 20, marginRight: 10}}
             resizeMode="contain"
             source={require('../asset/Google_Login.png')}></Image>
         </View>
-        <View style={{flex:4}}>
+        <View style={{flex: 4}}>
           <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
             Continue with Google
           </Text>
         </View>
       </TouchableOpacity>
-
-      {/* <TouchableOpacity style={styles.buttonGuest} >
-        <Text style={styles.buttonText}>Continue as guest</Text>
-      </TouchableOpacity> */}
-
-      {/* <Button
-        style={{paddingTop: 20}}
-        title="Continue with gmail"
-        onPress={() =>
-          googleSignIn()
-            .then(res => {
-              data = res;
-              console.log(data.user);
-              console.log(data.user.displayName);
-              setUserData(data.user);
-              successLogin(data.user);
-            })
-            .catch(error => console.log(error))
-        }
-      /> */}
     </View>
   );
 };

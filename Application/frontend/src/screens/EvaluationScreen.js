@@ -28,11 +28,10 @@ function EvaluationScreen({navigation, route}) {
   const togglePopup = () => {
     setPopupVisible(!popupVisible);
   };
-  const [resultVisible, setResultVisible] = useState(false)
+  const [resultVisible, setResultVisible] = useState(false);
   const handleResult = () => {
-    setResultVisible(!resultVisible)
-  }
-  
+    setResultVisible(!resultVisible);
+  };
 
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [questionIndex, setQuestionIndex] = useState(0); // Initialize the current question index to 0
@@ -91,7 +90,8 @@ function EvaluationScreen({navigation, route}) {
     },
     {
       id: 6,
-      question: 'รู้สึกไม่ดีกับตัวเอง คิดว่าตัวเองล้มเหลว หรือเป็นคนทำให้ตัวเอง หรือครอบครัวผิดหวัง',
+      question:
+        'รู้สึกไม่ดีกับตัวเอง คิดว่าตัวเองล้มเหลว หรือเป็นคนทำให้ตัวเอง หรือครอบครัวผิดหวัง',
       answers: [
         {id: 1, text: 'ไม่เลย', score: 0},
         {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
@@ -101,7 +101,8 @@ function EvaluationScreen({navigation, route}) {
     },
     {
       id: 7,
-      question: 'สมาธิไม่ดีเวลาทำอะไร เช่น ดูโทรทัศน์ ฟังวิทยุ หรือทำงานท่ีต้องใช้ความตั้งใจ',
+      question:
+        'สมาธิไม่ดีเวลาทำอะไร เช่น ดูโทรทัศน์ ฟังวิทยุ หรือทำงานท่ีต้องใช้ความตั้งใจ',
       answers: [
         {id: 1, text: 'ไม่เลย', score: 0},
         {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
@@ -111,7 +112,8 @@ function EvaluationScreen({navigation, route}) {
     },
     {
       id: 8,
-      question: ' พูดหรือทำอะไรช้าจนคนอื่นมองเห็น หรือกระสับกระส่ายจนท่านอยู่ไม่นิ่งเหมือนเคย',
+      question:
+        ' พูดหรือทำอะไรช้าจนคนอื่นมองเห็น หรือกระสับกระส่ายจนท่านอยู่ไม่นิ่งเหมือนเคย',
       answers: [
         {id: 1, text: 'ไม่เลย', score: 0},
         {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
@@ -132,18 +134,16 @@ function EvaluationScreen({navigation, route}) {
     {
       id: 10,
       question: 'lazy stuff',
-      answers: [
-        {id: 1, text: 'ยืนยัน', score: 0},
-      ],
+      answers: [{id: 1, text: 'ยืนยัน', score: 0}],
     },
   ];
 
-  const handleAnswerSelect = async(questionId, answerId) => {
+  const handleAnswerSelect = async (questionId, answerId) => {
     await setSelectedAnswers(prevState => ({
       ...prevState,
       [questionId]: answerId,
     }));
-    await console.log(questionIndex)
+    await console.log(questionIndex);
     if (questionIndex === questions.length - 1 && answerId) {
       setTotalScore(calculateScore(questions, selectedAnswers));
       handleResult();
@@ -164,25 +164,38 @@ function EvaluationScreen({navigation, route}) {
     await setTotalScore(0);
     // await navigation.navigate('EvalutionScreen');
   };
+  const handleClose = async () => {
+    await togglePopup();
+    // await handleResult();
+    await setQuestionIndex(0);
+    await setSelectedAnswers({});
+    await setTotalScore(0);
+  };
+
 
   const currentQuestion = questions[questionIndex];
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={styles.EvaluateText}>
-        แบบทดสอบ PHQ-9
-      </Text>
+      <Text style={styles.EvaluateText}>แบบทดสอบ PHQ-9</Text>
       <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
         <Text style={styles.textStart}>Start</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
         {!resultVisible && (
           <View key={currentQuestion.id}>
-            <Text style={styles.IndexNumber}>{currentQuestion.id}/{questions.length}</Text>
+            <View  style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={styles.IndexNumber}>
+                {currentQuestion.id}/{questions.length}
+              </Text>
+              <Text style={styles.ExitButton} onPress={()=>handleClose()}>
+                x
+              </Text>
+            </View>
             <Text style={styles.textQuestion}>{currentQuestion.question}</Text>
             {currentQuestion.answers.map(answer => (
               <TouchableOpacity
-              style = {styles.buttonAnswer}
+                style={styles.buttonAnswer}
                 key={answer.id}
                 onPress={() =>
                   handleAnswerSelect(currentQuestion.id, answer.id)
@@ -192,7 +205,7 @@ function EvaluationScreen({navigation, route}) {
             ))}
             {questionIndex > 0 && (
               <TouchableOpacity style={styles.buttonBack} onPress={handleBack}>
-                <Text style={{color:'white'}}>Back</Text>
+                <Text style={{color: 'white'}}>Back</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -200,12 +213,16 @@ function EvaluationScreen({navigation, route}) {
 
         {resultVisible && (
           <View style={styles.container}>
-          <Text style={styles.header}>Results</Text>
-          <Text style={styles.score}>Your score on the PHQ-9 Depression test was: {totalScore}</Text> 
-          <TouchableOpacity style={styles.buttonHome} onPress={handleBackPress}>
-            <Text style={styles.buttonText}>Back to Home</Text>
-          </TouchableOpacity>
-        </View>
+            <Text style={styles.header}>Results</Text>
+            <Text style={styles.score}>
+              Your score on the PHQ-9 Depression test was: {totalScore}
+            </Text>
+            <TouchableOpacity
+              style={styles.buttonHome}
+              onPress={handleBackPress}>
+              <Text style={styles.buttonText}>Back to Home</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </Modal>
     </View>
@@ -213,9 +230,9 @@ function EvaluationScreen({navigation, route}) {
 }
 
 const styles = StyleSheet.create({
-  textQuestion:{
-    marginVertical:20,
-    marginLeft:15
+  textQuestion: {
+    marginVertical: 20,
+    marginLeft: 15,
   },
   container: {
     flex: 1,
@@ -228,8 +245,8 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 6,
     // paddingBottom:10,
-    marginHorizontal:18,
-    borderRadius:8,
+    marginHorizontal: 18,
+    borderRadius: 8,
   },
   buttonBack: {
     alignItems: 'center',
@@ -237,8 +254,8 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 16,
     // paddingBottom:10,
-    marginHorizontal:18,
-    borderRadius:8,
+    marginHorizontal: 18,
+    borderRadius: 8,
   },
   countContainer: {
     alignItems: 'center',
@@ -252,43 +269,51 @@ const styles = StyleSheet.create({
   score: {
     fontSize: 16,
     marginBottom: 20,
-    marginHorizontal:12,
-    textAlign:'center',
+    marginHorizontal: 12,
+    textAlign: 'center',
   },
-  textStart:{
-    color:'white',
-    fontWeight:'bold',
-    letterSpacing:1.1
+  textStart: {
+    color: 'white',
+    fontWeight: 'bold',
+    letterSpacing: 1.1,
   },
   buttonStart: {
     backgroundColor: '#008CBA',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    paddingBottom:10
+    paddingBottom: 10,
   },
   buttonHome: {
     backgroundColor: '#008CBA',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    paddingTop:10
+    paddingTop: 10,
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  EvaluateText:{
-    paddingHorizontal:30,
-    paddingBottom:15,
-    textAlign:'center'
+  EvaluateText: {
+    paddingHorizontal: 30,
+    paddingBottom: 15,
+    textAlign: 'center',
   },
-  IndexNumber:{
-    marginLeft:15,
-    paddingBottom:0,
-    paddingTop:20,
-    textAlign:'left'
+  IndexNumber: {
+    marginLeft: 15,
+    paddingBottom: 0,
+    paddingTop: 20,
+    textAlign: 'left',
+
+  },
+  ExitButton: {
+    marginRight: 15,
+    paddingBottom: 0,
+    paddingTop: 20,
+    textAlign: 'left',
+
   },
 });
 
