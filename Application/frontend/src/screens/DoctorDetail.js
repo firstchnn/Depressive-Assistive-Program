@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker'
+// import CalendarPicker from 'react-native-calendar-picker';
 
 function DoctorDetail({navigation, route}) {
   const [count, setCount] = useState(0);
@@ -53,14 +54,15 @@ function DoctorDetail({navigation, route}) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.countContainer}>
+      <View style={styles.countContainer_out}>
         {data !== null ? (
           <View style={styles.countContainer}>
-            <Text>{data.name}</Text>
-            <Text>{data.tel}</Text>
-            <Text>{data.workplace}</Text>
-            <Text>{data.expertise}</Text>
-            <Text>{data.ovr_rating}</Text>
+            <Text style={{alignSelf:'center',fontWeight:'bold',fontSize:24}}>{data.name}</Text>
+            <Text style={{alignSelf:'center',fontWeight:'regular',fontSize:16}}>{data.expertise}</Text>
+            <Text>Tel: {data.tel}</Text>
+            <Text>workplace: {data.workplace}</Text>
+            
+            <Text>Rating: {data.ovr_rating}</Text>
             <Text>{data.consultantNumber}</Text>
           </View>
         ) : (
@@ -80,8 +82,8 @@ function DoctorDetail({navigation, route}) {
           setOpen(false)
         }}
       />
-      <TouchableOpacity style={styles.button} onPress={() => setOpen(true)}>
-        <Text>Make Appointment</Text>
+      <TouchableOpacity style={styles.button_Appointment} onPress={() => setOpen(true)}>
+        <Text style={{fontWeight:'bold'}}>นัดหมาย</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -127,15 +129,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
+  button_Appointment: {
+    alignItems: 'center',
+    backgroundColor: '#82E7C9',
+    padding: 10,
+    marginBottom: '6%',
+    borderRadius:8,
+    width:180,
+    alignSelf:'center',
+  },
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
     marginBottom: '6%',
   },
-  countContainer: {
-    alignItems: 'center',
+  countContainer_out: {
+    alignItems: 'flex-start',
     padding: 10,
+    borderColor:'black',
+    borderWidth:1.5,
+    borderRadius:8,
+    marginBottom:24
+  },
+  countContainer: {
+    alignItems: 'flex-start',
+    padding: 10,
+    borderColor:'black',
+    // borderWidth:1,
+    
   },
 });
 

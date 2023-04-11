@@ -133,7 +133,8 @@ function EvaluationScreen({navigation, route}) {
     },
     {
       id: 10,
-      question: 'แบบทดสอบ PHQ-9 นี้ เป็นเพียงการประเมินระดับภาวะซึมเศร้าในขั้นต้นเท่านั้น',
+      question:
+        'แบบทดสอบ PHQ-9 นี้ เป็นเพียงการประเมินระดับภาวะซึมเศร้าในขั้นต้นเท่านั้น',
       answers: [{id: 1, text: 'รับทราบ', score: 0}],
     },
   ];
@@ -172,7 +173,6 @@ function EvaluationScreen({navigation, route}) {
     await setTotalScore(0);
   };
 
-
   const currentQuestion = questions[questionIndex];
 
   return (
@@ -184,11 +184,16 @@ function EvaluationScreen({navigation, route}) {
       <Modal visible={popupVisible} animationType="slide">
         {!resultVisible && (
           <View key={currentQuestion.id}>
-            <View  style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
               <Text style={styles.IndexNumber}>
                 {currentQuestion.id}/{questions.length}
               </Text>
-              <Text style={styles.ExitButton} onPress={()=>handleClose()}>
+              <Text style={styles.ExitButton} onPress={() => handleClose()}>
                 x
               </Text>
             </View>
@@ -214,9 +219,39 @@ function EvaluationScreen({navigation, route}) {
         {resultVisible && (
           <View style={styles.container}>
             <Text style={styles.header}>Results</Text>
-            <Text style={styles.score}>
+            {/* <Text style={styles.score}>
               Your score on the PHQ-9 Depression test was: {totalScore}
-            </Text>
+            </Text> */}
+            {totalScore >= 0 && totalScore <= 4 && (
+              <Text style={styles.score}>
+                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
+                Normal 
+              </Text>
+            )}
+            {totalScore >= 5 && totalScore <= 9 && (
+              <Text style={styles.score}>
+                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
+                Mild มีความผิดปกติ แต่ยังไม่มีภาวะซึมเศร้า
+              </Text>
+            )}
+            {totalScore >= 10 && totalScore <= 14 && (
+              <Text style={styles.score}>
+                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
+                Moderate มีภาวะซึมเศร้าเล็กน้อย
+              </Text>
+            )}
+            {totalScore >= 15 && totalScore <= 19 && (
+              <Text style={styles.score}>
+                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
+                Morderate to severe มีภาวะซึมเศร้าปานกลาง
+              </Text>
+            )}
+            {totalScore >= 20 && (
+              <Text style={styles.score}>
+                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
+                Severe มีภาวะซึมเศร้ารุนแรง
+              </Text>
+            )}
             <TouchableOpacity
               style={styles.buttonHome}
               onPress={handleBackPress}>
@@ -306,14 +341,12 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     paddingTop: 20,
     textAlign: 'left',
-
   },
   ExitButton: {
     marginRight: 15,
     paddingBottom: 0,
     paddingTop: 20,
     textAlign: 'left',
-
   },
 });
 
