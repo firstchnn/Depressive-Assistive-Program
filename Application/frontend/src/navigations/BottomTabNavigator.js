@@ -39,12 +39,6 @@ function BottomTabNavigator({route, navigation}) {
             />
           ),
         }}
-        initialParams={{
-          displayName: route.params.displayName,
-          email: route.params.email,
-          photo: route.params.photoURL,
-          uid: route.params.uid,
-        }}
       />
       <Tab.Screen 
       name="DoctorList" 

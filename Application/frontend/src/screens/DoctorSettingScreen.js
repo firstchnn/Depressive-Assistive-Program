@@ -5,10 +5,11 @@ import {UserContext} from '../components/UserContext';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
 
-function SettingScreen({navigation}) {
+function DoctorSettingScreen({navigation}) {
   const nav = useNavigation();
   const {userData, setUserData} = React.useContext(UserContext);
   const [singleUser, setSingleUser] = useState({});
+  const [singleDoc, setSingleDoc] = useState({});
 
   function encodeEmail(email) {
     const encodedEmail = email.replace(/[@.]/g, match => {
@@ -23,7 +24,7 @@ function SettingScreen({navigation}) {
     });
     return encodedEmail;
   }
-  const fetchData = async () => {
+  const fetchUserData = async () => {
     let email = encodeEmail(userData.email);
     try {
       const response = await fetch(
@@ -36,9 +37,23 @@ function SettingScreen({navigation}) {
       console.error(error);
     }
   };
+  const fetchDoctorData = async () => {
+    let email = encodeEmail(userData.email);
+    try {
+      const response = await fetch(
+        `https://ce22.onrender.com/singleDoc/${email}`,
+      );
+      const json = await response.json();
+      setSingleDoc(json);
+      console.log(json);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    fetchData();
+    fetchUserData();
+    // fetchDoctorData();
   }, []);
 
   const handleLogout = async () => {
@@ -53,23 +68,18 @@ function SettingScreen({navigation}) {
     <View style={styles.container}>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
-        <TouchableOpacity style={styles.option} onPress={fetchData}>
-          <Text style={styles.optionText}>Edit Profile</Text>
+        <TouchableOpacity style={styles.option} onPress={() => nav.navigate('SetTimeScreen')}>
+          <Text style={styles.optionText}>Appointment Setting</Text>
         </TouchableOpacity>
         {singleUser == null && (
           <TouchableOpacity style={styles.option}>
             <Text style={styles.optionText}>Loading...</Text>
           </TouchableOpacity>
         )}
-        {singleUser != null && singleUser.role !== 'doctor' && (
-          <TouchableOpacity style={styles.option}>
-            <Text style={styles.optionText}>Request Professional Account</Text>
-          </TouchableOpacity>
-        )}
         {singleUser != null && singleUser.role === 'doctor' && (
-          <TouchableOpacity style={styles.option} onPress={() => nav.navigate('DocNav')}>
+          <TouchableOpacity style={styles.option} onPress={() => nav.navigate('BottomNav')}>
             <Text style={styles.optionText}>
-              Switch to Professional Account
+              Switch to Normal Account
             </Text>
           </TouchableOpacity>
         )}
@@ -139,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingScreen;
+export default DoctorSettingScreen;

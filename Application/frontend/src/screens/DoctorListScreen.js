@@ -40,15 +40,7 @@ function DoctorListScreen({navigation, route}) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Doctor List Screen</Text>
-      {/* <TouchableOpacity
-              style={{borderRadius: 5, backgroundColor: '#A3E4D7', padding: 10}}
-              onPress={fetchData}>
-              <Text style={{fontWeight: 'bold', fontFamily: 'sans-serif'}}>
-                Fetch Data
-              </Text>
-            </TouchableOpacity> */}
-    
+      <Text>Doctor List Screen</Text>    
             {isLoading ? (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

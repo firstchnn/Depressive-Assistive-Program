@@ -8,6 +8,8 @@ import VideoCall from '../screens/VideoCall';
 import ScoreScreen from '../screens/ScoreScreen';
 import HomeScreen from '../screens/HomeScreen';
 import PaymentScreen from '../screens/PaymentScreen';
+import DoctorNav from './DoctorNav';
+import SetTimeScreen from '../screens/SetTimeScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,12 +23,18 @@ function AuthNavigator() {
         component={BottomTabNavigator}
         options={{headerShown: false}}
         />
+        <Stack.Screen 
+        name="DocNav" 
+        component={DoctorNav}
+        options={{headerShown: false}}
+        />
         <Stack.Screen name="DoctorDetail" component={DoctorDetail}/>
         <Stack.Screen name="UserChat" component={UserChatScreen}/>
         <Stack.Screen name="VideoCall" component={VideoCall}/>
         <Stack.Screen name="ScoreScreen" component={ScoreScreen}/>
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
         <Stack.Screen name="PaymentScreen" component={PaymentScreen}/>
+        <Stack.Screen name="SetTimeScreen" component={SetTimeScreen}/>
     </Stack.Navigator>
   )
 }

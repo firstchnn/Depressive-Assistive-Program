@@ -3,6 +3,66 @@ import {StyleSheet, View, Text, Button} from 'react-native';
 import {RTCView, mediaDevices} from 'react-native-webrtc';
 import {useNavigation} from '@react-navigation/native';
 
+function VideoCall(){
+  const nav = useNavigation();
+  const [localStream, setLocalStream] = useState(null);
+  const [remoteStream, setRemoteStream] = useState(null);
+  const [isCalling, setIsCalling] = useState(false);
+
+  const startLocalStream = async () => {
+    const stream = await mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
+    setLocalStream(stream);
+    setIsCalling(true);
+  };
+
+  useEffect(() => {
+    startLocalStream();
+  }, []);
+
+  const handleHangUp = () => {
+    setIsCalling(false);
+    localStream?.getTracks().forEach(track => track.stop());
+    remoteStream?.getTracks().forEach(track => track.stop());
+    nav.navigate('MainChat');
+  };
+
+  return (
+    <View style={styles.container}>
+      {remoteStream && (
+        <RTCView
+          style={styles.rtcView}
+          streamURL={remoteStream.toURL()}
+          mirror={false}
+          objectFit={'cover'}
+        />
+      )}
+      <View>
+      <Text>Calling...</Text>
+      </View>
+      {localStream && (
+        <View style={styles.localView}>
+          <RTCView
+            style={styles.rtcViewLocal}
+            streamURL={localStream.toURL()}
+            mirror={true}
+            objectFit={'cover'}
+          />
+        </View>
+      )}
+      <View style={styles.buttonContainer}>
+        {isCalling && (
+          <View style={styles.button}>
+            <Button title="Hang Up" onPress={handleHangUp} />
+          </View>
+        )}
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -66,65 +126,5 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
-
-const VideoCall = () => {
-  const nav = useNavigation();
-  const [localStream, setLocalStream] = useState(null);
-  const [remoteStream, setRemoteStream] = useState(null);
-  const [isCalling, setIsCalling] = useState(false);
-
-  const startLocalStream = async () => {
-    const stream = await mediaDevices.getUserMedia({
-      audio: true,
-      video: true,
-    });
-    setLocalStream(stream);
-    setIsCalling(true);
-  };
-
-  useEffect(() => {
-    startLocalStream();
-  }, []);
-
-  const handleHangUp = () => {
-    setIsCalling(false);
-    localStream?.getTracks().forEach(track => track.stop());
-    remoteStream?.getTracks().forEach(track => track.stop());
-    nav.navigate('MainChat');
-  };
-
-  return (
-    <View style={styles.container}>
-      {remoteStream && (
-        <RTCView
-          style={styles.rtcView}
-          streamURL={remoteStream.toURL()}
-          mirror={false}
-          objectFit={'cover'}
-        />
-      )}
-      <View>
-      <Text>Calling...</Text>
-      </View>
-      {localStream && (
-        <View style={styles.localView}>
-          <RTCView
-            style={styles.rtcViewLocal}
-            streamURL={localStream.toURL()}
-            mirror={true}
-            objectFit={'cover'}
-          />
-        </View>
-      )}
-      <View style={styles.buttonContainer}>
-        {isCalling && (
-          <View style={styles.button}>
-            <Button title="Hang Up" onPress={handleHangUp} />
-          </View>
-        )}
-      </View>
-    </View>
-  );
-};
 
 export default VideoCall;

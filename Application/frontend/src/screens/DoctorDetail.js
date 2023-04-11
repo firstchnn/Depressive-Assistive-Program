@@ -7,13 +7,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import DatePicker from 'react-native-date-picker'
 
 function DoctorDetail({navigation, route}) {
-  // const DoctorDetail1 = () => {
   const [count, setCount] = useState(0);
   const [doctorID, setDoctorID] = useState({});
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
+
 
   const [popupVisible, setPopupVisible] = useState(false);
   const togglePopup = () => {
@@ -22,8 +25,9 @@ function DoctorDetail({navigation, route}) {
   const paymentContinue = () => {
     setPopupVisible(!popupVisible);
     navigation.navigate('PaymentScreen');
-  }
-  // const onPress = () => setCount(prevCount => prevCount + 1);
+  };
+  const [chosenDate, setChosenDate] = useState(new Date());
+
   const showData = () => {
     console.log(data._id);
   };
@@ -44,19 +48,12 @@ function DoctorDetail({navigation, route}) {
     setIsLoading(false);
   };
   useEffect(() => {
-    // setDoctorID(route.params);
-    // console.log(route.params);
     fetchData();
   }, []);
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.container}>
-        <Text>{doctorID.id}</Text>
-      </View> */}
       <View style={styles.countContainer}>
-        {/* <Text>This is doctor detail pages</Text> */}
-        {/* <Text>Count: {count}</Text> */}
         {data !== null ? (
           <View style={styles.countContainer}>
             <Text>{data.name}</Text>
@@ -70,9 +67,21 @@ function DoctorDetail({navigation, route}) {
           <Text>Loading...</Text>
         )}
       </View>
-      <TouchableOpacity style={styles.button} 
-      onPress={togglePopup}>
-        <Text>Make Apppoinment</Text>
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+          paymentContinue();
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
+      <TouchableOpacity style={styles.button} onPress={() => setOpen(true)}>
+        <Text>Make Appointment</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -80,8 +89,26 @@ function DoctorDetail({navigation, route}) {
         <Text>Go Back</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding:10}}>
-          <Text style={{marginBottom:'6%'}}>Choose appointment time</Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 10,
+          }}>
+          <Text style={{marginBottom: '6%'}}>Choose appointment time</Text>
+          {/* <DatePicker
+            style={{width: 200}}
+            date={appointmentDate}
+            mode="date"
+            placeholder="select date"
+            format="YYYY-MM-DD"
+            minDate={new Date()}
+            maxDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)} // 7 days from now
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            onDateChange={date => setAppointmentDate(date)}
+          /> */}
           <TouchableOpacity style={styles.button} onPress={paymentContinue}>
             <Text>Continue</Text>
           </TouchableOpacity>
@@ -91,10 +118,6 @@ function DoctorDetail({navigation, route}) {
         </View>
       </Modal>
     </View>
-
-    // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    //   <Text>Doctor List Screen</Text>
-    // </View>
   );
 }
 

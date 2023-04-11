@@ -7,21 +7,52 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg';
+import Omise from 'omise-react-native';
 
 function PaymentScreen({navigation}) {
   const nav = useNavigation();
+  const [qrCodeData, setQrCodeData] = useState('');
+  const promptPayId = '1234567890123'; // PromptPay ID
+  const amount = '500'; // Amount to be paid
 
+  async function omiseSetup() {
+    await Omise.config('pkey_test_5v7e32m5mhrxedjbtf2', '2019-05-29');
+    const source = await Omise.createSource({
+      type: 'promptpay',
+      amount: amount,
+      currency: 'thb',
+    });
+    console.log(source);
+    const sourceId = source.id;
+    console.log(sourceId)
+    // console.log(amount.toFixed(2));
+    const qrCodeText = `00020101021129370016A000000677010111${promptPayId}0126${amount}5802TH5303764${sourceId}304`;
+    setQrCodeData(qrCodeText);
+  }
+  useEffect(() => {
+    omiseSetup();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.countContainer}>
         <Text>Payment</Text>
       </View>
+      <View style={styles.countContainer}>
+      {qrCodeData ? (
+        <QRCode value={qrCodeData} />
+      ) : (
+        <Text style={styles.loadingText}>Loading QR code...</Text>
+      )}
+      </View>
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.goBack()}>
-        <Text>Pay</Text>
+        <Text>Continue</Text>
       </TouchableOpacity>
     </View>
   );

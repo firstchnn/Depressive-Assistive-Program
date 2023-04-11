@@ -7,23 +7,23 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-// import MySvgIcon from '../components/SVGIcon';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {MaterialIcons} from 'react-native-vector-icons/MaterialIcons';
-import {Icon} from 'react-native-vector-icons/FontAwesome';
-import axios from 'axios';
-// import { MdGoogle } from "react-icons/md";
-// import { FaFacebook } from 'react-icons/fa';
+import { UserContext } from '../components/UserContext';
 
 const LoginScreen = ({navigation}) => {
-  const [userData, setUserData] = useState();
+  const { userData, setUserData } = React.useContext(UserContext);
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
         '243886581222-u51vuh9dkq8c39hru7qh4v12detq1q29.apps.googleusercontent.com',
     });
   }, []);
+  // useEffect(() => {
+  //   if(userData !== null){
+  //     nav.navigate('BottomNav');
+  //   }
+  // }, []);
 
   const googleSignIn = async () => {
     try {
@@ -151,15 +151,8 @@ const LoginScreen = ({navigation}) => {
         justifyContent: 'center',
         backgroundColor: '#E5EFE9',
       }}>
-      {/* ----------------------------Icon SVG------------------- */}
-      {/* <View>
-        <MySvgIcon width={50} height={50} color="fill" />
-      </View> */}
-      {/* ----------------------------Icon SVG------------------- */}
       <Text style={{paddingBottom: 20}}>Login Screen</Text>
-      {/* <TouchableOpacity/> */}
       <View style={{paddingBottom: 20}}></View>
-
       <TouchableOpacity
         style={styles.buttonGoogle}
         onPress={() =>
@@ -168,36 +161,6 @@ const LoginScreen = ({navigation}) => {
               const userData = res.user;
               setUserData(userData);
               postUser(userData);
-              // try {
-              //   const response = await fetch(
-              //     'https://ce22.onrender.com/users',
-              //     {
-              //       method: 'POST',
-              //       headers: {
-              //         'Content-Type': 'application/json',
-              //       },
-              //       body: JSON.stringify({
-              //         displayName: userData.displayName,
-              //         email: userData.email,
-              //         emailVerified: userData.emailVerified,
-              //         metadata: userData.metadata,
-              //         phoneNumber: userData.phoneNumber,
-              //         photoURL: userData.photoURL,
-              //         uid: userData.uid,
-              //       }),
-              //     },
-              //   );
-
-              //   if (response.ok) {
-              //     console.log('User data posted to server');
-              //     successLogin(userData);
-              //   } else {
-              //     const data = await response.json();
-              //     console.log('Failed to post user data to server:', data);
-              //   }
-              // } catch (error) {
-              //   console.error('Error posting user data to server:', error);
-              // }
             })
             .catch(error => {
               console.log(error);

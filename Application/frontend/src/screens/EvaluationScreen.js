@@ -133,8 +133,8 @@ function EvaluationScreen({navigation, route}) {
     },
     {
       id: 10,
-      question: 'lazy stuff',
-      answers: [{id: 1, text: 'ยืนยัน', score: 0}],
+      question: 'แบบทดสอบ PHQ-9 นี้ เป็นเพียงการประเมินระดับภาวะซึมเศร้าในขั้นต้นเท่านั้น',
+      answers: [{id: 1, text: 'รับทราบ', score: 0}],
     },
   ];
 
