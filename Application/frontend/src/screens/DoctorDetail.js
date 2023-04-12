@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker';
 // import CalendarPicker from 'react-native-calendar-picker';
 
 function DoctorDetail({navigation, route}) {
@@ -15,9 +15,8 @@ function DoctorDetail({navigation, route}) {
   const [doctorID, setDoctorID] = useState({});
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false)
-
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
 
   const [popupVisible, setPopupVisible] = useState(false);
   const togglePopup = () => {
@@ -57,13 +56,25 @@ function DoctorDetail({navigation, route}) {
       <View style={styles.countContainer_out}>
         {data !== null ? (
           <View style={styles.countContainer}>
-            <Text style={{alignSelf:'center',fontWeight:'bold',fontSize:24}}>{data.name}</Text>
-            <Text style={{alignSelf:'center',fontWeight:'regular',fontSize:16}}>{data.expertise}</Text>
-            <Text>Tel: {data.tel}</Text>
+            <Text
+              style={{alignSelf: 'center', fontWeight: 'bold', fontSize: 24}}>
+              {data.name.length > 20
+                ? data.name.substring(0, 20) + '...'
+                : data.name}
+            </Text>
+            <Text
+              style={{
+                alignSelf: 'center',
+                fontWeight: 'regular',
+                fontSize: 16,
+              }}>
+              {data.expertise}
+            </Text>
+            {/* <Text>Tel: {data.tel}</Text> */}
             <Text>workplace: {data.workplace}</Text>
-            
+            {/* <Text></Text> */}
             <Text>Rating: {data.ovr_rating}</Text>
-            <Text>{data.consultantNumber}</Text>
+            <Text>consultant: {data.consultantNumber}</Text>
           </View>
         ) : (
           <Text>Loading...</Text>
@@ -73,17 +84,19 @@ function DoctorDetail({navigation, route}) {
         modal
         open={open}
         date={date}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
+        onConfirm={date => {
+          setOpen(false);
+          setDate(date);
           paymentContinue();
         }}
         onCancel={() => {
-          setOpen(false)
+          setOpen(false);
         }}
       />
-      <TouchableOpacity style={styles.button_Appointment} onPress={() => setOpen(true)}>
-        <Text style={{fontWeight:'bold'}}>นัดหมาย</Text>
+      <TouchableOpacity
+        style={styles.button_Appointment}
+        onPress={() => setOpen(true)}>
+        <Text style={{fontWeight: 'bold'}}>นัดหมาย</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -134,9 +147,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#82E7C9',
     padding: 10,
     marginBottom: '6%',
-    borderRadius:8,
-    width:180,
-    alignSelf:'center',
+    borderRadius: 8,
+    width: 180,
+    alignSelf: 'center',
   },
   button: {
     alignItems: 'center',
@@ -147,17 +160,20 @@ const styles = StyleSheet.create({
   countContainer_out: {
     alignItems: 'flex-start',
     padding: 10,
-    borderColor:'black',
-    borderWidth:1.5,
-    borderRadius:8,
-    marginBottom:24
+    borderColor: 'black',
+    // borderWidth:1.5,
+    borderRadius: 8,
+    marginBottom: 24,
   },
   countContainer: {
     alignItems: 'flex-start',
     padding: 10,
-    borderColor:'black',
-    // borderWidth:1,
-    
+    borderColor: 'black',
+    borderWidth: 1.5,
+    borderRadius: 8,
+    alignSelf: 'center',
+    padding: 16,
+    width: '100%',
   },
 });
 

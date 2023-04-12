@@ -29,7 +29,10 @@ function AuthNavigator() {
         options={{headerShown: false}}
         />
         <Stack.Screen name="DoctorDetail" component={DoctorDetail}/>
-        <Stack.Screen name="UserChat" component={UserChatScreen}/>
+        <Stack.Screen name="UserChat" component={UserChatScreen} 
+        options={{headerShown: false}}
+        // options={{headerBackTitle:"Back"}}
+        />
         <Stack.Screen name="VideoCall" component={VideoCall}/>
         <Stack.Screen name="ScoreScreen" component={ScoreScreen}/>
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>

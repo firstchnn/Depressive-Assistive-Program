@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
+  Image,
   // ProgressBarAndroid,
 } from 'react-native';
 
@@ -176,7 +177,11 @@ function EvaluationScreen({navigation, route}) {
   const currentQuestion = questions[questionIndex];
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'#ccd2ff',}}>
+      {/* <View > */}
+      <Image style={styles.SurveyPic} resizeMode='contain'
+        source={require('../asset/Survey.png')}></Image>
+        {/* </View> */}
       <Text style={styles.EvaluateText}>แบบทดสอบ PHQ-9</Text>
       <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
         <Text style={styles.textStart}>Start</Text>
@@ -224,14 +229,13 @@ function EvaluationScreen({navigation, route}) {
             </Text> */}
             {totalScore >= 0 && totalScore <= 4 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Normal 
+                Your score on the PHQ-9 Depression test was: {totalScore} Normal
               </Text>
             )}
             {totalScore >= 5 && totalScore <= 9 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Mild มีความผิดปกติ แต่ยังไม่มีภาวะซึมเศร้า
+                Your score on the PHQ-9 Depression test was: {totalScore} Mild
+                มีความผิดปกติ แต่ยังไม่มีภาวะซึมเศร้า
               </Text>
             )}
             {totalScore >= 10 && totalScore <= 14 && (
@@ -248,8 +252,8 @@ function EvaluationScreen({navigation, route}) {
             )}
             {totalScore >= 20 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Severe มีภาวะซึมเศร้ารุนแรง
+                Your score on the PHQ-9 Depression test was: {totalScore} Severe
+                มีภาวะซึมเศร้ารุนแรง
               </Text>
             )}
             <TouchableOpacity
@@ -296,6 +300,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
+  SurveyPic: {
+    // max-width: 100%,
+    // display:'flex',
+    Width:'50%',
+    height:'50%',
+    // borderWidth:1,
+    alignContent:'center',
+  },
+
   header: {
     fontSize: 24,
     fontWeight: 'bold',

@@ -1,8 +1,17 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, TextInput, Text, Button, FlatList} from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  Button,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from 'react-native';
 import io from 'socket.io-client';
 
-function UserChatScreen({navigation,route}) {
+function UserChatScreen({navigation, route}) {
   const role = route.params.role;
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -24,17 +33,17 @@ function UserChatScreen({navigation,route}) {
 
   useEffect(() => {
     if (socket) {
-      socket.on('chat message', (response) => {
-        if(response.role !== role)
-        setMessages(prevMessages => [
-          ...prevMessages,
-          {text: response.message, fromSender: false},
-        ]);
+      socket.on('chat message', response => {
+        if (response.role !== role)
+          setMessages(prevMessages => [
+            ...prevMessages,
+            {text: response.message, fromSender: false},
+          ]);
       });
     }
   }, [socket]);
 
-  const handleSend = (role) => {
+  const handleSend = role => {
     setMessages(prevMessages => [
       ...prevMessages,
       {text: newMessage, fromSender: true, role},
@@ -49,9 +58,15 @@ function UserChatScreen({navigation,route}) {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View>
-        <Text>{role}</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.Back_BTN}>
+        <Image
+          source={require('../asset/BackBTN.png')}
+          style={styles.Back_Icon}></Image>
+        <Text style={{fontSize: 16, alignItems: 'center'}}>Back</Text>
+      </TouchableOpacity>
+      <View>{/* <Text>{role}</Text> */}</View>
       <FlatList
         ref={flatListRef}
         data={messages}
@@ -80,5 +95,21 @@ function UserChatScreen({navigation,route}) {
     </View>
   );
 }
+const styles = StyleSheet.create({
 
+  Back_BTN:{
+    flexDirection: 'row',
+    // borderWidth: 1,
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  Back_Icon: {
+    // backgroundColor:'green',
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+    marginTop: 0,
+    marginHorizontal: 10,
+  },
+});
 export default UserChatScreen;
