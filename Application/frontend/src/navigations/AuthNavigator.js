@@ -28,7 +28,7 @@ function AuthNavigator() {
         component={DoctorNav}
         options={{headerShown: false}}
         />
-        <Stack.Screen name="DoctorDetail" component={DoctorDetail}/>
+        <Stack.Screen name="DoctorDetail" component={DoctorDetail} options={{headerShown: false}}/>
         <Stack.Screen name="UserChat" component={UserChatScreen} 
         options={{headerShown: false}}
         // options={{headerBackTitle:"Back"}}

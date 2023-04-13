@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     alignItems: 'center',
     marginVertical: 10,
+    marginTop:15,
   },
   Back_Icon: {
     // backgroundColor:'green',

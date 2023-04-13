@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 // import CalendarPicker from 'react-native-calendar-picker';
@@ -53,6 +54,14 @@ function DoctorDetail({navigation, route}) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.Back_BTN}>
+        <Image
+          source={require('../asset/BackBTN.png')}
+          style={styles.Back_Icon}></Image>
+        <Text style={{fontSize: 16, alignItems: 'center'}}>Back</Text>
+      </TouchableOpacity>
       <View style={styles.countContainer_out}>
         {data !== null ? (
           <View style={styles.countContainer}>
@@ -98,11 +107,11 @@ function DoctorDetail({navigation, route}) {
         onPress={() => setOpen(true)}>
         <Text style={{fontWeight: 'bold'}}>นัดหมาย</Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.goBack()}>
         <Text>Go Back</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <Modal visible={popupVisible} animationType="slide">
         <View
           style={{
@@ -139,8 +148,27 @@ function DoctorDetail({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     paddingHorizontal: 10,
+    // borderWidth:2,
+    // borderColor:'red'
+  },
+  Back_BTN:{
+    flexDirection: 'row',
+    // borderWidth: 1,
+    alignItems: 'center',
+    marginVertical: 10,
+    marginTop:15,
+    marginBottom:150
+    
+  },
+  Back_Icon: {
+    // backgroundColor:'green',
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+    marginTop: 0,
+    marginHorizontal: 10,
   },
   button_Appointment: {
     alignItems: 'center',
@@ -158,6 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: '6%',
   },
   countContainer_out: {
+    
     alignItems: 'flex-start',
     padding: 10,
     borderColor: 'black',
