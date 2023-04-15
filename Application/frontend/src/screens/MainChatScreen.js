@@ -68,6 +68,8 @@ function MainChatScreen({navigation}) {
             marginBottom: 30,
             paddingStart: 50,
             paddingEnd: 50,
+            fontSize:18,
+            fontFamily:'Kanit-Regular'
           }}>
           {currentTextSet}
         </Text>
@@ -94,6 +96,7 @@ function MainChatScreen({navigation}) {
               alignSelf: 'center',
               textAlign:'center',
               marginBottom:80,
+              fontFamily:'Kanit-Regular'
             }}>
             ฉันมีเรื่องที่ {'\n'}อยากจะระบาย
           </Text>
@@ -109,8 +112,8 @@ function MainChatScreen({navigation}) {
             onPress={() => nav.navigate('UserChat', {role: 'Speaker'})}>
             <Text
               style={{
-                fontWeight: 'bold',
-                fontFamily: 'sans-serif',
+                // fontWeight: 'bold',
+                fontFamily: 'Kanit-Bold',
                 color: '#242424',
               }}>
               ระบาย
@@ -125,6 +128,7 @@ function MainChatScreen({navigation}) {
             style={{
               alignSelf: 'center',
               textAlign:'center',
+              fontFamily: 'Kanit-Regular',
               marginBottom:80,
             }}>
             ฉันพร้อม{'\n'}ที่จะรับฟังผู้อื่น
@@ -145,8 +149,8 @@ function MainChatScreen({navigation}) {
             onPress={() => nav.navigate('UserChat', {role: 'Listener'})}>
             <Text
               style={{
-                fontWeight: 'bold',
-                fontFamily: 'sans-serif',
+                // fontWeight: 'bold',
+                fontFamily: 'Kanit-Bold',
                 color: '#242424',
               }}>
               รับฟัง
