@@ -35,30 +35,32 @@ function HomeScreen({navigation, route}) {
   // const filteredData = data.filtered((item) =>
   //   item.name.toLowerCase().includes(searchText.toLowerCase())
   // );
-  const handleTextChange = (text) => {
+  const handleTextChange = text => {
     setSearchText(text);
     let temp = [];
-    for(let i = 0; i < data.length ; i++){
-      if (data[i].name.includes(text)){
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].name.includes(text)) {
         temp.push(data[i]);
       }
     }
     setCurrData(temp);
-  }
-  const filteredData = data && data.filter((item) =>
-  item.name.toLowerCase().includes(searchText.toLowerCase())
-);
-  const renderItem = ({ item }) => (
+  };
+  const filteredData =
+    data &&
+    data.filter(item =>
+      item.name.toLowerCase().includes(searchText.toLowerCase()),
+    );
+  const renderItem = ({item}) => (
     <View>
       <Text>{item.name}</Text>
     </View>
   );
   const [search, setSearch] = useState('');
-  
+
   const [userData, setUserData] = useState({});
-  const updateSearch = () => {
-    setSearch(search);
-  };
+  // const updateSearch = () => {
+  //   setSearch(search);
+  // };
   const [data, setData] = useState(null);
   const [currData, setCurrData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -136,8 +138,7 @@ function HomeScreen({navigation, route}) {
           style={styles.Text_Input}
           placeholder="ค้นหา"
           onChangeText={text => handleTextChange(text)}
-          value={searchText}>
-        </TextInput>
+          value={searchText}></TextInput>
         <Image
           style={styles.search_Icon}
           source={require('../asset/Search.png')}></Image>
@@ -157,7 +158,6 @@ function HomeScreen({navigation, route}) {
             // borderColor: 'red',
             // borderWidth: 3,
           }}
-          
           onPress={() => navigation.navigate('MainChat')}>
           <Image
             style={{
@@ -198,8 +198,8 @@ function HomeScreen({navigation, route}) {
           <Text
             style={{
               fontSize: 20,
-              fontWeight: 'bold',
-              fontFamily: 'Sarabun, sans-serif',
+              // fontWeight: 'bold',
+              fontFamily:'Kanit-Regular'
             }}>
             ปรึกษาแพทย์
           </Text>
@@ -229,23 +229,6 @@ function HomeScreen({navigation, route}) {
             justifyContent: 'center',
             margin: 20,
           }}>
-          {/* <View style={{flexDirection: 'row'}}> */}
-          {/* <TouchableOpacity
-              style={{borderRadius: 5, backgroundColor: '#A3E4D7', padding: 10}}
-              onPress={fetchData}>
-              <Text style={{fontWeight: 'bold', fontFamily: 'sans-serif'}}>
-                Fetch Data
-              </Text>
-            </TouchableOpacity> */}
-          {/* <TouchableOpacity
-              style={{borderRadius: 5, backgroundColor: '#A3E4D7', padding: 10}}
-              onPress={fetchData}> */}
-          {/* <Text style={{fontWeight: 'bold', fontFamily: 'Gloock-serif'}}> */}
-          {/* <Text style={[GlobalStyle.CustomFont]}> */}
-          {/* Fetch Data */}
-          {/* </Text> */}
-          {/* </TouchableOpacity> */}
-          {/* </View> */}
           {isLoading ? (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

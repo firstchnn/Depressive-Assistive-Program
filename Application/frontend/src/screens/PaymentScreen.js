@@ -18,6 +18,7 @@ function PaymentScreen({navigation}) {
   const [qrCodeData, setQrCodeData] = useState('');
   const promptPayId = '1234567890123'; // PromptPay ID
   const amount = '500'; // Amount to be paid
+  
 
   async function omiseSetup() {
     await Omise.config('pkey_test_5v7e32m5mhrxedjbtf2', '2019-05-29');
@@ -36,8 +37,20 @@ function PaymentScreen({navigation}) {
   useEffect(() => {
     omiseSetup();
   }, []);
+  const Spinner = () => {
+    const [rotationAngle, setRotationAngle] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRotationAngle(angle => angle + 10);
+    }, 50);
+    return () => clearInterval(intervalId);
+  }, []);
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={styles.circle}>
+      
       <View style={styles.countContainer}>
         <Text>Payment</Text>
       </View>
@@ -54,6 +67,13 @@ function PaymentScreen({navigation}) {
         onPress={() => navigation.goBack()}>
         <Text>Continue</Text>
       </TouchableOpacity>
+      <ActivityIndicator
+        size="large"
+        color="#00ff00"
+        style={styles.spinner}
+        animating={true}
+        transform={[{ rotate: '45deg' }]}
+      />
     </View>
   );
 }
@@ -73,6 +93,14 @@ const styles = StyleSheet.create({
   countContainer: {
     alignItems: 'center',
     padding: 10,
+  },
+  circle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner: {
+    transform: [{ rotate: '45deg' }],
   },
 });
 

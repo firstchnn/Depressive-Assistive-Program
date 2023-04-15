@@ -177,11 +177,19 @@ function EvaluationScreen({navigation, route}) {
   const currentQuestion = questions[questionIndex];
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'#ccd2ff',}}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ccd2ff',
+      }}>
       {/* <View > */}
-      <Image style={styles.SurveyPic} resizeMode='contain'
+      <Image
+        style={styles.SurveyPic}
+        resizeMode="contain"
         source={require('../asset/Survey.png')}></Image>
-        {/* </View> */}
+      {/* </View> */}
       <Text style={styles.EvaluateText}>แบบทดสอบ PHQ-9</Text>
       <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
         <Text style={styles.textStart}>Start</Text>
@@ -198,9 +206,14 @@ function EvaluationScreen({navigation, route}) {
               <Text style={styles.IndexNumber}>
                 {currentQuestion.id}/{questions.length}
               </Text>
-              <Text style={styles.ExitButton} onPress={() => handleClose()}>
+              {/* <Text style={styles.ExitButton} onPress={() => handleClose()}>
                 x
-              </Text>
+              </Text> */}
+              <TouchableOpacity onPress={() => handleClose()}>
+              <Image
+            style={styles.ExitButton}
+            source={require('../asset/Close.png')}></Image>
+              </TouchableOpacity>
             </View>
             <Text style={styles.textQuestion}>{currentQuestion.question}</Text>
             {currentQuestion.answers.map(answer => (
@@ -229,30 +242,34 @@ function EvaluationScreen({navigation, route}) {
             </Text> */}
             {totalScore >= 0 && totalScore <= 4 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore} Normal
+                Your score on the PHQ-9 Depression test was: {totalScore} 
+                Normal
               </Text>
             )}
             {totalScore >= 5 && totalScore <= 9 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore} Mild
+                Your score on the PHQ-9 Depression test was: {totalScore} Mild{'\n'}
                 มีความผิดปกติ แต่ยังไม่มีภาวะซึมเศร้า
               </Text>
             )}
             {totalScore >= 10 && totalScore <= 14 && (
               <Text style={styles.score}>
                 Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Moderate มีภาวะซึมเศร้าเล็กน้อย
+                Moderate {'\n'}
+                มีภาวะซึมเศร้าเล็กน้อย
               </Text>
             )}
             {totalScore >= 15 && totalScore <= 19 && (
               <Text style={styles.score}>
                 Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Morderate to severe มีภาวะซึมเศร้าปานกลาง
+                Morderate to severe {'\n'}
+                มีภาวะซึมเศร้าปานกลาง
               </Text>
             )}
             {totalScore >= 20 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore} Severe
+                Your score on the PHQ-9 Depression test was: {totalScore} 
+                Severe {'\n'}
                 มีภาวะซึมเศร้ารุนแรง
               </Text>
             )}
@@ -303,10 +320,10 @@ const styles = StyleSheet.create({
   SurveyPic: {
     // max-width: 100%,
     // display:'flex',
-    Width:'50%',
-    height:'50%',
+    Width: '50%',
+    height: '50%',
     // borderWidth:1,
-    alignContent:'center',
+    alignContent: 'center',
   },
 
   header: {
@@ -356,11 +373,13 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   ExitButton: {
-    marginRight: 15,
-    paddingBottom: 0,
-    paddingTop: 20,
-    textAlign: 'left',
-  },
+    alignSelf: 'center',
+    width: 25,
+    height: 25,
+    marginRight: 20,
+    resizeMode:'contain',
+    marginTop:20,
+  }
 });
 
 export default EvaluationScreen;

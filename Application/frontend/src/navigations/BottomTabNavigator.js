@@ -38,6 +38,7 @@ function BottomTabNavigator({route, navigation}) {
               style={{ width: size, height: size, tintColor: color }} // ตั้งค่าต่างๆตรงนี้ เช่น กว้าง สูง ฯลฯ
             />
           ),
+          headerShown: false // set headerShown to false for the "Home" screen
         }}
       />
       <Tab.Screen 
