@@ -207,6 +207,7 @@ function HomeScreen({navigation, route}) {
             }}>
             ปรึกษาแพทย์
           </Text>
+          
           <View style={{width: '30%'}}></View>
           <TouchableOpacity onPress={() => navigation.navigate('DoctorList')}>
             <Text
@@ -216,16 +217,11 @@ function HomeScreen({navigation, route}) {
                 fontSize: 14,
                 fontFamily:'Kanit-Regular',
               }}
-
-              // onPress={() => navigation.navigate('TestPage')}
             >
               ดูเพิ่มเติม+
             </Text>
           </TouchableOpacity>
         </View>
-        {/* <Switch value={colorScheme==="dark"} onChange={toggleColorScheme}></Switch> */}
-        {/* <Text>Welcome {userData.displayName}</Text>
-        <Text>Email : {userData.email}</Text> */}
 
         <View
           style={{
@@ -246,17 +242,19 @@ function HomeScreen({navigation, route}) {
               renderItem={({item}) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('DoctorDetail', {id: item._id})
+                    navigation.navigate('DoctorDetail', {id: item.name})
                   }>
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
                       {/* <Text>{item._id}</Text> */}
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.name}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.tel}</Text>
+                      <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start'}}>{item.name.length > 15
+                      ? item.name.substr(0, 15) + '...'
+                      : item.name}</Text>
+                      {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.tel}</Text> */}
                       <Text style={{fontFamily:'Kanit-Regular'}}>{item.workplace}</Text>
                       <Text style={{fontFamily:'Kanit-Regular'}}>{item.expertise}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.ovr_rating}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.consultantNumber}</Text>
+                      {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.ovr_rating}</Text> */}
+                      {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.consultantNumber}</Text> */}
                     </View>
                   </CardHome>
                 </TouchableOpacity>

@@ -75,10 +75,21 @@ function UserChatScreen({navigation, route}) {
             style={{
               padding: 10,
               margin: 10,
+              width:'auto',
+              maxWidth:'70%',
               alignSelf: item.fromSender ? 'flex-end' : 'flex-start',
-              backgroundColor: 'lightgray',
+              // backgroundColor: item.fromSender ? '#F0B0C0' : '#9FC5E8',
+              backgroundColor: item.fromSender ? '#9FC5E8' : '#F0B0C0',
+              borderRadius:8,
             }}>
-            <Text>{item.text}</Text>
+            <Text 
+            style={{
+              fontFamily:'Kanit-Regular',
+              fontSize:16,
+              alignItems:item.fromSender ? 'flex-end':'flex-start'
+            }}>
+              {item.text}
+              </Text>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
@@ -90,7 +101,14 @@ function UserChatScreen({navigation, route}) {
           onChangeText={setNewMessage}
           placeholder="Type your message here"
         />
-        <Button title="Send" onPress={() => handleSend(role)} />
+        <TouchableOpacity 
+        style={{backgroundColor:'#82E7C9',paddingVertical:8,paddingHorizontal:12,borderRadius:8,}}
+        onPress={() => handleSend(role)}>
+          <Text style={{fontFamily:'Kanit-Regular'}}>
+            SEND
+          </Text>
+        </TouchableOpacity>
+        {/* <Button title="Send" onPress={() => handleSend(role)} /> */}
       </View>
     </View>
   );
