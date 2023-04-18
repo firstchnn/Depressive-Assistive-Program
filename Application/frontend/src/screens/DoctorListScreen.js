@@ -108,7 +108,7 @@ function DoctorListScreen({navigation, route}) {
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('DoctorDetail', {id: item._id})
+                navigation.navigate('DoctorDetail', {id: item.name})
               }>
               <CardHome>
                 <View style={{flexDirection: 'column'}}>

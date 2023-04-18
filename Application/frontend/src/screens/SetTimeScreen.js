@@ -7,9 +7,12 @@ function SetTimeScreen() {
   const {userData, setUserData} = React.useContext(UserContext);
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const [selectedDays, setSelectedDays] = useState([]);
+  const [currentPrice, setCurrentPrice] = useState(0);
 
   const times = [
     '00,00',
+    '00,30',
+    '01,00',
     '01,30',
     '02,00',
     '03,30',
@@ -44,6 +47,13 @@ function SetTimeScreen() {
     setSelectedTo(itemValue);
   };
 
+  const handleCurrentPrice = value => {
+    setCurrentPrice(currentPrice + value);
+    if (value == 0) {
+      setCurrentPrice(0);
+    }
+  };
+
   const handleDayPress = day => {
     if (selectedDays.includes(day)) {
       // If the selected day is already in the array, remove it
@@ -56,6 +66,10 @@ function SetTimeScreen() {
   };
 
   const isDaySelected = day => selectedDays.includes(day);
+
+  function updateDoctor(){
+    console.log(selectedDays+' - '+selectedFrom+' - '+selectedTo+' - '+currentPrice);
+  }
 
   return (
     <View style={styles.container}>
@@ -114,6 +128,45 @@ function SetTimeScreen() {
           You will be available from {selectedFrom.replace(',', ':')} to{' '}
           {selectedTo.replace(',', ':')}
         </Text>
+      </View>
+      <View>
+        <View style={styles.daysContainer}>
+          <Text>Price : {currentPrice.toString()} THB</Text>
+        </View>
+        <View style={styles.daysContainer}>
+          <TouchableOpacity
+            style={styles.dayButton}
+            onPress={() => handleCurrentPrice(50)}>
+            <Text style={styles.dayText}>+50</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.dayButton}
+            onPress={() => handleCurrentPrice(100)}>
+            <Text style={styles.dayText}>+100</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.dayButton}
+            onPress={() => handleCurrentPrice(200)}>
+            <Text style={styles.dayText}>+200</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.dayButton}
+            onPress={() => handleCurrentPrice(300)}>
+            <Text style={styles.dayText}>+300</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.dayButton}
+            onPress={() => handleCurrentPrice(500)}>
+            <Text style={styles.dayText}>+500</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleCurrentPrice(0)}>
+            <Text>Reset</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 20}}>
         <TouchableOpacity style={styles.button}>

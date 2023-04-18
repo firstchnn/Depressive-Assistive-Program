@@ -1,6 +1,14 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Image,
+  TextInput,
+} from 'react-native';
 import {UserContext} from '../components/UserContext';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
@@ -9,6 +17,13 @@ function SettingScreen({navigation}) {
   const nav = useNavigation();
   const {userData, setUserData} = React.useContext(UserContext);
   const [singleUser, setSingleUser] = useState({});
+  const [popupVisible, setPopupVisible] = useState(false);
+  const togglePopup = () => {
+    setPopupVisible(!popupVisible);
+  };
+  const handleClose = async () => {
+    await togglePopup();
+  };
 
   function encodeEmail(email) {
     const encodedEmail = email.replace(/[@.]/g, match => {
@@ -37,6 +52,58 @@ function SettingScreen({navigation}) {
     }
   };
 
+  const [name, setName] = useState('');
+  const [tel, setTel] = useState('');
+  const [workplace, setWorkplace] = useState('');
+  const [expertise, setExpertise] = useState('');
+  const [license, setLicense] = useState('');
+
+  const postRequest = async () => {
+    if (!name || !tel || !workplace || !expertise || !license) {
+      setError('Please fill out all fields');
+      console.log('ERROR');
+    } else {
+      setError('');
+      await fetch('https://ce22.onrender.com/requests', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          name: name,
+          email: userData.email,
+          tel: tel,
+          workplace: workplace,
+          expertise: expertise,
+        }),
+      })
+        .then(res => {
+          console.log(res.status);
+          console.log(res.headers);
+          console.log('response = ', res);
+          console.log('response body:', res.text());
+          return res.json();
+        })
+        .then(
+          result => {
+            console.log('result = ', result);
+          },
+          error => {
+            console.log('error = ', error);
+          },
+        );
+      await handleClose();
+    }
+  };
+
+  // const [formValid, setFormValid] = useState(false);
+  const [error, setError] = useState('');
+  // const validateForm = () => {
+  //   // if (!name || !tel || !workplace || !expertise) {
+  //   //   setError('Please fill out all fields');
+  //   // } else {
+  //   //   setError('');
+  //   // }
+  // };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -62,12 +129,14 @@ function SettingScreen({navigation}) {
           </TouchableOpacity>
         )}
         {singleUser != null && singleUser.role !== 'doctor' && (
-          <TouchableOpacity style={styles.option}>
+          <TouchableOpacity style={styles.option} onPress={togglePopup}>
             <Text style={styles.optionText}>Request Professional Account</Text>
           </TouchableOpacity>
         )}
         {singleUser != null && singleUser.role === 'doctor' && (
-          <TouchableOpacity style={styles.option} onPress={() => nav.navigate('DocNav')}>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => nav.navigate('DocNav')}>
             <Text style={styles.optionText}>
               Switch to Professional Account
             </Text>
@@ -90,13 +159,80 @@ function SettingScreen({navigation}) {
         <TouchableOpacity style={styles.option}>
           <Text style={styles.optionText}>Report a Problem</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.option} onPress={() => nav.navigate('VideoCall')}>
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => nav.navigate('VideoCall')}>
           <Text style={styles.optionText}>VideoCall</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.option} onPress={handleLogout}>
           <Text style={styles.optionText}>Log Out</Text>
         </TouchableOpacity>
       </View>
+      <Modal visible={popupVisible} animationType="slide">
+        <View>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styles.IndexNumber}>Request</Text>
+            <TouchableOpacity onPress={() => handleClose()}>
+              <Image
+                style={styles.ExitButton}
+                source={require('../asset/Close.png')}></Image>
+            </TouchableOpacity>
+          </View>
+          <View style={{padding: '5%'}}>
+            <Text style={styles.label}>Name</Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              // onBlur={() => validateForm()}
+            />
+
+            <Text style={styles.label}>Telephone</Text>
+            <TextInput
+              style={styles.input}
+              value={tel}
+              onChangeText={setTel}
+              // onBlur={() => validateForm()}
+            />
+
+            <Text style={styles.label}>Workplace</Text>
+            <TextInput
+              style={styles.input}
+              value={workplace}
+              onChangeText={setWorkplace}
+              // onBlur={() => validateForm()}
+            />
+
+            <Text style={styles.label}>Expertise</Text>
+            <TextInput
+              style={styles.input}
+              value={expertise}
+              onChangeText={setExpertise}
+              // onBlur={() => validateForm()}
+            />
+
+            <Text style={styles.label}>Medical license number</Text>
+            <TextInput
+              style={styles.input}
+              value={license}
+              onChangeText={setLicense}
+              // onBlur={() => validateForm()}
+            />
+
+            {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => postRequest()}>
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
     
   );
@@ -104,7 +240,7 @@ function SettingScreen({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: 'white',
     // backgroundColor:'#6983CE',
   },
@@ -139,6 +275,57 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 16,
     fontFamily:'Kanit-Regular',
+  },
+  ExitButton: {
+    alignSelf: 'center',
+    width: 25,
+    height: 25,
+    marginRight: 20,
+    resizeMode: 'contain',
+    marginTop: 20,
+  },
+  IndexNumber: {
+    marginLeft: 15,
+    paddingBottom: 0,
+    paddingTop: 20,
+    textAlign: 'left',
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  formContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 20,
+    marginBottom: 6,
+    // paddingBottom:10,
+    marginHorizontal: 18,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  label: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
