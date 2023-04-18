@@ -77,7 +77,7 @@ function DoctorSettingScreen({navigation}) {
           </TouchableOpacity>
         )}
         {singleUser != null && singleUser.role === 'doctor' && (
-          <TouchableOpacity style={styles.option} onPress={() => nav.navigate('BottomNav')}>
+          <TouchableOpacity style={styles.option} onPress={() => nav.navigate('Home')}>
             <Text style={styles.optionText}>
               Switch to Normal Account
             </Text>

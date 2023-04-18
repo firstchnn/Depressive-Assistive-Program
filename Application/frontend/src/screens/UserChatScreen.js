@@ -94,7 +94,7 @@ function UserChatScreen({navigation, route}) {
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-      <View style={{flexDirection: 'row', alignItems: 'center', margin: 10}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', margin: 10,borderRadius:8,borderWidth:1}}>
         <TextInput
           style={{flex: 1, padding: 10}}
           value={newMessage}

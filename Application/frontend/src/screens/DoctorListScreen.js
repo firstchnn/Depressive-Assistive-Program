@@ -96,7 +96,7 @@ function DoctorListScreen({navigation, route}) {
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontFamily:'Kanit-Bold',fontSize:32,marginTop:24,}}>Doctor List Screen</Text>
+      <Text style={{fontFamily:'Kanit-Bold',fontSize:32,marginTop:24,}}>Doctor List</Text>
       {isLoading ? (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <ActivityIndicator size="large" />
