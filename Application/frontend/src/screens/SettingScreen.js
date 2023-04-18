@@ -98,6 +98,7 @@ function SettingScreen({navigation}) {
         </TouchableOpacity>
       </View>
     </View>
+    
   );
 }
 
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    // backgroundColor:'#6983CE',
   },
   header: {
     flexDirection: 'row',

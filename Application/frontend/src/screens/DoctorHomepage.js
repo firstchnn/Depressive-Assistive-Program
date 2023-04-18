@@ -13,30 +13,19 @@ import {
   Dimensions,
   TextInput,
   StyleSheet,
-  // Pressable,
 } from 'react-native';
-// import GlobalStyle from '../utils/GlobalStyle';
 import {useNavigation} from '@react-navigation/native';
 import CardHome from '../components/CardHome';
-// import {useColorScheme} from 'nativewind';
-// import {Icon} from 'react-native-elements';
 import {MaterialIcons} from '@expo/vector-icons';
-// import Icon from 'react-native-ico-material-design';
+// import { Calendar } from 'react-native-calendars';
 
-// import arrow_right from '../../asset/'
-// import ArrowButton  from '../components/TouchableOpacity';
-// import { Button,Icon } from 'semantic-ui-react'
-// import BottomTabNav from '../components/BottomTabNav';
-function HomeScreen({navigation, route}) {
+function DoctorHomepage({navigation, route}) {
   const {width: viewportWidth} = Dimensions.get('window');
   const {height: viewportHeight} = Dimensions.get('window');
   const vw = viewportWidth / 100;
   const vh = viewportHeight / 100;
 
   const [searchText, setSearchText] = useState('');
-  // const filteredData = data.filtered((item) =>
-  //   item.name.toLowerCase().includes(searchText.toLowerCase())
-  // );
   const handleTextChange = text => {
     setSearchText(text);
     let temp = [];
@@ -60,9 +49,6 @@ function HomeScreen({navigation, route}) {
   const [search, setSearch] = useState('');
 
   const [userData, setUserData] = useState({});
-  // const updateSearch = () => {
-  //   setSearch(search);
-  // };
   const [data, setData] = useState(null);
   const [currData, setCurrData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +68,7 @@ function HomeScreen({navigation, route}) {
       paddingLeft: 4 * vw,
       paddingRight: 13 * vw,
       marginTop: 1 * vh,
-      fontFamily:'Kanit-Regular',
+      fontFamily: 'Kanit-Regular',
     },
     search_Icon: {
       position: 'absolute',
@@ -122,7 +108,6 @@ function HomeScreen({navigation, route}) {
   }, [navigation]);
 
   const backgroundStyle = 'bg-neutral-300 dark:bg-slate-900';
-  // const {colorScheme, toggleColorScheme} = useColorScheme();
   const style = StyleSheet.create({
     body: {
       flex: 1,
@@ -132,20 +117,35 @@ function HomeScreen({navigation, route}) {
     text: {
       fontFamily: 'Inter-Regular',
     },
+    toMngm: {
+      alignItems: 'center',
+      backgroundColor: '#82E7C9',
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      marginVertical: 8,
+      borderRadius: 8,
+      alignSelf: 'center',
+    },
+    toContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingTop:4,
+    },
+    toText: {
+      fontFamily: 'Kanit-Regular',
+      // borderWidth: 3,
+      marginRight: 10,
+    },
+    calendar: {
+      width: 20,
+      height: 20,
+      resizeMode: 'contain',
+    },
   });
 
   return (
     <>
-      <View style={styles.Search_Bar}>
-        <TextInput
-          style={styles.Text_Input}
-          placeholder="ค้นหา"
-          onChangeText={text => handleTextChange(text)}
-          value={searchText}></TextInput>
-        <Image
-          style={styles.search_Icon}
-          source={require('../asset/Search.png')}></Image>
-      </View>
       <View
         style={{
           flex: 1,
@@ -153,13 +153,11 @@ function HomeScreen({navigation, route}) {
           justifyContent: 'center',
           margin: 20,
         }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             alignItems: 'center',
             flexDirection: 'row',
             margin: 10,
-            // borderColor: 'red',
-            // borderWidth: 3,
           }}
           onPress={() => navigation.navigate('MainChat')}>
           <Image
@@ -176,17 +174,13 @@ function HomeScreen({navigation, route}) {
                 alignSelf: 'center',
                 marginRight: 20,
                 marginBottom: 15,
-                fontFamily:'Kanit-Regular',
+                fontFamily: 'Kanit-Regular',
               }}>
               เริ่มต้นการสนทนา
             </Text>
             <Image
               style={{alignSelf: 'center'}}
               source={require('../asset/arrow_right.png')}></Image>
-            {/* <Button
-              title="Start Chatting"
-              
-            /> */}
           </View>
         </TouchableOpacity>
 
@@ -195,15 +189,11 @@ function HomeScreen({navigation, route}) {
             alignItems: 'center',
             flexDirection: 'row',
             margin: 1,
-            // borderColor: 'blue',
-            // borderWidth: 3,
           }}>
-          {/* <Text style={{marginRight: 20, fontSize: 20}}>ปรึกษาแพทย์</Text> */}
           <Text
             style={{
               fontSize: 20,
-              // fontWeight: 'bold',
-              fontFamily:'Kanit-Regular'
+              fontFamily: 'Kanit-Regular',
             }}>
             ปรึกษาแพทย์
           </Text>
@@ -214,20 +204,13 @@ function HomeScreen({navigation, route}) {
                 color: 'black',
                 textDecorationLine: 'underline',
                 fontSize: 14,
-                fontFamily:'Kanit-Regular',
-              }}
-
-              // onPress={() => navigation.navigate('TestPage')}
-            >
+                fontFamily: 'Kanit-Regular',
+              }}>
               ดูเพิ่มเติม+
             </Text>
           </TouchableOpacity>
-        </View>
-        {/* <Switch value={colorScheme==="dark"} onChange={toggleColorScheme}></Switch> */}
-        {/* <Text>Welcome {userData.displayName}</Text>
-        <Text>Email : {userData.email}</Text> */}
-
-        <View
+        </View> */}
+        {/* <View
           style={{
             flex: 1,
             alignItems: 'center',
@@ -250,23 +233,46 @@ function HomeScreen({navigation, route}) {
                   }>
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
-                      {/* <Text>{item._id}</Text> */}
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.name}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.tel}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.workplace}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.expertise}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.ovr_rating}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.consultantNumber}</Text>
+                      <Text style={{fontFamily: 'Kanit-Regular'}}>
+                        {item.name}
+                      </Text>
+                      <Text style={{fontFamily: 'Kanit-Regular'}}>
+                        {item.tel}
+                      </Text>
+                      <Text style={{fontFamily: 'Kanit-Regular'}}>
+                        {item.workplace}
+                      </Text>
+                      <Text style={{fontFamily: 'Kanit-Regular'}}>
+                        {item.expertise}
+                      </Text>
+                      <Text style={{fontFamily: 'Kanit-Regular'}}>
+                        {item.ovr_rating}
+                      </Text>
+                      <Text style={{fontFamily: 'Kanit-Regular'}}>
+                        {item.consultantNumber}
+                      </Text>
                     </View>
                   </CardHome>
                 </TouchableOpacity>
               )}
             />
           )}
-        </View>
+          
+        </View> */}
+        <TouchableOpacity
+            style={style.toMngm}
+            onPress={() => navigation.navigate('SetTimeScreen')}>
+            <Image
+              style={style.calendar}
+              source={require('../asset/Calendar.png')}
+            />
+            <View style={style.toContent}>
+              <Text style={style.toText}>ตั้งค่าเวลา</Text>
+            </View>
+          </TouchableOpacity>
       </View>
     </>
   );
 }
 
-export default HomeScreen;
+export default DoctorHomepage;

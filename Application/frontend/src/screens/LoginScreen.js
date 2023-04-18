@@ -151,7 +151,10 @@ const LoginScreen = ({navigation}) => {
         justifyContent: 'center',
         backgroundColor: '#E5EFE9',
       }}>
-      <Text style={{paddingBottom: 20}}>Login Screen</Text>
+        <Image
+        style={{marginBottom:30}}
+          source={require('../asset/Big-logo.png')}></Image>
+      {/* <Text style={{paddingBottom: 20}}>Login Screen</Text> */}
       <View style={{paddingBottom: 20}}></View>
       <TouchableOpacity
         style={styles.buttonGoogle}

@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import DoctorNav from './DoctorNav';
 import SetTimeScreen from '../screens/SetTimeScreen';
+import DoctorHomepage from '../screens/DoctorHomepage';
 
 const Stack = createStackNavigator();
 
@@ -35,9 +36,10 @@ function AuthNavigator() {
         />
         <Stack.Screen name="VideoCall" component={VideoCall}/>
         <Stack.Screen name="ScoreScreen" component={ScoreScreen}/>
-        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="PaymentScreen" component={PaymentScreen}/>
         <Stack.Screen name="SetTimeScreen" component={SetTimeScreen}/>
+        <Stack.Screen name="DoctorHomepage" component={DoctorHomepage}/>
     </Stack.Navigator>
   )
 }

@@ -52,7 +52,7 @@ function PaymentScreen({navigation}) {
     <View style={styles.circle}>
       
       <View style={styles.countContainer}>
-        <Text>Payment</Text>
+        <Text style={{fontFamily:'Kanit-Regular'}}>Payment</Text>
       </View>
       <View style={styles.countContainer}>
       {qrCodeData ? (
@@ -65,7 +65,7 @@ function PaymentScreen({navigation}) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.goBack()}>
-        <Text>Continue</Text>
+        <Text style={{fontFamily:'Kanit-Regular'}}>Confirm Payment</Text>
       </TouchableOpacity>
       <ActivityIndicator
         size="large"
@@ -86,13 +86,16 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#82E7C9',
     padding: 10,
+    marginTop:10,
+    borderRadius:8,
     marginBottom: '6%',
   },
   countContainer: {
     alignItems: 'center',
     padding: 10,
+    marginBottom:10,
   },
   circle: {
     flex: 1,

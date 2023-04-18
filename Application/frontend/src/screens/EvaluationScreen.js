@@ -183,6 +183,7 @@ function EvaluationScreen({navigation, route}) {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ccd2ff',
+        // borderWidth:3,
       }}>
       {/* <View > */}
       <Image
@@ -192,7 +193,7 @@ function EvaluationScreen({navigation, route}) {
       {/* </View> */}
       <Text style={styles.EvaluateText}>แบบทดสอบ PHQ-9</Text>
       <TouchableOpacity style={styles.buttonStart} onPress={togglePopup}>
-        <Text style={styles.textStart}>Start</Text>
+        <Text style={styles.textStart}>เริ่มแบบทดสอบ</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
         {!resultVisible && (
@@ -223,12 +224,12 @@ function EvaluationScreen({navigation, route}) {
                 onPress={() =>
                   handleAnswerSelect(currentQuestion.id, answer.id)
                 }>
-                <Text>{answer.text}</Text>
+                <Text style={{fontFamily:'Kanit-Regular',}}>{answer.text}</Text>
               </TouchableOpacity>
             ))}
             {questionIndex > 0 && (
               <TouchableOpacity style={styles.buttonBack} onPress={handleBack}>
-                <Text style={{color: 'white'}}>Back</Text>
+                <Text style={{color: 'white',fontFamily:'Kanit-Regular'}}>Back</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -254,8 +255,7 @@ function EvaluationScreen({navigation, route}) {
             )}
             {totalScore >= 10 && totalScore <= 14 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Moderate {'\n'}
+                Your score on the PHQ-9 Depression test was: {totalScore}{' '}Moderate {'\n'}
                 มีภาวะซึมเศร้าเล็กน้อย
               </Text>
             )}
@@ -288,7 +288,8 @@ function EvaluationScreen({navigation, route}) {
 const styles = StyleSheet.create({
   textQuestion: {
     marginVertical: 20,
-    marginLeft: 15,
+    marginLeft: 18,
+    fontFamily:'Kanit-Regular',
   },
   container: {
     flex: 1,
@@ -317,6 +318,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
+  
   SurveyPic: {
     // max-width: 100%,
     // display:'flex',
@@ -328,7 +330,7 @@ const styles = StyleSheet.create({
 
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily:'Kanit-Bold',
     marginBottom: 20,
   },
   score: {
@@ -336,14 +338,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 12,
     textAlign: 'center',
+    fontFamily:'Kanit-Regular',
   },
   textStart: {
     color: 'white',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     letterSpacing: 1.1,
+    fontFamily:'Kanit-Bold',
+    alignSelf:'center',
   },
   buttonStart: {
     backgroundColor: '#008CBA',
+    width:160,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -360,17 +366,20 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+    // fontFamily:'Kanit-Bold',
   },
   EvaluateText: {
     paddingHorizontal: 30,
     paddingBottom: 15,
     textAlign: 'center',
+    fontFamily:'Kanit-Bold'
   },
   IndexNumber: {
     marginLeft: 15,
     paddingBottom: 0,
     paddingTop: 20,
     textAlign: 'left',
+    fontFamily:'Kanit-Regular'
   },
   ExitButton: {
     alignSelf: 'center',

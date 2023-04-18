@@ -66,7 +66,7 @@ function DoctorDetail({navigation, route}) {
         {data !== null ? (
           <View style={styles.countContainer}>
             <Text
-              style={{alignSelf: 'center', fontWeight: 'bold', fontSize: 24}}>
+              style={{alignSelf: 'center', fontFamily:'Kanit-Bold', fontSize: 24}}>
               {data.name.length > 20
                 ? data.name.substring(0, 20) + '...'
                 : data.name}
@@ -74,19 +74,19 @@ function DoctorDetail({navigation, route}) {
             <Text
               style={{
                 alignSelf: 'center',
-                fontWeight: 'regular',
+                fontFamily:'Kanit-Regular',
                 fontSize: 16,
               }}>
               {data.expertise}
             </Text>
             {/* <Text>Tel: {data.tel}</Text> */}
-            <Text>workplace: {data.workplace}</Text>
+            <Text style={{fontFamily:'Kanit-Regular',}}>workplace: {data.workplace}</Text>
             {/* <Text></Text> */}
-            <Text>Rating: {data.ovr_rating}</Text>
-            <Text>consultant: {data.consultantNumber}</Text>
+            <Text style={{fontFamily:'Kanit-Regular',}}>Rating: {data.ovr_rating}</Text>
+            <Text style={{fontFamily:'Kanit-Regular',}}>consultant: {data.consultantNumber}</Text>
           </View>
         ) : (
-          <Text>Loading...</Text>
+          <Text style={{alignSelf:'center'}}>Loading...</Text>
         )}
       </View>
       <DatePicker

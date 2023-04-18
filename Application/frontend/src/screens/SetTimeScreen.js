@@ -117,7 +117,7 @@ function SetTimeScreen() {
       </View>
       <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 20}}>
         <TouchableOpacity style={styles.button}>
-          <Text>Update</Text>
+          <Text style={{fontFamily:'Kanit-Regular'}}>Update</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -148,8 +148,9 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily:'Kanit-Bold',
   },
   timeButton: {
     flex: 1,
@@ -168,9 +169,10 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#82E7C9',
     padding: 10,
     marginBottom: '6%',
+    borderRadius:8,
   },
 });
 

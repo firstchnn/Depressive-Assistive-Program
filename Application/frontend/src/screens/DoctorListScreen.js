@@ -123,11 +123,11 @@ function DoctorListScreen({navigation, route}) {
                       ? item.name.substr(0, 15) + '...'
                       : item.name}
                   </Text>
-                  <Text>{item.tel}</Text>
-                  <Text>{item.workplace}</Text>
-                  <Text>{item.expertise}</Text>
-                  <Text>{item.ovr_rating}</Text>
-                  <Text>{item.consultantNumber}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular',}}>{item.tel}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular',}}>{item.workplace}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular',}}>{item.expertise}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular',}}>{item.ovr_rating}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular',}}>{item.consultantNumber}</Text>
                 </View>
               </CardHome>
             </TouchableOpacity>
