@@ -26,7 +26,8 @@ function VideoCall(){
     setIsCalling(false);
     localStream?.getTracks().forEach(track => track.stop());
     remoteStream?.getTracks().forEach(track => track.stop());
-    nav.navigate('MainChat');
+    // nav.navigate('MainChat');
+    nav.goBack();
   };
 
   return (

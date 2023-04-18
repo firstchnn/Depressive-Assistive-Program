@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
+    fontFamily:'Kanit-Regular',
   },
 });
 
