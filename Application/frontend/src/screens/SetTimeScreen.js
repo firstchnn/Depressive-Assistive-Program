@@ -162,7 +162,7 @@ function SetTimeScreen() {
         </View>
         <View>
           <TouchableOpacity
-            style={styles.button}
+            style={styles.resetBtn}
             onPress={() => handleCurrentPrice(0)}>
             <Text>Reset</Text>
           </TouchableOpacity>
@@ -227,6 +227,16 @@ const styles = StyleSheet.create({
     marginBottom: '6%',
     borderRadius:8,
   },
+  resetBtn:{
+    alignItems: 'center',
+    borderColor: '#82E7C9',
+    borderWidth:2,
+    padding: 10,
+    marginVertical: '6%',
+    borderRadius:8,
+    width:160,
+    alignSelf:'center'
+  }
 });
 
 export default SetTimeScreen;

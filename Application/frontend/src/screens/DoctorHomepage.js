@@ -125,12 +125,14 @@ function DoctorHomepage({navigation, route}) {
       marginVertical: 8,
       borderRadius: 8,
       alignSelf: 'center',
+      width:'70%'
     },
     toContent: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingTop:4,
+      
     },
     toText: {
       fontFamily: 'Kanit-Regular',

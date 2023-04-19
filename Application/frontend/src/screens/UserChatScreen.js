@@ -66,7 +66,34 @@ function UserChatScreen({navigation, route}) {
           style={styles.Back_Icon}></Image>
         <Text style={{fontSize: 16, alignItems: 'center'}}>Back</Text>
       </TouchableOpacity>
-      <View>{/* <Text>{role}</Text> */}</View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignSelf: 'center',
+          justifyContent: 'space-evenly',
+        }}>
+        {/* <Text>{role}</Text> */}
+        <Image
+          source={require('../asset/Exclamation.png')}
+          style={{
+            resizeMode: 'contain',
+            width: 30,
+            height: 30,
+            alignSelf: 'center',
+          }}></Image>
+        <Text
+          style={{
+            alignSelf: 'center',
+            fontFamily: 'Kanit-Regular',
+            marginLeft: 10,
+            fontSize:12,
+          }}>
+          เราให้ความสำคัญกับข้อมูลส่วนบุคคลของผู้ใช้งาน{'\n'}
+          กรุณารักษารักษาข้อมูลส่วนบุคคล และอย่ามอบข้อมูล{'\n'}
+          ของท่านแก่บุคคลอื่น
+        </Text>
+      </View>
+
       <FlatList
         ref={flatListRef}
         data={messages}
@@ -75,38 +102,54 @@ function UserChatScreen({navigation, route}) {
             style={{
               padding: 10,
               margin: 10,
-              width:'auto',
-              maxWidth:'70%',
+              width: 'auto',
+              maxWidth: '70%',
               alignSelf: item.fromSender ? 'flex-end' : 'flex-start',
               // backgroundColor: item.fromSender ? '#F0B0C0' : '#9FC5E8',
               backgroundColor: item.fromSender ? '#9FC5E8' : '#F0B0C0',
-              borderRadius:8,
+              borderRadius: 8,
             }}>
-            <Text 
-            style={{
-              fontFamily:'Kanit-Regular',
-              fontSize:16,
-              alignItems:item.fromSender ? 'flex-end':'flex-start'
-            }}>
+            <Text
+              style={{
+                fontFamily: 'Kanit-Regular',
+                fontSize: 16,
+                alignItems: item.fromSender ? 'flex-end' : 'flex-start',
+              }}>
               {item.text}
-              </Text>
+            </Text>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-      <View style={{flexDirection: 'row', alignItems: 'center', margin: 10,borderRadius:8,borderWidth:1}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          margin: 10,
+          borderRadius: 8,
+        }}>
         <TextInput
-          style={{flex: 1, padding: 10}}
+          style={{
+            flex: 1,
+            paddingHorizontal: 10,
+            paddingVertical: 4,
+            marginRight: 2,
+            borderRadius: 8,
+            borderWidth: 0.6,
+          }}
           value={newMessage}
           onChangeText={setNewMessage}
           placeholder="Type your message here"
         />
-        <TouchableOpacity 
-        style={{backgroundColor:'#82E7C9',paddingVertical:8,paddingHorizontal:12,borderRadius:8,}}
-        onPress={() => handleSend(role)}>
-          <Text style={{fontFamily:'Kanit-Regular'}}>
-            SEND
-          </Text>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#82E7C9',
+            paddingVertical: 8,
+            paddingHorizontal: 12,
+            borderRadius: 8,
+          }}
+          onPress={() => handleSend(role)}>
+          <Text style={{fontFamily: 'Kanit-Regular'}}>SEND</Text>
         </TouchableOpacity>
         {/* <Button title="Send" onPress={() => handleSend(role)} /> */}
       </View>
@@ -114,13 +157,12 @@ function UserChatScreen({navigation, route}) {
   );
 }
 const styles = StyleSheet.create({
-
-  Back_BTN:{
+  Back_BTN: {
     flexDirection: 'row',
     // borderWidth: 1,
     alignItems: 'center',
     marginVertical: 10,
-    marginTop:15,
+    marginTop: 15,
   },
   Back_Icon: {
     // backgroundColor:'green',
