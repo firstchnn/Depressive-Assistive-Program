@@ -63,6 +63,7 @@ const LoginScreen = ({navigation}) => {
         photoURL: userData.photoURL,
         uid: userData.uid,
         role: 'user',
+        appointment : {},
       }),
     })
       .then(res => {

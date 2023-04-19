@@ -8,7 +8,7 @@ import {
   View,
   Image,
 } from 'react-native';
-import DatePicker from 'react-native-date-picker';
+import {Picker} from '@react-native-picker/picker';
 // import CalendarPicker from 'react-native-calendar-picker';
 
 function DoctorDetail({navigation, route}) {
@@ -18,6 +18,15 @@ function DoctorDetail({navigation, route}) {
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const [workDay, setWorkDay] = useState([]);
+  const [workFrom, setWorkFrom] = useState();
+  const [workTo, setWorkTo] = useState();
+  const [timeArray, setTimeArray] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(timeArray[0]);
+
+  const onTimeChange = (itemValue, itemIndex) => {
+    setSelectedTime(itemValue);
+  };
 
   const [popupVisible, setPopupVisible] = useState(false);
   const togglePopup = () => {
@@ -41,13 +50,36 @@ function DoctorDetail({navigation, route}) {
       );
       const json = await response.json();
       setData(json);
-      console.log(json);
+      setWorkDay(json.workday.split(','));
+      // setWorkTime(json.worktime.split(','));
+      // setWorkTime[1](json.worktime.split(5,10));
+      setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
+      setWorkTo(json.worktime.slice(5).replace(',', ':'));
+      console.log(json.workday);
+      console.log(json.worktime);
+      createTimeArray(workFrom, workTo);
     } catch (error) {
       console.error(error);
     }
 
     setIsLoading(false);
   };
+
+  function createTimeArray(startTime, endTime) {
+    const result = [];
+    let current = new Date(`2023-01-01T${startTime}:00`);
+    const end = new Date(`2023-01-01T${endTime}:00`);
+    while (current < end) {
+      const hours = current.getHours().toString().padStart(2, '0');
+      const minutes = current.getMinutes().toString().padStart(2, '0');
+      result.push(`${hours}:${minutes}`);
+      current.setTime(current.getTime() + 30 * 60 * 1000); // add 30 minutes
+    }
+    // result.push(workTo.replace(',',':'));
+    setTimeArray(result);
+    console.log(result);
+  }
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -66,7 +98,11 @@ function DoctorDetail({navigation, route}) {
         {data !== null ? (
           <View style={styles.countContainer}>
             <Text
-              style={{alignSelf: 'center', fontFamily:'Kanit-Bold', fontSize: 24}}>
+              style={{
+                alignSelf: 'center',
+                fontFamily: 'Kanit-Bold',
+                fontSize: 24,
+              }}>
               {data.name.length > 20
                 ? data.name.substring(0, 20) + '...'
                 : data.name}
@@ -74,22 +110,28 @@ function DoctorDetail({navigation, route}) {
             <Text
               style={{
                 alignSelf: 'center',
-                fontFamily:'Kanit-Regular',
+                fontFamily: 'Kanit-Regular',
                 fontSize: 16,
               }}>
               {data.expertise}
             </Text>
             {/* <Text>Tel: {data.tel}</Text> */}
-            <Text style={{fontFamily:'Kanit-Regular',}}>workplace: {data.workplace}</Text>
+            <Text style={{fontFamily: 'Kanit-Regular'}}>
+              workplace: {data.workplace}
+            </Text>
             {/* <Text></Text> */}
-            <Text style={{fontFamily:'Kanit-Regular',}}>Rating: {data.ovr_rating}</Text>
-            <Text style={{fontFamily:'Kanit-Regular',}}>consultant: {data.consultantNumber}</Text>
+            <Text style={{fontFamily: 'Kanit-Regular'}}>
+              Rating: {data.ovr_rating}
+            </Text>
+            <Text style={{fontFamily: 'Kanit-Regular'}}>
+              consultant: {data.consultantNumber}
+            </Text>
           </View>
         ) : (
-          <Text style={{alignSelf:'center'}}>Loading...</Text>
+          <Text style={{alignSelf: 'center'}}>Loading...</Text>
         )}
       </View>
-      <DatePicker
+      {/* <DatePicker
         modal
         open={open}
         date={date}
@@ -101,17 +143,12 @@ function DoctorDetail({navigation, route}) {
         onCancel={() => {
           setOpen(false);
         }}
-      />
+      /> */}
       <TouchableOpacity
         style={styles.button_Appointment}
-        onPress={() => setOpen(true)}>
+        onPress={() => togglePopup()}>
         <Text style={{fontWeight: 'bold'}}>นัดหมาย</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.goBack()}>
-        <Text>Go Back</Text>
-      </TouchableOpacity> */}
       <Modal visible={popupVisible} animationType="slide">
         <View
           style={{
@@ -121,19 +158,40 @@ function DoctorDetail({navigation, route}) {
             padding: 10,
           }}>
           <Text style={{marginBottom: '6%'}}>Choose appointment time</Text>
-          {/* <DatePicker
-            style={{width: 200}}
-            date={appointmentDate}
-            mode="date"
-            placeholder="select date"
-            format="YYYY-MM-DD"
-            minDate={new Date()}
-            maxDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)} // 7 days from now
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            onDateChange={date => setAppointmentDate(date)}
-          /> */}
-          <TouchableOpacity style={styles.button} onPress={paymentContinue}>
+          <View style={styles.daysContainer}>
+            {workDay.map(day => (
+              <TouchableOpacity
+                key={day}
+                // onPress={() => handleDayPress(day)}
+                style={[
+                  styles.dayButton,
+                  // {backgroundColor: isDaySelected(day) ? 'blue' : 'white'},
+                ]}>
+                <Text
+                  style={[
+                    styles.dayText,
+                    // {color: isDaySelected(day) ? 'white' : 'black'},
+                  ]}>
+                  {day}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View>
+            <Picker selectedValue={selectedTime} onValueChange={onTimeChange}>
+            {timeArray.map((time, index) => (
+              <Picker.Item
+                key={index}
+                label={time}
+                value={time}
+              />
+            ))}
+          </Picker>
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => paymentContinue()}
+            >
             <Text>Continue</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={togglePopup}>
@@ -153,14 +211,13 @@ const styles = StyleSheet.create({
     // borderWidth:2,
     // borderColor:'red'
   },
-  Back_BTN:{
+  Back_BTN: {
     flexDirection: 'row',
     // borderWidth: 1,
     alignItems: 'center',
     marginVertical: 10,
-    marginTop:15,
-    marginBottom:150
-    
+    marginTop: 15,
+    marginBottom: 150,
   },
   Back_Icon: {
     // backgroundColor:'green',
@@ -186,7 +243,6 @@ const styles = StyleSheet.create({
     marginBottom: '6%',
   },
   countContainer_out: {
-    
     alignItems: 'flex-start',
     padding: 10,
     borderColor: 'black',
@@ -203,6 +259,27 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 16,
     width: '100%',
+  },
+  daysContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginHorizontal: 10,
+    marginTop: 20,
+  },
+  dayButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    margin: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'grey',
+  },
+  dayText: {
+    fontSize: 18,
+    // fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'Kanit-Bold',
   },
 });
 

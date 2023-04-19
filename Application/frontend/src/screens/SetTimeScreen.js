@@ -67,9 +67,33 @@ function SetTimeScreen() {
 
   const isDaySelected = day => selectedDays.includes(day);
 
-  function updateDoctor(){
-    console.log(selectedDays+' - '+selectedFrom+' - '+selectedTo+' - '+currentPrice);
-  }
+  const updateDoctor = async () => {
+    await fetch(`https://ce22.onrender.com/update-time/${userData.email}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          day : selectedDays.join(','),
+          timeFrom : selectedFrom,
+          timeTo : selectedTo,
+          price : currentPrice,
+        }),
+      })
+        .then(res => {
+          console.log(res.status);
+          console.log(res.headers);
+          console.log('response = ', res);
+          console.log('response body:', res.text());
+          return res.json();
+        })
+        .then(
+          result => {
+            console.log('result = ', result);
+          },
+          error => {
+            console.log('error = ', error);
+          },
+        );
+    };
 
   return (
     <View style={styles.container}>
@@ -169,7 +193,7 @@ function SetTimeScreen() {
         </View>
       </View>
       <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 20}}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={updateDoctor}>
           <Text style={{fontFamily:'Kanit-Regular'}}>Update</Text>
         </TouchableOpacity>
       </View>

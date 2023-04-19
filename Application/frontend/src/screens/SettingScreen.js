@@ -12,6 +12,7 @@ import {
 import {UserContext} from '../components/UserContext';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function SettingScreen({navigation}) {
   const nav = useNavigation();
@@ -57,6 +58,8 @@ function SettingScreen({navigation}) {
   const [workplace, setWorkplace] = useState('');
   const [expertise, setExpertise] = useState('');
   const [license, setLicense] = useState('');
+  const [error, setError] = useState('');
+  const [imageUri, setImageUri] = useState(null);
 
   const postRequest = async () => {
     if (!name || !tel || !workplace || !expertise || !license) {
@@ -94,15 +97,29 @@ function SettingScreen({navigation}) {
     }
   };
 
-  // const [formValid, setFormValid] = useState(false);
-  const [error, setError] = useState('');
-  // const validateForm = () => {
-  //   // if (!name || !tel || !workplace || !expertise) {
-  //   //   setError('Please fill out all fields');
-  //   // } else {
-  //   //   setError('');
-  //   // }
-  // };
+  const openGallery = () => {
+    const options = {
+      storageOptions : {
+        path : 'images',
+        mediaType : 'photo',
+      },
+      includeBase64 : true,
+    };
+
+    launchImageLibrary(options, response => {
+      console.log('Response = ', response);
+      if(response.didCancel) {
+        console.log('User cancelled')
+      } else if(response.error){
+        console.log('IMGpicker Error : ',response.error);
+      } else if(response.customButton){
+        console.log('User tapped custom button : ',response.customButton);
+      } else {
+        const source = {usi: 'data:image/jpeg;base64' + response.base64};
+        setImageUri(source)
+      }
+    })
+  };
 
   useEffect(() => {
     fetchData();
@@ -224,6 +241,14 @@ function SettingScreen({navigation}) {
               // onBlur={() => validateForm()}
             />
 
+            <TouchableOpacity style={styles.button} onPress={() => openGallery}>
+              <Text style={styles.buttonText}>Select Image</Text>
+            </TouchableOpacity>
+            <Image
+            source={imageUri}
+            style={{height : 100,width:100,}}
+            />
+
             {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
             <TouchableOpacity
               style={styles.button}
@@ -234,7 +259,6 @@ function SettingScreen({navigation}) {
         </View>
       </Modal>
     </View>
-    
   );
 }
 
@@ -274,7 +298,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    fontFamily:'Kanit-Regular',
+    fontFamily: 'Kanit-Regular',
   },
   ExitButton: {
     alignSelf: 'center',
