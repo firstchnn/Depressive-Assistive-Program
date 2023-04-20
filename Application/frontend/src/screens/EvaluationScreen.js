@@ -43,50 +43,170 @@ function EvaluationScreen({navigation, route}) {
       id: 1,
       question: 'เบื่อ ทำอะไร ๆ ก็ไม่เพลิดเพลิน',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
       id: 2,
       question: 'ไม่สบายใจ ซึมเศร้า หรือท้อแท้',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
       id: 3,
       question: ' หลับยาก หรือหลับ ๆ ตื่น ๆ หรือหลับมากไป',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
       id: 4,
       question: 'เหนื่อยง่าย หรือไม่ค่อยมีแรง',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
       id: 5,
       question: 'เบื่ออาหาร หรือกินมากเกินไป',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
@@ -94,10 +214,34 @@ function EvaluationScreen({navigation, route}) {
       question:
         'รู้สึกไม่ดีกับตัวเอง คิดว่าตัวเองล้มเหลว หรือเป็นคนทำให้\nตัวเอง หรือครอบครัวผิดหวัง',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
@@ -105,10 +249,34 @@ function EvaluationScreen({navigation, route}) {
       question:
         'สมาธิไม่ดีเวลาทำอะไร เช่น ดูโทรทัศน์ ฟังวิทยุ หรือทำงาน\nที่ต้องใช้ความตั้งใจ',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
@@ -116,27 +284,83 @@ function EvaluationScreen({navigation, route}) {
       question:
         ' พูดหรือทำอะไรช้าจนคนอื่นมองเห็น หรือกระสับกระส่าย\nจนท่านอยู่ไม่นิ่งเหมือนเคย',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
       id: 9,
       question: 'คิดทำร้ายตนเอง หรือคิดว่าถ้าตาย ๆ ไปเสียคงจะดี',
       answers: [
-        {id: 1, text: 'ไม่เลย', score: 0},
-        {id: 2, text: 'มีบางวันหรือไม่บ่อย', score: 1},
-        {id: 3, text: 'มีค่อนข้างบ่อย', score: 2},
-        {id: 4, text: 'มีเกือบทุกวัน', score: 3},
+        {
+          id: 1,
+          text: 'ไม่เลย',
+          score: 0,
+          Image: require('../asset/SmileFace.png'),
+          color: '#d9ead3',
+        },
+        {
+          id: 2,
+          text: 'มีบางวันหรือไม่บ่อย',
+          score: 1,
+          Image: require('../asset/NormalFace.png'),
+          color: '#fff2cc',
+        },
+        {
+          id: 3,
+          text: 'มีค่อนข้างบ่อย',
+          score: 2,
+          Image: require('../asset/SadFace.png'),
+          color: '#fce5cd',
+        },
+        {
+          id: 4,
+          text: 'มีเกือบทุกวัน',
+          score: 3,
+          Image: require('../asset/CryFace.png'),
+          color: '#ea9999',
+        },
       ],
     },
     {
       id: 10,
       question:
         'แบบทดสอบ PHQ-9 นี้ เป็นเพียงการประเมิน\nระดับภาวะซึมเศร้าในขั้นต้นเท่านั้น',
-      answers: [{id: 1, text: 'รับทราบ', score: 0}],
+      answers: [
+        {
+          id: 1,
+          text: 'รับทราบ',
+          score: 0,
+          Image: require('../asset/Agree.png'),
+          color: '#d0e0e3',
+        },
+      ],
     },
   ];
 
@@ -216,21 +440,38 @@ function EvaluationScreen({navigation, route}) {
                   source={require('../asset/Close.png')}></Image>
               </TouchableOpacity>
             </View>
-            <View style={{borderWidth:2,width:'90%',alignSelf:'center',marginVertical:16,borderRadius:8,padding:8,}}>
+            <View
+              style={{
+                borderWidth: 2,
+                width: '90%',
+                alignSelf: 'center',
+                marginVertical: 16,
+                borderRadius: 8,
+                padding: 8,
+              }}>
               <Text style={styles.textQuestion}>
                 {currentQuestion.question}
               </Text>
             </View>
+
             {currentQuestion.answers.map(answer => (
               <TouchableOpacity
-                style={styles.buttonAnswer}
+                style={[styles.buttonAnswer, {backgroundColor: answer.color}]}
                 key={answer.id}
                 onPress={() =>
                   handleAnswerSelect(currentQuestion.id, answer.id)
                 }>
-                <Text style={{fontFamily: 'Kanit-Regular'}}>{answer.text}</Text>
+                <View style={styles.answerSet}>
+                  <Image
+                    source={answer.Image}
+                    style={{width: 50, height: 50}}></Image>
+                  <Text style={{fontFamily: 'Kanit-Regular'}}>
+                    {answer.text}
+                  </Text>
+                </View>
               </TouchableOpacity>
             ))}
+
             {questionIndex > 0 && (
               <TouchableOpacity style={styles.buttonBack} onPress={handleBack}>
                 <Text style={{color: 'white', fontFamily: 'Kanit-Regular'}}>
@@ -298,10 +539,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginLeft: 0,
     fontFamily: 'Kanit-Regular',
-    alignSelf:'center',
-    justifyContent:'center',
-    textAlign:'center',
-    alignItems:'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,
@@ -329,6 +570,10 @@ const styles = StyleSheet.create({
   countContainer: {
     alignItems: 'center',
     padding: 10,
+  },
+  answerSet:{
+    flexDirection: 'column',
+    alignItems:'center',
   },
 
   SurveyPic: {

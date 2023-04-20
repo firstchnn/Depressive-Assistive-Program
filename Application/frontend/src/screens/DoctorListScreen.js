@@ -18,6 +18,8 @@ import React, {useEffect, useState} from 'react';
 import CardHome from '../components/CardHome';
 
 function DoctorListScreen({navigation, route}) {
+
+  const [searchText, setSearchText] = useState('');
   const handleTextChange = text => {
     setSearchText(text);
     let temp = [];
@@ -33,7 +35,13 @@ function DoctorListScreen({navigation, route}) {
     data.filter(item =>
       item.name.toLowerCase().includes(searchText.toLowerCase()),
     );
+    const renderItem = ({item}) => (
+      <View>
+        <Text>{item.name}</Text>
+      </View>
+    );
 
+  const [search, setSearch] = useState('');
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const {width: viewportWidth} = Dimensions.get('window');
@@ -68,10 +76,11 @@ function DoctorListScreen({navigation, route}) {
       justifyContent: 'center',
       marginTop: 2 * vh,
       height: 6 * vh,
+      marginBottom: 2*vh,
     },
     search_Icon: {
       position: 'absolute',
-      right: 25,
+      right: 15,
       top: 15,
       height: 20,
       width: 20,
@@ -79,7 +88,7 @@ function DoctorListScreen({navigation, route}) {
     Text_Input: {
       borderColor: 'black',
       borderWidth: 2,
-      borderRadius: 32,
+      borderRadius: 8,
       width: 85 * vw,
       paddingLeft: 4 * vw,
       paddingRight: 13 * vw,
@@ -87,24 +96,34 @@ function DoctorListScreen({navigation, route}) {
     },
   });
 
-  const [searchText, setSearchText] = useState('');
+
   // const filteredData = data.filtered((item) =>
   //   item.name.toLowerCase().includes(searchText.toLowerCase())
   // );
 
-  const [search, setSearch] = useState('');
+ 
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text style={{fontFamily:'Kanit-Bold',fontSize:32,marginTop:24,}}>Doctor List</Text>
+      <View style={styles.Search_Bar}>
+        <TextInput
+          style={styles.Text_Input}
+          placeholder="ค้นหา"
+          onChangeText={text => handleTextChange(text)}
+          value={searchText}></TextInput>
+        <Image
+          style={styles.search_Icon}
+          source={require('../asset/Search.png')}></Image>
+      </View>
+      
       {isLoading ? (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <ActivityIndicator size="large" />
         </View>
       ) : (
         <FlatList
-        style={{borderWidth:0,marginTop:32}}
-          data={data}
+          data={currData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => (
             <TouchableOpacity
@@ -112,23 +131,19 @@ function DoctorListScreen({navigation, route}) {
                 navigation.navigate('DoctorDetail', {id: item.name})
               }>
               <CardHome>
+                <View style={{}}>
+                    {/* for profile image */}
+                </View>
                 <View style={{flexDirection: 'column'}}>
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      // fontWeight: 'bold',
-                      fontSize: 20,
-                      fontFamily:'Kanit-Regular'
-                    }}>
-                    {item.name.length > 15
-                      ? item.name.substr(0, 15) + '...'
-                      : item.name}
-                  </Text>
-                  {/* <Text style={{fontFamily:'Kanit-Regular',}}>{item.tel}</Text> */}
-                  <Text style={{fontFamily:'Kanit-Regular',}}>{item.workplace}</Text>
-                  <Text style={{fontFamily:'Kanit-Regular',}}>{item.expertise}</Text>
-                  {/* <Text style={{fontFamily:'Kanit-Regular',}}>{item.ovr_rating}</Text> */}
-                  {/* <Text style={{fontFamily:'Kanit-Regular',}}>{item.consultantNumber}</Text> */}
+                  {/* <Text>{item._id}</Text> */}
+                  <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start'}}>{item.name.length > 15
+                  ? item.name.substr(0, 15) + '...'
+                  : item.name}</Text>
+                  {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.tel}</Text> */}
+                  <Text style={{fontFamily:'Kanit-Regular'}}>{item.workplace}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular'}}>{item.expertise}</Text>
+                  {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.ovr_rating}</Text> */}
+                  {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.consultantNumber}</Text> */}
                 </View>
               </CardHome>
             </TouchableOpacity>

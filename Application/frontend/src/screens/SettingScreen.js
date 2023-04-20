@@ -246,7 +246,7 @@ function SettingScreen({navigation}) {
             </TouchableOpacity>
             <Image
             source={imageUri}
-            style={{height : 100,width:100,}}
+            style={{height : 50,width:50,}}
             />
 
             {error ? <Text style={{color: 'red'}}>{error}</Text> : null}

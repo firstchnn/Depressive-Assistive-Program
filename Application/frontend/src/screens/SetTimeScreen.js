@@ -104,7 +104,7 @@ function SetTimeScreen() {
             onPress={() => handleDayPress(day)}
             style={[
               styles.dayButton,
-              {backgroundColor: isDaySelected(day) ? 'blue' : 'white'},
+              {backgroundColor: isDaySelected(day) ? '#5c84ff' : 'white'},
             ]}>
             <Text
               style={[
@@ -124,7 +124,8 @@ function SetTimeScreen() {
         }}>
         <View style={{flex: 1, marginRight: 10}}>
           <Text style={{textAlign: 'left', marginLeft: '10%'}}>From:</Text>
-          <Picker selectedValue={selectedFrom} onValueChange={onFromChange}>
+          {/* <View style={{borderBottomWidth:1}}> */}
+          <Picker selectedValue={selectedFrom} onValueChange={onFromChange} >
             {times.map((time, index) => (
               <Picker.Item
                 key={index}
@@ -133,6 +134,7 @@ function SetTimeScreen() {
               />
             ))}
           </Picker>
+          {/* </View> */}
         </View>
         <View style={{flex: 1, marginLeft: 10}}>
           <Text style={{textAlign: 'left', marginLeft: '10%'}}>To:</Text>

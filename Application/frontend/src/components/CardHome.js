@@ -32,13 +32,14 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     borderColor: 'green',
     borderWidth: 3,
+    width:300,
   },
   cardContent: {
     marginHorizontal: 18,
     marginVertical: 10,
     flexDirection: 'column',
     padding: 0,
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   Button_to_Doc_Detail: {
     backgroundColor: 'gray',

@@ -136,7 +136,8 @@ function HomeScreen({navigation, route}) {
 
   return (
     <>
-      <View style={styles.Search_Bar}>
+    {/* -------------------------------------------------------------------------------------------- */}
+      {/* <View style={styles.Search_Bar}>
         <TextInput
           style={styles.Text_Input}
           placeholder="ค้นหา"
@@ -145,7 +146,8 @@ function HomeScreen({navigation, route}) {
         <Image
           style={styles.search_Icon}
           source={require('../asset/Search.png')}></Image>
-      </View>
+      </View> */}
+      {/* -------------------------------------------------------------------------------------------- */}
       <View
         style={{
           flex: 1,
@@ -205,7 +207,7 @@ function HomeScreen({navigation, route}) {
               // fontWeight: 'bold',
               fontFamily:'Kanit-Regular'
             }}>
-            ปรึกษาแพทย์
+            นัดหมายของฉัน
           </Text>
           
           <View style={{width: '30%'}}></View>
