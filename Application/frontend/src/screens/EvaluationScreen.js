@@ -351,7 +351,7 @@ function EvaluationScreen({navigation, route}) {
     {
       id: 10,
       question:
-        'แบบทดสอบ PHQ-9 นี้ เป็นเพียงการประเมิน\nระดับภาวะซึมเศร้าในขั้นต้นเท่านั้น',
+        'แบบทดสอบ PHQ-9 นี้ เป็นเพียงการประเมิน\nระดับภาวะซึมเศร้าในขั้นต้นเท่านั้น \n คำวินิจฉัยจากทางแพทย์ถือเป็นที่สุด',
       answers: [
         {
           id: 1,
@@ -486,46 +486,72 @@ function EvaluationScreen({navigation, route}) {
           <View style={styles.container}>
             <Text style={styles.header}>Results</Text>
             {/* <Text style={styles.score}>
-              Your score on the PHQ-9 Depression test was: {totalScore}
+              ผลการทดสอบ PHQ-9 ของคุณwas: {totalScore}
             </Text> */}
             {totalScore >= 0 && totalScore <= 4 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}
+                ผลการทดสอบ PHQ-9 ของคุณ
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                  {'\n'} {totalScore} {'\n'}
+                </Text>
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
                 Normal
+                </Text>
               </Text>
             )}
             {totalScore >= 5 && totalScore <= 9 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore} Mild
+                ผลการทดสอบ PHQ-9 ของคุณ
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                  {'\n'} {totalScore} {'\n'}
+                </Text>
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
+                Mild
+                </Text>
                 {'\n'}
-                มีความผิดปกติ แต่ยังไม่มีภาวะซึมเศร้า
+                มีความผิดปกติเล็กน้อย อาจมีภาวะซึมเศร้า
               </Text>
             )}
             {totalScore >= 10 && totalScore <= 14 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Moderate {'\n'}
+                ผลการทดสอบ PHQ-9 ของคุณ
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                  {'\n'} {totalScore} {'\n'}
+                </Text>
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
+                Moderate </Text>
+                {'\n'}
                 มีภาวะซึมเศร้าเล็กน้อย
               </Text>
             )}
             {totalScore >= 15 && totalScore <= 19 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}{' '}
-                Morderate to severe {'\n'}
+                ผลการทดสอบ PHQ-9 ของคุณ
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                  {'\n'} {totalScore} {'\n'}
+                </Text>
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
+                Morderate to severe </Text>
+                {'\n'}
                 มีภาวะซึมเศร้าปานกลาง
               </Text>
             )}
             {totalScore >= 20 && (
               <Text style={styles.score}>
-                Your score on the PHQ-9 Depression test was: {totalScore}
-                {'\n'}Severe {'\n'}
+                ผลการทดสอบ PHQ-9 ของคุณ
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                  {'\n'} {totalScore} {'\n'}
+                </Text>
+                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24,}}>
+                Severe {'\n'}
+                </Text>
                 มีภาวะซึมเศร้ารุนแรง
               </Text>
             )}
             <TouchableOpacity
               style={styles.buttonHome}
               onPress={handleBackPress}>
-              <Text style={styles.buttonText}>Back to Home</Text>
+              <Text style={styles.buttonText}>ย้อนกลับ</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -571,9 +597,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
-  answerSet:{
+  answerSet: {
     flexDirection: 'column',
-    alignItems:'center',
+    alignItems: 'center',
   },
 
   SurveyPic: {

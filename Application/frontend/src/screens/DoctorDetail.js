@@ -88,11 +88,12 @@ function DoctorDetail({navigation, route}) {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
-        style={styles.Back_BTN}>
+        style={styles.backButton}>
         <Image
           source={require('../asset/BackBTN.png')}
-          style={styles.Back_Icon}></Image>
-        <Text style={{fontSize: 16, alignItems: 'center'}}>Back</Text>
+          style={styles.backIcon}
+        />
+        <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
       <View style={styles.countContainer_out}>
         {data !== null ? (
@@ -179,19 +180,14 @@ function DoctorDetail({navigation, route}) {
           </View>
           <View>
             <Picker selectedValue={selectedTime} onValueChange={onTimeChange}>
-            {timeArray.map((time, index) => (
-              <Picker.Item
-                key={index}
-                label={time}
-                value={time}
-              />
-            ))}
-          </Picker>
+              {timeArray.map((time, index) => (
+                <Picker.Item key={index} label={time} value={time} />
+              ))}
+            </Picker>
           </View>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => paymentContinue()}
-            >
+            onPress={() => paymentContinue()}>
             <Text>Continue</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={togglePopup}>
@@ -208,24 +204,23 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     paddingHorizontal: 10,
+    paddingVertical: 16,
     // borderWidth:2,
     // borderColor:'red'
   },
-  Back_BTN: {
+  backButton: {
     flexDirection: 'row',
-    // borderWidth: 1,
     alignItems: 'center',
-    marginVertical: 10,
-    marginTop: 15,
-    marginBottom: 150,
+    marginBottom: 16,
   },
-  Back_Icon: {
-    // backgroundColor:'green',
-    width: 30,
-    height: 30,
-    borderRadius: 100,
-    marginTop: 0,
-    marginHorizontal: 10,
+  backIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#007AFF',
   },
   button_Appointment: {
     alignItems: 'center',
@@ -243,10 +238,11 @@ const styles = StyleSheet.create({
     marginBottom: '6%',
   },
   countContainer_out: {
-    alignItems: 'flex-start',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 10,
     borderColor: 'black',
-    // borderWidth:1.5,
     borderRadius: 8,
     marginBottom: 24,
   },

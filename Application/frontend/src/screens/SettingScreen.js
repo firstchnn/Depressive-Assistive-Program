@@ -201,7 +201,7 @@ function SettingScreen({navigation}) {
             </TouchableOpacity>
           </View>
           <View style={{padding: '5%'}}>
-            <Text style={styles.label}>Name</Text>
+            <Text style={styles.labelHead}>Name</Text>
             <TextInput
               style={styles.input}
               value={name}
@@ -209,7 +209,7 @@ function SettingScreen({navigation}) {
               // onBlur={() => validateForm()}
             />
 
-            <Text style={styles.label}>Telephone</Text>
+            <Text style={styles.labelHead}>Telephone</Text>
             <TextInput
               style={styles.input}
               value={tel}
@@ -217,7 +217,7 @@ function SettingScreen({navigation}) {
               // onBlur={() => validateForm()}
             />
 
-            <Text style={styles.label}>Workplace</Text>
+            <Text style={styles.labelHead}>Workplace</Text>
             <TextInput
               style={styles.input}
               value={workplace}
@@ -225,7 +225,7 @@ function SettingScreen({navigation}) {
               // onBlur={() => validateForm()}
             />
 
-            <Text style={styles.label}>Expertise</Text>
+            <Text style={styles.labelHead}>Expertise</Text>
             <TextInput
               style={styles.input}
               value={expertise}
@@ -233,7 +233,7 @@ function SettingScreen({navigation}) {
               // onBlur={() => validateForm()}
             />
 
-            <Text style={styles.label}>Medical license number</Text>
+            <Text style={styles.labelHead}>Medical license number</Text>
             <TextInput
               style={styles.input}
               value={license}
@@ -314,10 +314,10 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     textAlign: 'left',
   },
-  label: {
+  labelHead: {
     fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 20,
+    fontFamily:'Kanit-Bold',
+    marginTop: 0,
   },
   input: {
     borderWidth: 1,
@@ -326,6 +326,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     marginBottom: 10,
+    fontFamily:'Kanit-Regular',
   },
   formContainer: {
     flex: 1,

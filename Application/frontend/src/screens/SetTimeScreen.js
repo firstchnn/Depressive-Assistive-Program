@@ -1,9 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  navigation,
+} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {UserContext} from '../components/UserContext';
+import {useNavigation} from '@react-navigation/native';
 
-function SetTimeScreen() {
+function SetTimeScreen({navigation, route}) {
   const {userData, setUserData} = React.useContext(UserContext);
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const [selectedDays, setSelectedDays] = useState([]);
@@ -69,34 +77,47 @@ function SetTimeScreen() {
 
   const updateDoctor = async () => {
     await fetch(`https://ce22.onrender.com/update-time/${userData.email}`, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          day : selectedDays.join(','),
-          timeFrom : selectedFrom,
-          timeTo : selectedTo,
-          price : currentPrice,
-        }),
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        day: selectedDays.join(','),
+        timeFrom: selectedFrom,
+        timeTo: selectedTo,
+        price: currentPrice,
+      }),
+    })
+      .then(res => {
+        console.log(res.status);
+        console.log(res.headers);
+        console.log('response = ', res);
+        console.log('response body:', res.text());
+        return res.json();
       })
-        .then(res => {
-          console.log(res.status);
-          console.log(res.headers);
-          console.log('response = ', res);
-          console.log('response body:', res.text());
-          return res.json();
-        })
-        .then(
-          result => {
-            console.log('result = ', result);
-          },
-          error => {
-            console.log('error = ', error);
-          },
-        );
-    };
+      .then(
+        result => {
+          console.log('result = ', result);
+        },
+        error => {
+          console.log('error = ', error);
+        },
+      );
+  };
 
   return (
     <View style={styles.container}>
+      <View style={styles.backBTN}>
+        <TouchableOpacity
+          // onPress={() => navigation.goBack()}
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}>
+          <Image
+            source={require('../asset/BackBTN.png')}
+            style={styles.backIcon}
+          />
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.headerText}>กำหนดตารางเวลารับงาน</Text>
       <View style={styles.daysContainer}>
         {daysOfWeek.map(day => (
           <TouchableOpacity
@@ -125,7 +146,7 @@ function SetTimeScreen() {
         <View style={{flex: 1, marginRight: 10}}>
           <Text style={{textAlign: 'left', marginLeft: '10%'}}>From:</Text>
           {/* <View style={{borderBottomWidth:1}}> */}
-          <Picker selectedValue={selectedFrom} onValueChange={onFromChange} >
+          <Picker selectedValue={selectedFrom} onValueChange={onFromChange}>
             {times.map((time, index) => (
               <Picker.Item
                 key={index}
@@ -196,7 +217,7 @@ function SetTimeScreen() {
       </View>
       <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 20}}>
         <TouchableOpacity style={styles.button} onPress={updateDoctor}>
-          <Text style={{fontFamily:'Kanit-Regular'}}>Update</Text>
+          <Text style={{fontFamily: 'Kanit-Regular'}}>Update</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -209,6 +230,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     // backgroundColor: '#F5FCFF',
+  },
+  backBTN: {
+    alignSelf: 'flex-start', 
+    margin: 16, 
+    marginBottom: 4
+  },
+  headerText: {
+    fontFamily: 'Kanit-Bold',
+    fontSize: 24,
+    marginTop: 8,
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    // marginBottom: 16,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#007AFF',
   },
   daysContainer: {
     flexDirection: 'row',
@@ -229,7 +274,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily:'Kanit-Bold',
+    fontFamily: 'Kanit-Bold',
   },
   timeButton: {
     flex: 1,
@@ -251,18 +296,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#82E7C9',
     padding: 10,
     marginBottom: '6%',
-    borderRadius:8,
+    borderRadius: 8,
   },
-  resetBtn:{
+  resetBtn: {
     alignItems: 'center',
     borderColor: '#82E7C9',
-    borderWidth:2,
+    borderWidth: 2,
     padding: 10,
     marginVertical: '6%',
-    borderRadius:8,
-    width:160,
-    alignSelf:'center'
-  }
+    borderRadius: 8,
+    width: 160,
+    alignSelf: 'center',
+  },
 });
 
 export default SetTimeScreen;

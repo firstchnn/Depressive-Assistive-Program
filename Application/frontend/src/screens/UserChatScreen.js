@@ -19,12 +19,10 @@ function UserChatScreen({navigation, route}) {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // Connect to socket.io server
     const newSocket = io('https://ce22.onrender.com/');
     setSocket(newSocket);
     console.log('Connected to socket');
 
-    // Cleanup function to disconnect from socket.io server when component unmounts
     return () => {
       newSocket.disconnect();
       console.log('Disconnected to socket');
@@ -34,22 +32,25 @@ function UserChatScreen({navigation, route}) {
   useEffect(() => {
     if (socket) {
       socket.on('chat message', response => {
-        if (response.role !== role)
+        if (response.role !== role) {
           setMessages(prevMessages => [
             ...prevMessages,
             {text: response.message, fromSender: false},
           ]);
+        }
       });
     }
   }, [socket]);
 
   const handleSend = role => {
-    setMessages(prevMessages => [
-      ...prevMessages,
-      {text: newMessage, fromSender: true, role},
-    ]);
-    socket.emit('chat message', {message: newMessage, role});
-    setNewMessage('');
+    if (newMessage.trim() !== '') {
+      setMessages(prevMessages => [
+        ...prevMessages,
+        {text: newMessage, fromSender: true, role},
+      ]);
+      socket.emit('chat message', {message: newMessage, role});
+      setNewMessage('');
+    }
   };
 
   useEffect(() => {
@@ -57,120 +58,134 @@ function UserChatScreen({navigation, route}) {
   }, [messages]);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
-        style={styles.Back_BTN}>
+        style={styles.backButton}>
         <Image
           source={require('../asset/BackBTN.png')}
-          style={styles.Back_Icon}></Image>
-        <Text style={{fontSize: 16, alignItems: 'center'}}>Back</Text>
+          style={styles.backIcon}
+        />
+        <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignSelf: 'center',
-          justifyContent: 'space-evenly',
-        }}>
-        {/* <Text>{role}</Text> */}
+      <View style={styles.disclaimerContainer}>
         <Image
           source={require('../asset/Exclamation.png')}
-          style={{
-            resizeMode: 'contain',
-            width: 30,
-            height: 30,
-            alignSelf: 'center',
-          }}></Image>
-        <Text
-          style={{
-            alignSelf: 'center',
-            fontFamily: 'Kanit-Regular',
-            marginLeft: 10,
-            fontSize:12,
-          }}>
+          style={styles.disclaimerIcon}
+        />
+        <Text style={styles.disclaimerText}>
           เราให้ความสำคัญกับข้อมูลส่วนบุคคลของผู้ใช้งาน{'\n'}
           กรุณารักษารักษาข้อมูลส่วนบุคคล และอย่ามอบข้อมูล{'\n'}
           ของท่านแก่บุคคลอื่น
         </Text>
       </View>
-
       <FlatList
         ref={flatListRef}
         data={messages}
         renderItem={({item}) => (
           <View
-            style={{
-              padding: 10,
-              margin: 10,
-              width: 'auto',
-              maxWidth: '70%',
-              alignSelf: item.fromSender ? 'flex-end' : 'flex-start',
-              // backgroundColor: item.fromSender ? '#F0B0C0' : '#9FC5E8',
-              backgroundColor: item.fromSender ? '#9FC5E8' : '#F0B0C0',
-              borderRadius: 8,
-            }}>
+            style={[
+              styles.messageContainer,
+              {alignSelf: item.fromSender ? 'flex-end' : 'flex-start'},
+              {backgroundColor: item.fromSender ? '#9FC5E8' : '#F0B0C0'},
+            ]}>
             <Text
-              style={{
-                fontFamily: 'Kanit-Regular',
-                fontSize: 16,
-                alignItems: item.fromSender ? 'flex-end' : 'flex-start',
-              }}>
+              style={[
+                styles.messageText,
+                {alignItems: item.fromSender ? 'flex-end' : 'flex-start'},
+              ]}>
               {item.text}
             </Text>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          margin: 10,
-          borderRadius: 8,
-        }}>
+      <View style={styles.inputContainer}>
         <TextInput
-          style={{
-            flex: 1,
-            paddingHorizontal: 10,
-            paddingVertical: 4,
-            marginRight: 2,
-            borderRadius: 8,
-            borderWidth: 0.6,
-          }}
+          style={styles.input}
           value={newMessage}
           onChangeText={setNewMessage}
           placeholder="Type your message here"
         />
         <TouchableOpacity
-          style={{
-            backgroundColor: '#82E7C9',
-            paddingVertical: 8,
-            paddingHorizontal: 12,
-            borderRadius: 8,
-          }}
+          style={styles.sendButton}
           onPress={() => handleSend(role)}>
-          <Text style={{fontFamily: 'Kanit-Regular'}}>SEND</Text>
+          <Text style={styles.sendButtonText}>Send</Text>
         </TouchableOpacity>
-        {/* <Button title="Send" onPress={() => handleSend(role)} /> */}
       </View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
-  Back_BTN: {
-    flexDirection: 'row',
-    // borderWidth: 1,
-    alignItems: 'center',
-    marginVertical: 10,
-    marginTop: 15,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 16,
   },
-  Back_Icon: {
-    // backgroundColor:'green',
-    width: 30,
-    height: 30,
-    borderRadius: 100,
-    marginTop: 0,
-    marginHorizontal: 10,
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#007AFF',
+  },
+  disclaimerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  disclaimerIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  disclaimerText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#777',
+    lineHeight: 20,
+  },
+  messageContainer: {
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    maxWidth: '80%',
+    marginVertical: 4,
+  },
+  messageText: {
+    fontSize: 16,
+    color: '#000',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderColor: '#ddd',
+    paddingTop: 8,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    backgroundColor: '#f8f8f8',
+    paddingHorizontal: 16,
+    borderRadius: 20,
+  },
+  sendButton: {
+    marginLeft: 8,
+    paddingHorizontal: 16,
+  },
+  sendButtonText: {
+    fontSize: 16,
+    color: '#007AFF',
   },
 });
+
 export default UserChatScreen;

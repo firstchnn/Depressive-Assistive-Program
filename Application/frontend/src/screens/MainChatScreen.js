@@ -19,8 +19,8 @@ function MainChatScreen({navigation}) {
     'สนทนาด้วยความเคารพ',
     'รับฟัง/พูดคุย ด้วยความเข้าใจ',
     'เห็นใจซึ่งกันและกัน',
-    'Text set 4',
-    'Text set 5',
+    'ไม่กดดัน ไม่เปรียบเทียบ',
+    // 'Text set 5',
   ];
 
   const [currentTextSet, setCurrentTextSet] = useState('');
