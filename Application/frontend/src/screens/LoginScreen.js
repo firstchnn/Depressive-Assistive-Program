@@ -28,6 +28,7 @@ const LoginScreen = ({navigation}) => {
   const googleSignIn = async () => {
     try {
       // Check if your device supports Google Play
+      await console.log('Google Signin is available')
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       // Get the users ID token
       const {idToken} = await GoogleSignin.signIn();
@@ -44,6 +45,7 @@ const LoginScreen = ({navigation}) => {
   };
 
   const postUser = async userData => {
+    await console.log('Posting user');
     await console.log('displayName:', userData.displayName);
     await console.log('email: ', userData.email);
     await console.log('emailVerified:', userData.emailVerified);
@@ -124,6 +126,7 @@ const LoginScreen = ({navigation}) => {
   const successLogin = async userData => {
     // console.log(userData)
     // await console.log(data)
+    await console.log('Navigating')
     await navigation.navigate('BottomNav', {
       displayName: userData.displayName,
       email: userData.email,
@@ -132,15 +135,6 @@ const LoginScreen = ({navigation}) => {
       phoneNumber: userData.phoneNumber,
       photoURL: userData.photoURL,
       uid: userData.uid,
-    });
-  };
-
-  const guestLogin = async () => {
-    await navigation.navigate('BottomNav', {
-      displayName: 'guest',
-      email: 'guest',
-      photo: 'guest',
-      uid: 'guest',
     });
   };
 

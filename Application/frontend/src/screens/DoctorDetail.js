@@ -9,23 +9,31 @@ import {
   Image,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import {Calendar} from 'react-native-calendars';
+import {todayString} from 'react-native-calendars/src/expandableCalendar/commons';
+import TimeDropdown from '../components/TimeDropdown';
 // import CalendarPicker from 'react-native-calendar-picker';
 
 function DoctorDetail({navigation, route}) {
-  const [count, setCount] = useState(0);
   const [doctorID, setDoctorID] = useState({});
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
   const [workDay, setWorkDay] = useState([]);
   const [workFrom, setWorkFrom] = useState();
   const [workTo, setWorkTo] = useState();
   const [timeArray, setTimeArray] = useState([]);
-  const [selectedTime, setSelectedTime] = useState(timeArray[0]);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [pickableDates, setPickableDates] = useState({});
+  const today = new Date();
+  const maxDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 30,
+  );
 
-  const onTimeChange = (itemValue, itemIndex) => {
-    setSelectedTime(itemValue);
+  const handleSelectTime = time => {
+    setSelectedTime(time);
   };
 
   const [popupVisible, setPopupVisible] = useState(false);
@@ -36,11 +44,7 @@ function DoctorDetail({navigation, route}) {
     setPopupVisible(!popupVisible);
     navigation.navigate('PaymentScreen');
   };
-  const [chosenDate, setChosenDate] = useState(new Date());
 
-  const showData = () => {
-    console.log(data._id);
-  };
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -51,12 +55,8 @@ function DoctorDetail({navigation, route}) {
       const json = await response.json();
       setData(json);
       setWorkDay(json.workday.split(','));
-      // setWorkTime(json.worktime.split(','));
-      // setWorkTime[1](json.worktime.split(5,10));
       setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
       setWorkTo(json.worktime.slice(5).replace(',', ':'));
-      console.log(json.workday);
-      console.log(json.worktime);
       createTimeArray(workFrom, workTo);
     } catch (error) {
       console.error(error);
@@ -75,13 +75,56 @@ function DoctorDetail({navigation, route}) {
       result.push(`${hours}:${minutes}`);
       current.setTime(current.getTime() + 30 * 60 * 1000); // add 30 minutes
     }
-    // result.push(workTo.replace(',',':'));
     setTimeArray(result);
-    console.log(result);
   }
+
+  const fetchPickableDates = async daysArray => {
+    const days = daysArray;
+    const times = ['04:00', '04:30', '05:00', '05:30'];
+    const pickableDates = {};
+    for (let i = 0; i < 30; i++) {
+      const date = new Date();
+      date.setDate(today.getDate() + i);
+      const day = date.toLocaleString('en-US', {weekday: 'short'});
+      // console.log(day.slice(0,3)+' '+days.includes(day.slice(0,3)))
+      if (days.includes(day.slice(0, 3))) {
+        // console.log(day + ' in days');
+        const dateString = date.toISOString().slice(0, 10);
+        pickableDates[dateString] = {
+          selectable: true,
+          marked: true,
+          disableTouchEvent: times.every(
+            time =>
+              new Date(`${dateString} ${time}`).getTime() <
+              new Date().getTime(),
+          ),
+        };
+      }
+    }
+    await setPickableDates(pickableDates);
+    await console.log(Object.keys(pickableDates)[0]);
+    for (let date in pickableDates) {
+      console.log(date);
+    }
+  };
+
+  const handleDayPress = day => {
+    for (let date in pickableDates) {
+      if (day.dateString === date) {
+        setSelectedDate(day.dateString);
+        console.log(day);
+      }
+    }
+  };
+
+  const markedDates = {
+    ...pickableDates,
+    [selectedDate]: {selected: true, marked: true},
+  };
 
   useEffect(() => {
     fetchData();
+    fetchPickableDates(workDay);
   }, []);
 
   return (
@@ -132,19 +175,6 @@ function DoctorDetail({navigation, route}) {
           <Text style={{alignSelf: 'center'}}>Loading...</Text>
         )}
       </View>
-      {/* <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={date => {
-          setOpen(false);
-          setDate(date);
-          paymentContinue();
-        }}
-        onCancel={() => {
-          setOpen(false);
-        }}
-      /> */}
       <TouchableOpacity
         style={styles.button_Appointment}
         onPress={() => togglePopup()}>
@@ -159,40 +189,28 @@ function DoctorDetail({navigation, route}) {
             padding: 10,
           }}>
           <Text style={{marginBottom: '6%'}}>Choose appointment time</Text>
-          <View style={styles.daysContainer}>
-            {workDay.map(day => (
-              <TouchableOpacity
-                key={day}
-                // onPress={() => handleDayPress(day)}
-                style={[
-                  styles.dayButton,
-                  // {backgroundColor: isDaySelected(day) ? 'blue' : 'white'},
-                ]}>
-                <Text
-                  style={[
-                    styles.dayText,
-                    // {color: isDaySelected(day) ? 'white' : 'black'},
-                  ]}>
-                  {day}
-                </Text>
-              </TouchableOpacity>
-            ))}
+          <View>
+            <Calendar
+              minDate={today.toISOString().slice(0, 10)}
+              maxDate={maxDate.toISOString().slice(0, 10)}
+              markedDates={markedDates}
+              onDayPress={handleDayPress}
+            />
           </View>
           <View>
-            <Picker selectedValue={selectedTime} onValueChange={onTimeChange}>
-              {timeArray.map((time, index) => (
-                <Picker.Item key={index} label={time} value={time} />
-              ))}
-            </Picker>
+            <TimeDropdown times={timeArray} onSelectTime={handleSelectTime} />
+            {selectedTime && <Text>Selected time: {selectedTime}</Text>}
           </View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => paymentContinue()}>
-            <Text>Continue</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={togglePopup}>
-            <Text>Close</Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => paymentContinue()}>
+              <Text>Continue</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={togglePopup}>
+              <Text>Close</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
