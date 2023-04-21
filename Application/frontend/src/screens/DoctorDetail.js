@@ -185,23 +185,55 @@ function DoctorDetail({navigation, route}) {
           style={{
             flex: 1,
             justifyContent: 'center',
-            alignItems: 'center',
+            // alignItems: 'center',
             padding: 10,
           }}>
           <Text style={{marginBottom: '6%'}}>Choose appointment time</Text>
-          <View>
+          <View 
+          style={{flex: 1, width: '100%'}}
+          >
             <Calendar
               minDate={today.toISOString().slice(0, 10)}
               maxDate={maxDate.toISOString().slice(0, 10)}
               markedDates={markedDates}
               onDayPress={handleDayPress}
+              style={{
+                // flex:1,
+                // alignSelf: 'stretch',
+                borderWidth: 0,
+                borderColor: 'green',
+                position: 'relative',
+              }}
             />
           </View>
-          <View>
+          {/* <View style={{flex:1, borderWidth: 3, borderColor: 'red'}}>
             <TimeDropdown times={timeArray} onSelectTime={handleSelectTime} />
             {selectedTime && <Text>Selected time: {selectedTime}</Text>}
-          </View>
-          <View>
+          </View> */}
+          <View
+            style={{
+              borderWidth: 0,
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifyContent: 'space-between',
+              flexDirection: 'column',
+              width: '80%',
+              marginTop: 'auto',
+              // position:'absolute',
+              // bottom:30
+            }}>
+            {/* <View style={{flex:1, borderWidth: 3, borderColor: 'red'}}> */}
+            <View
+              style={{
+                width: '60%',
+                borderWidth: 0,
+                borderColor: 'red',
+                borderRadius: 8,
+              }}>
+              <TimeDropdown times={timeArray} onSelectTime={handleSelectTime} />
+              {selectedTime && <Text>Selected time: {selectedTime}</Text>}
+            </View>
+            {/* </View>   */}
             <TouchableOpacity
               style={styles.buttonCtn}
               onPress={() => paymentContinue()}>
@@ -240,17 +272,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#007AFF',
   },
-  ContinueText:{
-    color:'black',
-    fontFamily:'Kanit-Regular',
+  ContinueText: {
+    color: 'black',
+    fontFamily: 'Kanit-Regular',
     // textDecorationLine:'underline',
-    textDecorationColor:'red',
+    textDecorationColor: 'red',
   },
-  closeText:{
-    color:'red',
-    fontFamily:'Kanit-Regular',
-    textDecorationLine:'underline',
-    textDecorationColor:'red',
+  closeText: {
+    color: 'red',
+    fontFamily: 'Kanit-Regular',
+    textDecorationLine: 'underline',
+    textDecorationColor: 'red',
   },
   button_Appointment: {
     alignItems: 'center',
@@ -265,18 +297,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#82E7C9',
     padding: 10,
-    marginBottom: '6%',
-    borderRadius:8,
-    width:'80%'
+    marginVertical: '2%',
+    marginTop: '24%',
+    borderRadius: 8,
+    width: '100%',
   },
   buttonCls: {
     alignItems: 'center',
-    borderWidth:1,
+    // borderWidth:1,
     // backgroundColor: '#82E7C9',
     padding: 10,
     marginBottom: '6%',
-    borderRadius:8,
-    width:'80%'
+    borderRadius: 8,
+    width: '80%',
   },
   countContainer_out: {
     flex: 1,

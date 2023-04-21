@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     marginHorizontal: 4,
     marginVertical: 6,
-    borderColor: 'green',
-    borderWidth: 3,
+    // borderColor: 'green',
+    // borderWidth: 3,
     width:300,
   },
   cardContent: {
