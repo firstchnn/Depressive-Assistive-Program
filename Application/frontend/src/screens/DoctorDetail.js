@@ -203,12 +203,12 @@ function DoctorDetail({navigation, route}) {
           </View>
           <View>
             <TouchableOpacity
-              style={styles.button}
+              style={styles.buttonCtn}
               onPress={() => paymentContinue()}>
-              <Text>Continue</Text>
+              <Text style={styles.ContinueText}>Continue</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={togglePopup}>
-              <Text>Close</Text>
+            <TouchableOpacity style={styles.buttonCls} onPress={togglePopup}>
+              <Text style={styles.closeText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
