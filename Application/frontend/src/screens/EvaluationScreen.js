@@ -583,8 +583,10 @@ const styles = StyleSheet.create({
     // paddingBottom:10,
     marginHorizontal: 18,
     borderRadius: 8,
+    elevation: 2,
   },
   buttonBack: {
+    elevation: 2,
     alignItems: 'center',
     backgroundColor: '#2986cc',
     padding: 20,

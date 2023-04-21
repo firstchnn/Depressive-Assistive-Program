@@ -178,7 +178,7 @@ function DoctorDetail({navigation, route}) {
               </TouchableOpacity>
             ))}
           </View>
-          <View>
+          <View style={{alignSelf:'center'}}>
             <Picker selectedValue={selectedTime} onValueChange={onTimeChange}>
               {timeArray.map((time, index) => (
                 <Picker.Item key={index} label={time} value={time} />
@@ -186,12 +186,12 @@ function DoctorDetail({navigation, route}) {
             </Picker>
           </View>
           <TouchableOpacity
-            style={styles.button}
+            style={styles.buttonCtn}
             onPress={() => paymentContinue()}>
-            <Text>Continue</Text>
+            <Text style={styles.ContinueText}>Continue</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={togglePopup}>
-            <Text>Close</Text>
+          <TouchableOpacity style={styles.buttonCls} onPress={togglePopup}>
+            <Text style={styles.closeText}>Close</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -222,6 +222,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#007AFF',
   },
+  ContinueText:{
+    color:'black',
+    fontFamily:'Kanit-Regular',
+    // textDecorationLine:'underline',
+    textDecorationColor:'red',
+  },
+  closeText:{
+    color:'red',
+    fontFamily:'Kanit-Regular',
+    textDecorationLine:'underline',
+    textDecorationColor:'red',
+  },
   button_Appointment: {
     alignItems: 'center',
     backgroundColor: '#82E7C9',
@@ -231,11 +243,22 @@ const styles = StyleSheet.create({
     width: 180,
     alignSelf: 'center',
   },
-  button: {
+  buttonCtn: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#82E7C9',
     padding: 10,
     marginBottom: '6%',
+    borderRadius:8,
+    width:'80%'
+  },
+  buttonCls: {
+    alignItems: 'center',
+    borderWidth:1,
+    // backgroundColor: '#82E7C9',
+    padding: 10,
+    marginBottom: '6%',
+    borderRadius:8,
+    width:'80%'
   },
   countContainer_out: {
     flex: 1,
@@ -249,7 +272,7 @@ const styles = StyleSheet.create({
   countContainer: {
     alignItems: 'flex-start',
     padding: 10,
-    borderColor: 'black',
+    borderColor: 'dimgrey',
     borderWidth: 1.5,
     borderRadius: 8,
     alignSelf: 'center',
