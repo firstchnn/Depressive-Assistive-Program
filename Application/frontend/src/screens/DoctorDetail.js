@@ -188,7 +188,7 @@ function DoctorDetail({navigation, route}) {
             // alignItems: 'center',
             padding: 10,
           }}>
-          <Text style={{marginBottom: '6%'}}>Choose appointment time</Text>
+          <Text style={{marginVertical: '6%',alignSelf:'center',fontFamily:'Kanit-Regular',fontSize:16}}>Choose appointment time</Text>
           <View 
           style={{flex: 1, width: '100%'}}
           >
