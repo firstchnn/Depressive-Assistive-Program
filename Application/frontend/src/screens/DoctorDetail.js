@@ -57,7 +57,8 @@ function DoctorDetail({navigation, route}) {
       setWorkDay(json.workday.split(','));
       setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
       setWorkTo(json.worktime.slice(5).replace(',', ':'));
-      createTimeArray(workFrom, workTo);
+      const tempTime = createTimeArray(workFrom, workTo);
+      await fetchPickableDates(json.workday.split(','), tempTime);
     } catch (error) {
       console.error(error);
     }
@@ -76,11 +77,14 @@ function DoctorDetail({navigation, route}) {
       current.setTime(current.getTime() + 30 * 60 * 1000); // add 30 minutes
     }
     setTimeArray(result);
+    return result;
   }
 
-  const fetchPickableDates = async daysArray => {
+  const fetchPickableDates = async (daysArray, timesArray) => {
     const days = daysArray;
-    const times = ['04:00', '04:30', '05:00', '05:30'];
+    const times = timesArray
+    await console.log()
+    // ['04:00', '04:30', '05:00', '05:30'];
     const pickableDates = {};
     for (let i = 0; i < 30; i++) {
       const date = new Date();
@@ -124,7 +128,7 @@ function DoctorDetail({navigation, route}) {
 
   useEffect(() => {
     fetchData();
-    fetchPickableDates(workDay);
+    // fetchPickableDates();
   }, []);
 
   return (
