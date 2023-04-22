@@ -76,7 +76,7 @@ function HomeScreen({navigation, route}) {
     },
     Text_Input: {
       borderColor: 'black',
-      borderWidth: 2,
+      borderWidth: 0,
       borderRadius: 32,
       width: 85 * vw,
       paddingLeft: 4 * vw,
@@ -154,14 +154,17 @@ function HomeScreen({navigation, route}) {
           alignItems: 'center',
           justifyContent: 'center',
           margin: 20,
+          borderWidth:0,
+          borderColor:'red',
+          
         }}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
             flexDirection: 'row',
             margin: 10,
-            // borderColor: 'red',
-            // borderWidth: 3,
+            borderColor: 'green',
+            borderWidth: 0,
           }}
           onPress={() => navigation.navigate('MainChat')}>
           <Image
@@ -194,11 +197,13 @@ function HomeScreen({navigation, route}) {
 
         <View
           style={{
-            alignItems: 'center',
-            flexDirection: 'row',
+            alignItems: 'flex-start',
+            // alignSelf:'auto',
+            // flexDirection: 'row',
             margin: 1,
-            // borderColor: 'blue',
-            // borderWidth: 3,
+            
+            borderColor: 'blue',
+            borderWidth: 0,
           }}>
           {/* <Text style={{marginRight: 20, fontSize: 20}}>ปรึกษาแพทย์</Text> */}
           <Text
@@ -211,7 +216,7 @@ function HomeScreen({navigation, route}) {
           </Text>
           
           <View style={{width: '30%'}}></View>
-          <TouchableOpacity onPress={() => navigation.navigate('DoctorList')}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate('DoctorList')}>
             <Text
               style={{
                 color: 'black',
@@ -222,7 +227,7 @@ function HomeScreen({navigation, route}) {
             >
               ดูเพิ่มเติม+
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View

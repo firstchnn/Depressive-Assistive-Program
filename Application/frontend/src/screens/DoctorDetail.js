@@ -108,7 +108,7 @@ function DoctorDetail({navigation, route}) {
     // return result;
   }
 
-  const fetchPickableDates = async (daysArray) => {
+  const fetchPickableDates = async daysArray => {
     const days = daysArray;
     // const times = timesArray;
     await console.log();
@@ -250,8 +250,10 @@ function DoctorDetail({navigation, route}) {
             <TimeDropdown times={timeArray} onSelectTime={handleSelectTime} />
             {selectedTime && <Text>Selected time: {selectedTime}</Text>}
           </View> */}
-          <View style={{
+          {/* <View
+            style={{
               borderWidth: 3,
+              borderColor: 'blue',
               alignItems: 'center',
               alignSelf: 'center',
               justifyContent: 'space-between',
@@ -260,41 +262,28 @@ function DoctorDetail({navigation, route}) {
               marginTop: 'auto',
               // position:'absolute',
               // bottom:30
+            }}></View> */}
+          <View
+            style={{
+              borderWidth: 0,
+              alignItems: 'center',
+              alignSelf: 'center',
+              // justifyContent: 'space-evenly',
+              flexDirection: 'column',
+              width: '80%',
+              marginTop: 'auto',
+              // position:'absolute',
+              // bottom:30
             }}>
-          { timeArray.length > 0 && (
-              <View
-              style={{
-                width: '60%',
-                borderWidth: 3,
-                borderColor: 'red',
-                borderRadius: 8,
-                alignItems: 'center',
-                marginBottom: 0,
-              }}>
+            <View style={{ borderWidth: 0, borderColor: 'red'}}>
+            {timeArray.length > 0 && (
               <WheelPicker
-              
                 selectedItem={selectedTime}
                 data={timeArray}
                 onItemSelected={handleSelectTime}
               />
-            </View>
             )}
-          </View>
-          <View
-            style={{
-              borderWidth: 3,
-              alignItems: 'center',
-              alignSelf: 'center',
-              justifyContent: 'space-between',
-              flexDirection: 'column',
-              width: '80%',
-              marginTop: 'auto',
-              // position:'absolute',
-              // bottom:30
-            }}>
-            {/* <View style={{flex:1, borderWidth: 3, borderColor: 'red'}}> */}
-            
-            {/* </View>   */}
+            </View>  
             <TouchableOpacity
               style={styles.buttonCtn}
               onPress={() => paymentContinue()}>
@@ -359,7 +348,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#82E7C9',
     padding: 10,
     marginVertical: '2%',
-    marginTop: '24%',
+    marginTop: '0%',
     borderRadius: 8,
     width: '100%',
   },
