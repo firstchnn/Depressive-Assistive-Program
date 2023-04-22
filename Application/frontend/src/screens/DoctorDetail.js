@@ -8,11 +8,17 @@ import {
   View,
   Image,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+// import {Picker} from '@react-native-picker/picker';
 import {Calendar} from 'react-native-calendars';
-import {todayString} from 'react-native-calendars/src/expandableCalendar/commons';
+// import {todayString} from 'react-native-calendars/src/expandableCalendar/commons';
 import TimeDropdown from '../components/TimeDropdown';
+// import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import CalendarPicker from 'react-native-calendar-picker';
+import {
+  WheelPicker,
+  TimePicker,
+  DatePicker,
+} from 'react-native-wheel-picker-android';
 
 function DoctorDetail({navigation, route}) {
   const [doctorID, setDoctorID] = useState({});
@@ -22,9 +28,18 @@ function DoctorDetail({navigation, route}) {
   const [workFrom, setWorkFrom] = useState();
   const [workTo, setWorkTo] = useState();
   const [timeArray, setTimeArray] = useState([]);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [pickableDates, setPickableDates] = useState({});
+  const wheelPickerData = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+  ];
   const today = new Date();
   const maxDate = new Date(
     today.getFullYear(),
@@ -35,6 +50,19 @@ function DoctorDetail({navigation, route}) {
   const handleSelectTime = time => {
     setSelectedTime(time);
   };
+
+  // const showTimePicker = () => {
+  //   setTimePickerVisibility(true);
+  // };
+
+  // const hideTimePicker = () => {
+  //   setTimePickerVisibility(false);
+  // };
+
+  // const handleTimeConfirm = time => {
+  //   setSelectedTime(time);
+  //   hideTimePicker();
+  // };
 
   const [popupVisible, setPopupVisible] = useState(false);
   const togglePopup = () => {
@@ -57,8 +85,8 @@ function DoctorDetail({navigation, route}) {
       setWorkDay(json.workday.split(','));
       setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
       setWorkTo(json.worktime.slice(5).replace(',', ':'));
-      const tempTime = createTimeArray(workFrom, workTo);
-      await fetchPickableDates(json.workday.split(','), tempTime);
+      await createTimeArray(workFrom, workTo);
+      await fetchPickableDates(json.workday.split(','));
     } catch (error) {
       console.error(error);
     }
@@ -77,13 +105,13 @@ function DoctorDetail({navigation, route}) {
       current.setTime(current.getTime() + 30 * 60 * 1000); // add 30 minutes
     }
     setTimeArray(result);
-    return result;
+    // return result;
   }
 
-  const fetchPickableDates = async (daysArray, timesArray) => {
+  const fetchPickableDates = async (daysArray) => {
     const days = daysArray;
-    const times = timesArray
-    await console.log()
+    // const times = timesArray;
+    await console.log();
     // ['04:00', '04:30', '05:00', '05:30'];
     const pickableDates = {};
     for (let i = 0; i < 30; i++) {
@@ -97,11 +125,11 @@ function DoctorDetail({navigation, route}) {
         pickableDates[dateString] = {
           selectable: true,
           marked: true,
-          disableTouchEvent: times.every(
-            time =>
-              new Date(`${dateString} ${time}`).getTime() <
-              new Date().getTime(),
-          ),
+          // disableTouchEvent: times.every(
+          //   time =>
+          //     new Date(`${dateString} ${time}`).getTime() <
+          //     new Date().getTime(),
+          // ),
         };
       }
     }
@@ -115,8 +143,10 @@ function DoctorDetail({navigation, route}) {
   const handleDayPress = day => {
     for (let date in pickableDates) {
       if (day.dateString === date) {
+        // showTimePicker();
         setSelectedDate(day.dateString);
         console.log(day);
+        break;
       }
     }
   };
@@ -192,10 +222,16 @@ function DoctorDetail({navigation, route}) {
             // alignItems: 'center',
             padding: 10,
           }}>
-          <Text style={{marginVertical: '6%',alignSelf:'center',fontFamily:'Kanit-Regular',fontSize:16}}>Choose appointment time</Text>
-          <View 
-          style={{flex: 1, width: '100%'}}
-          >
+          <Text
+            style={{
+              marginVertical: '6%',
+              alignSelf: 'center',
+              fontFamily: 'Kanit-Regular',
+              fontSize: 16,
+            }}>
+            Choose appointment time
+          </Text>
+          <View style={{flex: 1, width: '100%'}}>
             <Calendar
               minDate={today.toISOString().slice(0, 10)}
               maxDate={maxDate.toISOString().slice(0, 10)}
@@ -214,9 +250,39 @@ function DoctorDetail({navigation, route}) {
             <TimeDropdown times={timeArray} onSelectTime={handleSelectTime} />
             {selectedTime && <Text>Selected time: {selectedTime}</Text>}
           </View> */}
+          <View style={{
+              borderWidth: 3,
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifyContent: 'space-between',
+              flexDirection: 'column',
+              width: '80%',
+              marginTop: 'auto',
+              // position:'absolute',
+              // bottom:30
+            }}>
+          { timeArray.length > 0 && (
+              <View
+              style={{
+                width: '60%',
+                borderWidth: 3,
+                borderColor: 'red',
+                borderRadius: 8,
+                alignItems: 'center',
+                marginBottom: 0,
+              }}>
+              <WheelPicker
+              
+                selectedItem={selectedTime}
+                data={timeArray}
+                onItemSelected={handleSelectTime}
+              />
+            </View>
+            )}
+          </View>
           <View
             style={{
-              borderWidth: 0,
+              borderWidth: 3,
               alignItems: 'center',
               alignSelf: 'center',
               justifyContent: 'space-between',
@@ -227,16 +293,7 @@ function DoctorDetail({navigation, route}) {
               // bottom:30
             }}>
             {/* <View style={{flex:1, borderWidth: 3, borderColor: 'red'}}> */}
-            <View
-              style={{
-                width: '60%',
-                borderWidth: 0,
-                borderColor: 'red',
-                borderRadius: 8,
-              }}>
-              <TimeDropdown times={timeArray} onSelectTime={handleSelectTime} />
-              {selectedTime && <Text>Selected time: {selectedTime}</Text>}
-            </View>
+            
             {/* </View>   */}
             <TouchableOpacity
               style={styles.buttonCtn}
