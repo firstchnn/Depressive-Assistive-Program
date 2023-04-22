@@ -85,7 +85,10 @@ function DoctorDetail({navigation, route}) {
       setWorkDay(json.workday.split(','));
       setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
       setWorkTo(json.worktime.slice(5).replace(',', ':'));
-      await createTimeArray(workFrom, workTo);
+      await createTimeArray(
+        json.worktime.slice(0, 5).replace(',', ':'),
+        json.worktime.slice(5).replace(',', ':'),
+      );
       await fetchPickableDates(json.workday.split(','));
     } catch (error) {
       console.error(error);
@@ -275,15 +278,15 @@ function DoctorDetail({navigation, route}) {
               // position:'absolute',
               // bottom:30
             }}>
-            <View style={{ borderWidth: 0, borderColor: 'red'}}>
-            {timeArray.length > 0 && (
-              <WheelPicker
-                selectedItem={selectedTime}
-                data={timeArray}
-                onItemSelected={handleSelectTime}
-              />
-            )}
-            </View>  
+            <View style={{borderWidth: 0, borderColor: 'red'}}>
+              {timeArray.length > 0 && (
+                <WheelPicker
+                  selectedItem={selectedTime}
+                  data={timeArray}
+                  onItemSelected={handleSelectTime}
+                />
+              )}
+            </View>
             <TouchableOpacity
               style={styles.buttonCtn}
               onPress={() => paymentContinue()}>

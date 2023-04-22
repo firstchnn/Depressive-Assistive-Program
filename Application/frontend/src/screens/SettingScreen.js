@@ -8,14 +8,16 @@ import {
   Modal,
   Image,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import {UserContext} from '../components/UserContext';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary, ImagePicker} from 'react-native-image-picker';
 
 function SettingScreen({navigation}) {
   const nav = useNavigation();
+  const [uri, setUri] = useState(null);
   const {userData, setUserData} = React.useContext(UserContext);
   const [singleUser, setSingleUser] = useState({});
   const [popupVisible, setPopupVisible] = useState(false);
@@ -52,14 +54,17 @@ function SettingScreen({navigation}) {
       console.error(error);
     }
   };
-
+  
   const [name, setName] = useState('');
   const [tel, setTel] = useState('');
   const [workplace, setWorkplace] = useState('');
   const [expertise, setExpertise] = useState('');
   const [license, setLicense] = useState('');
   const [error, setError] = useState('');
-  const [imageUri, setImageUri] = useState(null);
+  // const [imageUri, setImageUri] = useState(null);
+  // const [selectedImage, setSelectedImage] = useState(null);
+  // const [selectedImageUri, setSelectedImageUri] = useState(null);
+  // const [filePath, setFilePath]=useState({});
 
   const postRequest = async () => {
     if (!name || !tel || !workplace || !expertise || !license) {
@@ -97,29 +102,57 @@ function SettingScreen({navigation}) {
     }
   };
 
-  const openGallery = () => {
-    const options = {
-      storageOptions : {
-        path : 'images',
-        mediaType : 'photo',
-      },
-      includeBase64 : true,
+  const chooseFile = (type) => {
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
     };
+  launchImageLibrary(options, (response) => {
+    console.log('Response = ', response);
 
-    launchImageLibrary(options, response => {
-      console.log('Response = ', response);
-      if(response.didCancel) {
-        console.log('User cancelled')
-      } else if(response.error){
-        console.log('IMGpicker Error : ',response.error);
-      } else if(response.customButton){
-        console.log('User tapped custom button : ',response.customButton);
-      } else {
-        const source = {usi: 'data:image/jpeg;base64' + response.base64};
-        setImageUri(source)
-      }
-    })
-  };
+    if (response.didCancel) {
+      alert('User cancelled camera picker');
+      return;
+    } else if (response.errorCode == 'camera_unavailable') {
+      alert('Camera not available on device');
+      return;
+    } else if (response.errorCode == 'permission') {
+      alert('Permission not satisfied');
+      return;
+    } else if (response.errorCode == 'others') {
+      alert(response.errorMessage);
+      return;
+    }
+    // const uri = response.assets[0].uri; // Added line to get the URI
+    if (response.assets && response.assets.length > 0) {
+      const uri = response.assets[0].uri; // Get the URI from assets array
+      console.log('uri -> ', uri);
+      setUri(uri);
+      // Do something with the uri
+    }
+    console.log('base64 -> ', response.base64);
+    console.log('width -> ', response.width);
+    console.log('height -> ', response.height);
+    console.log('fileSize -> ', response.fileSize);
+    console.log('type -> ', response.type);
+    console.log('fileName -> ', response.fileName);
+    
+    // const uri = response.uri;
+    // setFilePath(response);
+  });
+}
+
+  // const openGallery = () => {
+  //   const options = {
+  //     storageOptions: {
+  //       path: 'images',
+  //       mediaType: 'photo',
+  //     },
+  //     includeBase64: true,
+  //   };
+  // };
 
   useEffect(() => {
     fetchData();
@@ -133,8 +166,10 @@ function SettingScreen({navigation}) {
     // Navigate the user back to the login screen
     navigation.navigate('Login');
   };
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View >
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
         <TouchableOpacity style={styles.option} onPress={fetchData}>
@@ -186,6 +221,7 @@ function SettingScreen({navigation}) {
         </TouchableOpacity>
       </View>
       <Modal visible={popupVisible} animationType="slide">
+        <ScrollView>
         <View>
           <View
             style={{
@@ -240,14 +276,21 @@ function SettingScreen({navigation}) {
               onChangeText={setLicense}
               // onBlur={() => validateForm()}
             />
-
-            <TouchableOpacity style={styles.button} onPress={() => openGallery}>
+            {/* {selectedImage && ( */}
+              {/* {filePath && ( */}
+              {/* // <Image source={{ uri: selectedImage }} style={styles.ShownImage} /> */}
+              {/* <Image */}
+                {/* style={styles.image} // Update with your desired styles */}
+                {/* // source={{uri: filePath.uri}} */}
+                {/* Image source={{ uri }} */}
+              {/* /> */}
+            {/* )} */}
+            {uri && <Image style={styles.ShownImage} source={{ uri }} />}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => chooseFile('photo')}>
               <Text style={styles.buttonText}>Select Image</Text>
             </TouchableOpacity>
-            <Image
-            source={imageUri}
-            style={{height : 50,width:50,}}
-            />
 
             {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
             <TouchableOpacity
@@ -257,14 +300,16 @@ function SettingScreen({navigation}) {
             </TouchableOpacity>
           </View>
         </View>
+        </ScrollView>
       </Modal>
     </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     backgroundColor: 'white',
     // backgroundColor:'#6983CE',
   },
@@ -316,7 +361,7 @@ const styles = StyleSheet.create({
   },
   labelHead: {
     fontSize: 16,
-    fontFamily:'Kanit-Bold',
+    fontFamily: 'Kanit-Bold',
     marginTop: 0,
   },
   input: {
@@ -326,7 +371,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     marginBottom: 10,
-    fontFamily:'Kanit-Regular',
+    fontFamily: 'Kanit-Regular',
   },
   formContainer: {
     flex: 1,
@@ -341,6 +386,15 @@ const styles = StyleSheet.create({
     // paddingBottom:10,
     marginHorizontal: 18,
     borderRadius: 8,
+  },
+  ShownImage: {
+    height: 200,
+    width: 200,
+    alignSelf:'center',
+    marginVertical:16,
+    // padding:8,
+    borderWidth:3,
+    borderColor:'red'
   },
   buttonText: {
     color: '#000000',
