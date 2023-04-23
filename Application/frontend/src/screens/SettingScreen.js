@@ -67,11 +67,36 @@ function SettingScreen({navigation}) {
   // const [selectedImageUri, setSelectedImageUri] = useState(null);
   // const [filePath, setFilePath]=useState({});
 
+  const handleTextName = (text) => {
+    // Use a regular expression to check if the entered text contains any non-alphabetic characters
+    const alphabeticOnly = /^[A-Za-z\s]*$/;
+    if (alphabeticOnly.test(text)) {
+      // If the entered text contains only alphabetic characters, update the state
+      setName(text);
+    }
+  };
+
+  const handleTextPlace = (text) => {
+    // Use a regular expression to check if the entered text contains any non-alphabetic characters
+    const alphabeticOnly = /^[A-Za-z\s\d]*$/;
+    if (alphabeticOnly.test(text)) {
+      // If the entered text contains only alphabetic characters, update the state
+      setWorkplace(text);
+    }
+  };
+
+  const handleTextExpertise = (text) => {
+    // Use a regular expression to check if the entered text contains any non-alphabetic characters
+    const alphabeticOnly = /^[A-Za-z\s]*$/;
+    if (alphabeticOnly.test(text)) {
+      // If the entered text contains only alphabetic characters, update the state
+      setExpertise(text);
+    }
+  };
+
   const postRequest = async () => {
-    // let username = userData.email.substring(0, email.indexOf('@'));
-    //   console.log(username);
-    if (!name || !tel || !workplace || !expertise || !license ||!uri) {
-      setError('Please fill out all fields');
+    if (!name || !tel || !workplace || !expertise || !license) {
+      alert('Please fill out all fields');
       console.log('ERROR');
     } else {
       setError('');
@@ -124,10 +149,24 @@ function SettingScreen({navigation}) {
     };
     launchImageLibrary(options, response => {
       console.log('Response = ', response);
+
+      if (response.didCancel) {
+        // alert('User cancelled camera picker');
+        return;
+      } else if (response.errorCode == 'camera_unavailable') {
+        alert('Camera not available on device');
+        return;
+      } else if (response.errorCode == 'permission') {
+        alert('Permission not satisfied');
+        return;
+      } else if (response.errorCode == 'others') {
+        alert(response.errorMessage);
+        return;
+      }
+      // const uri = response.assets[0].uri; // Added line to get the URI
       if (response.assets && response.assets.length > 0) {
         const uri = response.assets[0].uri; // Get the URI from assets array
         console.log('uri -> ', uri);
-        console.log(response);
         setUri(uri);
         // Do something with the uri
       }
@@ -138,37 +177,10 @@ function SettingScreen({navigation}) {
       console.log('type -> ', response.type);
       console.log('fileName -> ', response.fileName);
 
-    if (response.didCancel) {
-      // alert('User cancelled camera picker');
-      return;
-    } else if (response.errorCode == 'camera_unavailable') {
-      alert('Camera not available on device');
-      return;
-    } else if (response.errorCode == 'permission') {
-      alert('Permission not satisfied');
-      return;
-    } else if (response.errorCode == 'others') {
-      alert(response.errorMessage);
-      return;
-    }
-    // const uri = response.assets[0].uri; // Added line to get the URI
-    if (response.assets && response.assets.length > 0) {
-      const uri = response.assets[0].uri; // Get the URI from assets array
-      console.log('uri -> ', uri);
-      setUri(uri);
-      // Do something with the uri
-    }
-    console.log('base64 -> ', response.base64);
-    console.log('width -> ', response.width);
-    console.log('height -> ', response.height);
-    console.log('fileSize -> ', response.fileSize);
-    console.log('type -> ', response.type);
-    console.log('fileName -> ', response.fileName);
-    
-    // const uri = response.uri;
-    // setFilePath(response);
-  });
-}
+      // const uri = response.uri;
+      // setFilePath(response);
+    });
+  };
 
   // const openGallery = () => {
   //   const options = {
@@ -244,124 +256,124 @@ function SettingScreen({navigation}) {
             onPress={() => nav.navigate('VideoCall')}>
             <Text style={styles.optionText}>VideoCall</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Notifications</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Privacy and Security</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Accounts Center</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.section}>
-        <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Support</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Report a Problem</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.option}
-          onPress={() => nav.navigate('VideoCall')}>
-          <Text style={styles.optionText}>VideoCall</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.option} onPress={handleLogout}>
-          <Text style={styles.optionText}>Log Out</Text>
-        </TouchableOpacity>
-      </View>
-      <Modal visible={popupVisible} animationType="slide">
-        <ScrollView>
-        <View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={styles.IndexNumber}>Request</Text>
-            <TouchableOpacity onPress={() => handleClose()}>
-              <Image
-                style={styles.ExitButton}
-                source={require('../asset/Close.png')}></Image>
-            </TouchableOpacity>
-          </View>
-          <View style={{padding: '5%'}}>
-            <View style={{flexDirection:'row'}}>
-
-            { name.length > 0 && (<View>
-              <Text style={styles.labelHead}>Name</Text>
-            </View>)}
-            { name.length <= 0 && (<View style={styles.labelHead2}>
-              <Text style={styles.labelHead}>Name</Text><Text style={styles.labelHead2}>{''} *</Text>
-            </View>)}
-            </View>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-              // onBlur={() => validateForm()}
-            />
-            <View style={{flexDirection:'row'}}>
-            { tel.length > 0 && (<View>
-              <Text style={styles.labelHead}>Telephone</Text>
-            </View>)}
-            { tel.length <= 0 && (<View style={styles.labelHead2}>
-              <Text style={styles.labelHead}>Telephone</Text><Text style={styles.labelHead2}>{''} *</Text>
-            </View>)}
-            </View>
-            <TextInput
-              style={styles.input}
-              value={tel}
-              onChangeText={setTel}
-              // onBlur={() => validateForm()}
-            />
-            <View style={{flexDirection:'row'}}>
-            { workplace.length > 0 && (<View>
-              <Text style={styles.labelHead}>Workplace</Text>
-            </View>)}
-            { workplace.length <= 0 && (<View style={styles.labelHead2}>
-              <Text style={styles.labelHead}>Workplace</Text><Text style={styles.labelHead2}>{''} *</Text>
-            </View>)}
-            </View>
-            <TextInput
-              style={styles.input}
-              value={workplace}
-              onChangeText={setWorkplace}
-              // onBlur={() => validateForm()}
-            />
-            <View style={{flexDirection:'row'}}>
-            { expertise.length > 0 && (<View>
-              <Text style={styles.labelHead}>Expertise</Text>
-            </View>)}
-            { expertise.length <= 0 && (<View style={styles.labelHead2}>
-              <Text style={styles.labelHead}>Expertise</Text><Text style={styles.labelHead2}>{''} *</Text>
-            </View>)}
-            </View>
-            <TextInput
-              style={styles.input}
-              value={expertise}
-              onChangeText={setExpertise}
-              // onBlur={() => validateForm()}
-            />
-            <View style={{flexDirection:'row'}}>
-            <Text style={styles.labelHead}>Medical license number</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              value={license}
-              onChangeText={setLicense}
-              // onBlur={() => validateForm()}
-            />
-            {/* {selectedImage && ( */}
-              {/* {filePath && ( */}
-              {/* // <Image source={{ uri: selectedImage }} style={styles.ShownImage} /> */}
-              {/* <Image */}
-                {/* style={styles.image} // Update with your desired styles */}
-                {/* // source={{uri: filePath.uri}} */}
-                {/* Image source={{ uri }} */}
-                {/* /> */}
-                {/* )} */}
+          <TouchableOpacity style={styles.option} onPress={handleLogout}>
+            <Text style={styles.optionText}>Log Out</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal visible={popupVisible} animationType="slide">
+          <ScrollView>
+            <View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={styles.IndexNumber}>
+                  Request Professional Account
+                </Text>
+                <TouchableOpacity onPress={() => handleClose()}>
+                  <Image
+                    style={styles.ExitButton}
+                    source={require('../asset/Close.png')}></Image>
+                </TouchableOpacity>
+              </View>
+              <View style={{padding: '5%'}}>
+                <View style={{flexDirection: 'row'}}>
+                  {name.length > 0 && (
+                    <View>
+                      <Text style={styles.labelHead}>Name</Text>
+                    </View>
+                  )}
+                  {name.length <= 0 && (
+                    <View style={styles.labelHead2}>
+                      <Text style={styles.labelHead}>Name</Text>
+                      <Text style={styles.labelHead2}>{''} *</Text>
+                    </View>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.input}
+                  value={name}
+                  onChangeText={handleTextName}
+                  keyboardType="default"
+                  // onBlur={() => validateForm()}
+                />
+                <View style={{flexDirection: 'row'}}>
+                  {tel.length > 0 && (
+                    <View>
+                      <Text style={styles.labelHead}>Telephone</Text>
+                    </View>
+                  )}
+                  {tel.length <= 0 && (
+                    <View style={styles.labelHead2}>
+                      <Text style={styles.labelHead}>Telephone</Text>
+                      <Text style={styles.labelHead2}>{''} *</Text>
+                    </View>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.input}
+                  value={tel}
+                  onChangeText={setTel}
+                  keyboardType='numeric'
+                  // onBlur={() => validateForm()}
+                />
+                <View style={{flexDirection: 'row'}}>
+                  {workplace.length > 0 && (
+                    <View>
+                      <Text style={styles.labelHead}>Workplace</Text>
+                    </View>
+                  )}
+                  {workplace.length <= 0 && (
+                    <View style={styles.labelHead2}>
+                      <Text style={styles.labelHead}>Workplace</Text>
+                      <Text style={styles.labelHead2}>{''} *</Text>
+                    </View>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.input}
+                  value={workplace}
+                  onChangeText={handleTextPlace}
+                  // onBlur={() => validateForm()}
+                />
+                <View style={{flexDirection: 'row'}}>
+                  {expertise.length > 0 && (
+                    <View>
+                      <Text style={styles.labelHead}>Expertise</Text>
+                    </View>
+                  )}
+                  {expertise.length <= 0 && (
+                    <View style={styles.labelHead2}>
+                      <Text style={styles.labelHead}>Expertise</Text>
+                      <Text style={styles.labelHead2}>{''} *</Text>
+                    </View>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.input}
+                  value={expertise}
+                  onChangeText={handleTextExpertise}
+                  // onBlur={() => validateForm()}
+                />
+                {license.length > 0 && (
+                  <View>
+                    <Text style={styles.labelHead}>Medical license number</Text>
+                  </View>
+                )}
+                {license.length <= 0 && (
+                  <View style={styles.labelHead2}>
+                    <Text style={styles.labelHead}>Medical license number</Text>
+                    <Text style={styles.labelHead2}>{''} *</Text>
+                  </View>
+                )}
+                <TextInput
+                  style={styles.input}
+                  value={license}
+                  keyboardType='numeric'
+                  onChangeText={setLicense}
+                />
                 {uri && <Image style={styles.ShownImage} source={{uri}} />}
                 <TouchableOpacity
                   style={styles.button}
@@ -369,7 +381,7 @@ function SettingScreen({navigation}) {
                   <Text style={styles.buttonText}>Select Image</Text>
                 </TouchableOpacity>
 
-                {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+                {/* {error ? <Text style={{color: 'red'}}>{error}</Text> : null} */}
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => postRequest()}>
@@ -445,8 +457,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Kanit-Bold',
     marginTop: 0,
-    color:'#cc0000',
-    flexDirection:'row',
+    color: '#cc0000',
+    flexDirection: 'row',
   },
   input: {
     borderWidth: 1,
@@ -474,9 +486,9 @@ const styles = StyleSheet.create({
   ShownImage: {
     height: 200,
     width: 200,
-    alignSelf:'center',
-    marginVertical:16,
-    resizeMode:'contain',
+    alignSelf: 'center',
+    marginVertical: 16,
+    resizeMode: 'contain',
     // padding:8,
     // borderWidth:0,
     // borderColor:'red'
