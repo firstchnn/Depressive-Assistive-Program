@@ -54,7 +54,7 @@ function SettingScreen({navigation}) {
       console.error(error);
     }
   };
-  
+
   const [name, setName] = useState('');
   const [tel, setTel] = useState('');
   const [workplace, setWorkplace] = useState('');
@@ -113,7 +113,7 @@ function SettingScreen({navigation}) {
     console.log('Response = ', response);
 
     if (response.didCancel) {
-      alert('User cancelled camera picker');
+      // alert('User cancelled camera picker');
       return;
     } else if (response.errorCode == 'camera_unavailable') {
       alert('Camera not available on device');
@@ -237,39 +237,66 @@ function SettingScreen({navigation}) {
             </TouchableOpacity>
           </View>
           <View style={{padding: '5%'}}>
-            <Text style={styles.labelHead}>Name</Text>
+            <View style={{flexDirection:'row'}}>
+
+            { name.length > 0 && (<View>
+              <Text style={styles.labelHead}>Name</Text>
+            </View>)}
+            { name.length <= 0 && (<View style={styles.labelHead2}>
+              <Text style={styles.labelHead}>Name</Text><Text style={styles.labelHead2}>{''} *</Text>
+            </View>)}
+            </View>
             <TextInput
               style={styles.input}
               value={name}
               onChangeText={setName}
               // onBlur={() => validateForm()}
             />
-
-            <Text style={styles.labelHead}>Telephone</Text>
+            <View style={{flexDirection:'row'}}>
+            { tel.length > 0 && (<View>
+              <Text style={styles.labelHead}>Telephone</Text>
+            </View>)}
+            { tel.length <= 0 && (<View style={styles.labelHead2}>
+              <Text style={styles.labelHead}>Telephone</Text><Text style={styles.labelHead2}>{''} *</Text>
+            </View>)}
+            </View>
             <TextInput
               style={styles.input}
               value={tel}
               onChangeText={setTel}
               // onBlur={() => validateForm()}
             />
-
-            <Text style={styles.labelHead}>Workplace</Text>
+            <View style={{flexDirection:'row'}}>
+            { workplace.length > 0 && (<View>
+              <Text style={styles.labelHead}>Workplace</Text>
+            </View>)}
+            { workplace.length <= 0 && (<View style={styles.labelHead2}>
+              <Text style={styles.labelHead}>Workplace</Text><Text style={styles.labelHead2}>{''} *</Text>
+            </View>)}
+            </View>
             <TextInput
               style={styles.input}
               value={workplace}
               onChangeText={setWorkplace}
               // onBlur={() => validateForm()}
             />
-
-            <Text style={styles.labelHead}>Expertise</Text>
+            <View style={{flexDirection:'row'}}>
+            { expertise.length > 0 && (<View>
+              <Text style={styles.labelHead}>Expertise</Text>
+            </View>)}
+            { expertise.length <= 0 && (<View style={styles.labelHead2}>
+              <Text style={styles.labelHead}>Expertise</Text><Text style={styles.labelHead2}>{''} *</Text>
+            </View>)}
+            </View>
             <TextInput
               style={styles.input}
               value={expertise}
               onChangeText={setExpertise}
               // onBlur={() => validateForm()}
             />
-
+            <View style={{flexDirection:'row'}}>
             <Text style={styles.labelHead}>Medical license number</Text>
+            </View>
             <TextInput
               style={styles.input}
               value={license}
@@ -364,6 +391,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit-Bold',
     marginTop: 0,
   },
+  labelHead2: {
+    fontSize: 16,
+    fontFamily: 'Kanit-Bold',
+    marginTop: 0,
+    color:'#cc0000',
+    flexDirection:'row',
+  },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
@@ -392,9 +426,10 @@ const styles = StyleSheet.create({
     width: 200,
     alignSelf:'center',
     marginVertical:16,
+    resizeMode:'contain',
     // padding:8,
-    borderWidth:3,
-    borderColor:'red'
+    // borderWidth:0,
+    // borderColor:'red'
   },
   buttonText: {
     color: '#000000',

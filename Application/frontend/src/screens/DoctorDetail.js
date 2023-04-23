@@ -202,10 +202,14 @@ function DoctorDetail({navigation, route}) {
             </Text>
             {/* <Text></Text> */}
             <Text style={{fontFamily: 'Kanit-Regular'}}>
-              Rating: {data.ovr_rating}
+              Price: {data.price}
             </Text>
             <Text style={{fontFamily: 'Kanit-Regular'}}>
-              consultant: {data.consultantNumber}
+              Work day: {data.workday}
+            </Text>
+            <Text style={{fontFamily: 'Kanit-Regular'}}>
+              Work time: {data.worktime.slice(0, 5).replace(',', ':')} -{' '}
+              {data.worktime.slice(5).replace(',', ':')}
             </Text>
           </View>
         ) : (
