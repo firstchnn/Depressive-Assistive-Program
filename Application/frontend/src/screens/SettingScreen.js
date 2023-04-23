@@ -160,7 +160,7 @@ function SettingScreen({navigation}) {
           workplace: workplace,
           expertise: expertise,
           medicalNumber: license,
-          imageData : imageurl,
+          imageURL : imageurl,
         }),
       })
         .then(res => {
