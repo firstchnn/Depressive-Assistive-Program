@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 // import {Picker} from '@react-native-picker/picker';
 import {Calendar} from 'react-native-calendars';
@@ -209,7 +210,16 @@ function DoctorDetail({navigation, route}) {
             </Text>
           </View>
         ) : (
+          <View>
+                            <ActivityIndicator
+        size="large"
+        color="#00ff00"
+        style={styles.spinner}
+        animating={true}
+        transform={[{rotate: '45deg'}]}
+      />
           <Text style={{alignSelf: 'center'}}>Loading...</Text>
+          </View>
         )}
       </View>
       <TouchableOpacity
@@ -224,6 +234,7 @@ function DoctorDetail({navigation, route}) {
             justifyContent: 'center',
             // alignItems: 'center',
             padding: 10,
+            borderWidth:0,
           }}>
           <Text
             style={{
@@ -254,12 +265,9 @@ function DoctorDetail({navigation, route}) {
               borderWidth: 0,
               alignItems: 'center',
               alignSelf: 'center',
-              // justifyContent: 'space-evenly',
               flexDirection: 'column',
               width: '80%',
               marginTop: 'auto',
-              // position:'absolute',
-              // bottom:30
             }}>
             <View style={{borderWidth: 0, borderColor: 'red'}}>
               {timeArray.length > 0 && (
@@ -337,6 +345,16 @@ const styles = StyleSheet.create({
     marginTop: '0%',
     borderRadius: 8,
     width: '100%',
+  },
+  circle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner: {
+    transform: [{rotate: '45deg'}],
+    marginBottom:4,
+    alignSelf:'center',
   },
   buttonCls: {
     alignItems: 'center',

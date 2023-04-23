@@ -11,17 +11,20 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
+import {ViewShot} from 'react-native-view-shot';
+import {CameraRoll} from '@react-native-community/cameraroll';
+import Share from 'react-native-share';
 // import Omise from 'omise-react-native';
 
 function PaymentScreen({navigation, route}) {
   const nav = useNavigation();
   const [data, setData] = useState({});
   const [qrData, setQrData] = useState('');
-
-  const handleData = async(data) => {
-    await setData(data.params)
-    await createQR(data.params.amount)
-  }
+  const viewShotRef = useRef();
+  const handleData = async data => {
+    await setData(data.params);
+    await createQR(data.params.amount);
+  };
 
   const makeAppointment = async data => {
     await fetch(`https://ce22.onrender.com/appointment/${data.email}`, {
@@ -76,49 +79,38 @@ function PaymentScreen({navigation, route}) {
     setData(route.params);
     console.log(route.params);
     createQR(route.params);
-    // handleData(route.params);
   }, []);
-  // const Spinner = () => {
-  //   const [rotationAngle, setRotationAngle] = useState(0);
-
-  //   useEffect(() => {
-  //     const intervalId = setInterval(() => {
-  //       setRotationAngle(angle => angle + 10);
-  //     }, 50);
-  //     return () => clearInterval(intervalId);
-  //   }, []);
-  // };
 
   return (
-    <View style={styles.circle}>
-      <View style={styles.countContainer}>
+    <View>
+      <View style={{alignSelf:'center',marginTop:20}}>
         <Text style={{fontFamily: 'Kanit-Regular'}}>Payment</Text>
       </View>
-      {/* <View style={styles.countContainer}>
-      {qrCodeData ? (
-        <QRCode value={qrCodeData} />
-      ) : (
-        <Text style={styles.loadingText}>Loading QR code...</Text>
-      )}
-      </View> */}
-      {qrData && (
-        <View style={styles.countContainer}>
-        <QRCode value={qrData} size={200} />
+      <View style={styles.circle}>
+        <View style={{borderWidth: 0, borderColor: 'red'}}>
+          {qrData ? (
+          <View style={styles.countContainer}>
+            <QRCode value={qrData} size={200} />
+          </View>
+        ) : (
+          <ActivityIndicator
+            size="large"
+            color="#00ff00"
+            style={styles.spinner}
+            animating={true}
+            transform={[{rotate: '45deg'}]}
+          />
+        )}
+        </View>
       </View>
-      )}
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => makeAppointment(data)}>
-        <Text style={{fontFamily: 'Kanit-Regular'}}>Confirm Payment</Text>
-      </TouchableOpacity>
-      <ActivityIndicator
-        size="large"
-        color="#00ff00"
-        style={styles.spinner}
-        animating={true}
-        transform={[{rotate: '45deg'}]}
-      />
+      <View style={{marginTop: 400, borderWidth: 0}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => makeAppointment(data)}>
+          <Text style={{fontFamily: 'Kanit-Regular'}}>Confirm Payment</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -131,24 +123,39 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
+    alignSelf: 'center',
     backgroundColor: '#82E7C9',
     padding: 10,
-    marginTop: 10,
+    marginTop: 'auto',
     borderRadius: 8,
     marginBottom: '6%',
+    width: 240,
   },
+  // button: {
+  //   alignSelf: 'center',
+  //   backgroundColor: '#82E7C9', /* Replace with your desired background color */
+  //   paddingVertical: 10,
+  //   paddingHorizontal: 20,
+  //   borderRadius: 5,
+  //   elevation: 3, /* Add elevation for a raised effect */
+  // },
   countContainer: {
+    flex: 1,
     alignItems: 'center',
     padding: 10,
-    marginBottom: 10,
+    marginVertical: 20,
   },
   circle: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 50,
+    borderWidth: 0,
+    borderColor: 'purple',
+    flex: 1,
   },
   spinner: {
     transform: [{rotate: '45deg'}],
+    alignSelf:'center',
   },
 });
 
