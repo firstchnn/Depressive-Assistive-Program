@@ -65,7 +65,7 @@ function DoctorDetail({navigation, route}) {
       day: selectedDate,
       time: timeArray[selectedTime],
       doctorName : data.name,
-      amount: data.price,
+      amount: data.price*100,
      });
   };
 

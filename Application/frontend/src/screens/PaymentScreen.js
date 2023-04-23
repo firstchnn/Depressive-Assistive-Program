@@ -18,9 +18,14 @@ function PaymentScreen({navigation, route}) {
   const [data, setData] = useState({});
   const [qrData, setQrData] = useState('');
 
+  const handleData = async(data) => {
+    await setData(data.params)
+    await createQR(data.params.amount)
+  }
+
   const makeAppointment = async data => {
     await fetch(`https://ce22.onrender.com/appointment/${data.email}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         day: data.day,
@@ -48,7 +53,8 @@ function PaymentScreen({navigation, route}) {
 
   const createQR = async data => {
     await console.log('getting QR data...');
-    await fetch(`https://ce22.onrender.com/create-payment`, {
+    // console.log(data.amount)
+    await fetch('https://ce22.onrender.com/create-payment', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -69,7 +75,8 @@ function PaymentScreen({navigation, route}) {
   useEffect(() => {
     setData(route.params);
     console.log(route.params);
-    createQR(route.params.amount);
+    createQR(route.params);
+    // handleData(route.params);
   }, []);
   // const Spinner = () => {
   //   const [rotationAngle, setRotationAngle] = useState(0);
