@@ -52,7 +52,7 @@ function DoctorDetail({navigation, route}) {
 
   const handleSelectTime = time => {
     setSelectedTime(time);
-    console.log(timeArray[time]);
+    // console.log(timeArray[time]);
   };
 
   const [popupVisible, setPopupVisible] = useState(false);
@@ -82,9 +82,12 @@ function DoctorDetail({navigation, route}) {
       setWorkDay(json.workday.split(','));
       setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
       setWorkTo(json.worktime.slice(5).replace(',', ':'));
+      // json.appointment.pop(0);
+      // console.log(json.appointment[0])
       await createTimeArray(
         json.worktime.slice(0, 5).replace(',', ':'),
         json.worktime.slice(5).replace(',', ':'),
+        json.appointment
       );
       await fetchPickableDates(json.workday.split(','));
     } catch (error) {
@@ -94,24 +97,30 @@ function DoctorDetail({navigation, route}) {
     setIsLoading(false);
   };
 
-  function createTimeArray(startTime, endTime) {
+  function createTimeArray(startTime, endTime, appointment) {
     const result = [];
+    // console.log(appointment);
+    const temp1 = [];
     let current = new Date(`2023-01-01T${startTime}:00`);
     const end = new Date(`2023-01-01T${endTime}:00`);
     while (current < end) {
       const hours = current.getHours().toString().padStart(2, '0');
       const minutes = current.getMinutes().toString().padStart(2, '0');
-      result.push(`${hours}:${minutes}`);
+      result.push(`${hours}:${minutes}`);     
       current.setTime(current.getTime() + 30 * 60 * 1000); // add 30 minutes
     }
-    setTimeArray(result);
+    for (let i = 0; i < appointment.length - 1; i++) {
+      temp1.push(appointment[i+1].time);
+    }
+    const temp2 = result.filter(item => !temp1.includes(item));
+    setTimeArray(temp2);
     // return result;
   }
 
   const fetchPickableDates = async daysArray => {
     const days = daysArray;
     // const times = timesArray;
-    await console.log();
+    // await console.log();
     // ['04:00', '04:30', '05:00', '05:30'];
     const pickableDates = {};
     for (let i = 0; i < 30; i++) {
@@ -134,9 +143,9 @@ function DoctorDetail({navigation, route}) {
       }
     }
     await setPickableDates(pickableDates);
-    await console.log(Object.keys(pickableDates)[0]);
+    // await console.log(Object.keys(pickableDates)[0]);
     for (let date in pickableDates) {
-      console.log(date);
+      // console.log(date);
     }
   };
 
@@ -145,7 +154,7 @@ function DoctorDetail({navigation, route}) {
       if (day.dateString === date) {
         // showTimePicker();
         setSelectedDate(day.dateString);
-        console.log(day);
+        // console.log(day);
         break;
       }
     }
