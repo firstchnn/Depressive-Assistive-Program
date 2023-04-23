@@ -18,14 +18,56 @@ import {launchImageLibrary, ImagePicker} from 'react-native-image-picker';
 function SettingScreen({navigation}) {
   const nav = useNavigation();
   const [uri, setUri] = useState(null);
+  const [type, setType] = useState('');
   const {userData, setUserData} = React.useContext(UserContext);
   const [singleUser, setSingleUser] = useState({});
   const [popupVisible, setPopupVisible] = useState(false);
+  const [imageURL, setImageURL] = useState('');
   const togglePopup = () => {
     setPopupVisible(!popupVisible);
   };
   const handleClose = async () => {
     await togglePopup();
+  };
+
+  const handleUpload = () => {
+    if (!name || !tel || !workplace || !expertise || !license) {
+      alert('Please fill out all fields');
+      console.log('ERROR');
+    } else{
+      let newFile = {
+        uri: uri,
+        type: `image/${type}`,
+        name: `${name}.${type}`,
+      };
+      console.log(newFile);
+      cloudUpload(newFile);
+    }
+    
+  };
+
+  const cloudUpload = image => {
+    const data = new FormData();
+    data.append('file', {
+      uri: image.uri,
+      type: image.type,
+      name: image.name,
+    });
+    data.append('upload_preset', 'CEP_DEMO');
+    data.append('cloud_name', 'dl8ybibuu');
+
+    fetch('https://api.cloudinary.com/v1_1/dl8ybibuu/image/upload', {
+      method: 'POST',
+      body: data,
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        postRequest(data);
+      })
+      .catch(error => {
+        console.error('Error uploading image:', error);
+      });
   };
 
   function encodeEmail(email) {
@@ -67,7 +109,7 @@ function SettingScreen({navigation}) {
   // const [selectedImageUri, setSelectedImageUri] = useState(null);
   // const [filePath, setFilePath]=useState({});
 
-  const handleTextName = (text) => {
+  const handleTextName = text => {
     // Use a regular expression to check if the entered text contains any non-alphabetic characters
     const alphabeticOnly = /^[A-Za-z\s]*$/;
     if (alphabeticOnly.test(text)) {
@@ -76,7 +118,7 @@ function SettingScreen({navigation}) {
     }
   };
 
-  const handleTextPlace = (text) => {
+  const handleTextPlace = text => {
     // Use a regular expression to check if the entered text contains any non-alphabetic characters
     const alphabeticOnly = /^[A-Za-z\s\d]*$/;
     if (alphabeticOnly.test(text)) {
@@ -85,7 +127,7 @@ function SettingScreen({navigation}) {
     }
   };
 
-  const handleTextExpertise = (text) => {
+  const handleTextExpertise = text => {
     // Use a regular expression to check if the entered text contains any non-alphabetic characters
     const alphabeticOnly = /^[A-Za-z\s]*$/;
     if (alphabeticOnly.test(text)) {
@@ -94,7 +136,7 @@ function SettingScreen({navigation}) {
     }
   };
 
-  const postRequest = async () => {
+  const postRequest = async (imageurl) => {
     if (!name || !tel || !workplace || !expertise || !license) {
       alert('Please fill out all fields');
       console.log('ERROR');
@@ -110,15 +152,15 @@ function SettingScreen({navigation}) {
       });
       await fetch('https://ce22.onrender.com/requests', {
         method: 'POST',
-        headers: {'Content-Type': 'multipart/form-data'},
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           name: name,
           email: userData.email,
           tel: tel,
           workplace: workplace,
           expertise: expertise,
-          medicalNumber : license,
-          formData: formData,
+          medicalNumber: license,
+          imageData : imageurl,
         }),
       })
         .then(res => {
@@ -168,6 +210,8 @@ function SettingScreen({navigation}) {
         const uri = response.assets[0].uri; // Get the URI from assets array
         console.log('uri -> ', uri);
         setUri(uri);
+        console.log('type -> ', uri.split('.')[2]);
+        setType(uri.split('.')[2]);
         // Do something with the uri
       }
       console.log('base64 -> ', response.base64);
@@ -316,7 +360,7 @@ function SettingScreen({navigation}) {
                   style={styles.input}
                   value={tel}
                   onChangeText={setTel}
-                  keyboardType='numeric'
+                  keyboardType="numeric"
                   // onBlur={() => validateForm()}
                 />
                 <View style={{flexDirection: 'row'}}>
@@ -371,7 +415,7 @@ function SettingScreen({navigation}) {
                 <TextInput
                   style={styles.input}
                   value={license}
-                  keyboardType='numeric'
+                  keyboardType="numeric"
                   onChangeText={setLicense}
                 />
                 {uri && <Image style={styles.ShownImage} source={{uri}} />}
@@ -384,7 +428,10 @@ function SettingScreen({navigation}) {
                 {/* {error ? <Text style={{color: 'red'}}>{error}</Text> : null} */}
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => postRequest()}>
+                  onPress={() =>
+                    // postRequest()}
+                    handleUpload()
+                  }>
                   <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
               </View>
