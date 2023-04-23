@@ -15,18 +15,10 @@ import {
   StyleSheet,
   // Pressable,
 } from 'react-native';
-// import GlobalStyle from '../utils/GlobalStyle';
 import {useNavigation} from '@react-navigation/native';
 import CardHome from '../components/CardHome';
-// import {useColorScheme} from 'nativewind';
-// import {Icon} from 'react-native-elements';
 import {MaterialIcons} from '@expo/vector-icons';
-// import Icon from 'react-native-ico-material-design';
-
-// import arrow_right from '../../asset/'
-// import ArrowButton  from '../components/TouchableOpacity';
-// import { Button,Icon } from 'semantic-ui-react'
-// import BottomTabNav from '../components/BottomTabNav';
+import { UserContext } from '../components/UserContext';
 function HomeScreen({navigation, route}) {
   const {width: viewportWidth} = Dimensions.get('window');
   const {height: viewportHeight} = Dimensions.get('window');
@@ -34,6 +26,7 @@ function HomeScreen({navigation, route}) {
   const vh = viewportHeight / 100;
 
   const [searchText, setSearchText] = useState('');
+  const {userData} = React.useContext(UserContext);
   // const filteredData = data.filtered((item) =>
   //   item.name.toLowerCase().includes(searchText.toLowerCase())
   // );
@@ -58,8 +51,6 @@ function HomeScreen({navigation, route}) {
     </View>
   );
   const [search, setSearch] = useState('');
-
-  const [userData, setUserData] = useState({});
   // const updateSearch = () => {
   //   setSearch(search);
   // };
@@ -96,10 +87,10 @@ function HomeScreen({navigation, route}) {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://ce22.onrender.com/all-doctor');
+      const response = await fetch(`https://ce22.onrender.com/singleUser/${userData.email}`);
       const json = await response.json();
       setData(json);
-      setCurrData(json);
+      setCurrData(json.appointment);
       console.log(json);
     } catch (error) {
       console.error(error);
@@ -107,10 +98,6 @@ function HomeScreen({navigation, route}) {
 
     setIsLoading(false);
   };
-  useEffect(() => {
-    setUserData(route.params);
-  }, []);
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -216,18 +203,6 @@ function HomeScreen({navigation, route}) {
           </Text>
           
           <View style={{width: '30%'}}></View>
-          {/* <TouchableOpacity onPress={() => navigation.navigate('DoctorList')}>
-            <Text
-              style={{
-                color: 'black',
-                textDecorationLine: 'underline',
-                fontSize: 14,
-                fontFamily:'Kanit-Regular',
-              }}
-            >
-              ดูเพิ่มเติม+
-            </Text>
-          </TouchableOpacity> */}
         </View>
 
         <View
@@ -248,18 +223,20 @@ function HomeScreen({navigation, route}) {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('DoctorDetail', {id: item.name})
-                  }>
+                  // onPress={() =>
+                  //   navigation.navigate('DoctorDetail', {id: item.name})
+                  // }
+                  >
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
                       {/* <Text>{item._id}</Text> */}
-                      <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start'}}>{item.name.length > 15
-                      ? item.name.substr(0, 15) + '...'
-                      : item.name}</Text>
+                      <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start'}}>{item.doctorName.length > 15
+                      ? item.doctorName.substr(0, 15) + '...'
+                      : item.doctorName}</Text>
                       {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.tel}</Text> */}
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.workplace}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.expertise}</Text>
+                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.day}</Text>
+                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.time}</Text>
+                      {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.doctorName}</Text> */}
                       {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.ovr_rating}</Text> */}
                       {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.consultantNumber}</Text> */}
                     </View>
