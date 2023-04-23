@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   Button,
   StyleSheet,
@@ -19,6 +19,7 @@ import {
   TimePicker,
   DatePicker,
 } from 'react-native-wheel-picker-android';
+import { UserContext } from '../components/UserContext';
 
 function DoctorDetail({navigation, route}) {
   const [doctorID, setDoctorID] = useState({});
@@ -32,6 +33,7 @@ function DoctorDetail({navigation, route}) {
   const [selectedTime, setSelectedTime] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [pickableDates, setPickableDates] = useState({});
+  const {userData} = React.useContext(UserContext);
   const wheelPickerData = [
     'sunday',
     'monday',
@@ -49,20 +51,8 @@ function DoctorDetail({navigation, route}) {
 
   const handleSelectTime = time => {
     setSelectedTime(time);
+    console.log(timeArray[time]);
   };
-
-  // const showTimePicker = () => {
-  //   setTimePickerVisibility(true);
-  // };
-
-  // const hideTimePicker = () => {
-  //   setTimePickerVisibility(false);
-  // };
-
-  // const handleTimeConfirm = time => {
-  //   setSelectedTime(time);
-  //   hideTimePicker();
-  // };
 
   const [popupVisible, setPopupVisible] = useState(false);
   const togglePopup = () => {
@@ -70,7 +60,13 @@ function DoctorDetail({navigation, route}) {
   };
   const paymentContinue = () => {
     setPopupVisible(!popupVisible);
-    navigation.navigate('PaymentScreen');
+    navigation.navigate('PaymentScreen',{
+      email: userData.email,
+      day: selectedDate,
+      time: timeArray[selectedTime],
+      doctorName : data.name,
+      amount: data.price,
+     });
   };
 
   const fetchData = async () => {
@@ -253,23 +249,6 @@ function DoctorDetail({navigation, route}) {
               }}
             />
           </View>
-          {/* <View style={{flex:1, borderWidth: 3, borderColor: 'red'}}>
-            <TimeDropdown times={timeArray} onSelectTime={handleSelectTime} />
-            {selectedTime && <Text>Selected time: {selectedTime}</Text>}
-          </View> */}
-          {/* <View
-            style={{
-              borderWidth: 3,
-              borderColor: 'blue',
-              alignItems: 'center',
-              alignSelf: 'center',
-              justifyContent: 'space-between',
-              flexDirection: 'column',
-              width: '80%',
-              marginTop: 'auto',
-              // position:'absolute',
-              // bottom:30
-            }}></View> */}
           <View
             style={{
               borderWidth: 0,

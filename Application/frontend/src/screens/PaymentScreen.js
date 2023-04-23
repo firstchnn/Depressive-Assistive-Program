@@ -11,68 +11,106 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
-import Omise from 'omise-react-native';
+// import Omise from 'omise-react-native';
 
-function PaymentScreen({navigation}) {
+function PaymentScreen({navigation, route}) {
   const nav = useNavigation();
-  const [qrCodeData, setQrCodeData] = useState('');
-  const promptPayId = '1234567890123'; // PromptPay ID
-  const amount = '500'; // Amount to be paid
-  
+  const [data, setData] = useState({});
+  const [qrData, setQrData] = useState('');
 
-  async function omiseSetup() {
-    await Omise.config('pkey_test_5v7e32m5mhrxedjbtf2', '2019-05-29');
-    const source = await Omise.createSource({
-      type: 'promptpay',
-      amount: amount,
-      currency: 'thb',
-    });
-    console.log(source);
-    const sourceId = source.id;
-    console.log(sourceId)
-    // console.log(amount.toFixed(2));
-    const qrCodeText = `00020101021129370016A000000677010111${promptPayId}0126${amount}5802TH5303764${sourceId}304`;
-    setQrCodeData(qrCodeText);
-  }
-  useEffect(() => {
-    omiseSetup();
-  }, []);
-  const Spinner = () => {
-    const [rotationAngle, setRotationAngle] = useState(0);
+  const makeAppointment = async data => {
+    await fetch(`https://ce22.onrender.com/appointment/${data.email}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        day: data.day,
+        time: data.time,
+        doctorName: data.doctorName,
+      }),
+    })
+      .then(res => {
+        console.log(res.status);
+        console.log(res.headers);
+        console.log('response = ', res);
+        console.log('response body:', res.text());
+        return res.json();
+      })
+      .then(
+        result => {
+          console.log('result = ', result);
+        },
+        error => {
+          console.log('error = ', error);
+        },
+      );
+    await navigation.goBack();
+  };
+
+  const createQR = async data => {
+    await console.log('getting QR data...');
+    await fetch(`https://ce22.onrender.com/create-payment`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        amount: parseInt(data.amount),
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('complete getting QR data...');
+        console.log(data.charge.source.scannable_code.image.download_uri); // replace with your desired response handling
+        setQrData(data.charge.source.scannable_code.image.download_uri);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setRotationAngle(angle => angle + 10);
-    }, 50);
-    return () => clearInterval(intervalId);
+    setData(route.params);
+    console.log(route.params);
+    createQR(route.params.amount);
   }, []);
-  }
+  // const Spinner = () => {
+  //   const [rotationAngle, setRotationAngle] = useState(0);
+
+  //   useEffect(() => {
+  //     const intervalId = setInterval(() => {
+  //       setRotationAngle(angle => angle + 10);
+  //     }, 50);
+  //     return () => clearInterval(intervalId);
+  //   }, []);
+  // };
 
   return (
     <View style={styles.circle}>
-      
       <View style={styles.countContainer}>
-        <Text style={{fontFamily:'Kanit-Regular'}}>Payment</Text>
+        <Text style={{fontFamily: 'Kanit-Regular'}}>Payment</Text>
       </View>
-      <View style={styles.countContainer}>
+      {/* <View style={styles.countContainer}>
       {qrCodeData ? (
         <QRCode value={qrCodeData} />
       ) : (
         <Text style={styles.loadingText}>Loading QR code...</Text>
       )}
+      </View> */}
+      {qrData && (
+        <View style={styles.countContainer}>
+        <QRCode value={qrData} size={200} />
       </View>
+      )}
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.goBack()}>
-        <Text style={{fontFamily:'Kanit-Regular'}}>Confirm Payment</Text>
+        onPress={() => makeAppointment(data)}>
+        <Text style={{fontFamily: 'Kanit-Regular'}}>Confirm Payment</Text>
       </TouchableOpacity>
       <ActivityIndicator
         size="large"
         color="#00ff00"
         style={styles.spinner}
         animating={true}
-        transform={[{ rotate: '45deg' }]}
+        transform={[{rotate: '45deg'}]}
       />
     </View>
   );
@@ -88,14 +126,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#82E7C9',
     padding: 10,
-    marginTop:10,
-    borderRadius:8,
+    marginTop: 10,
+    borderRadius: 8,
     marginBottom: '6%',
   },
   countContainer: {
     alignItems: 'center',
     padding: 10,
-    marginBottom:10,
+    marginBottom: 10,
   },
   circle: {
     flex: 1,
@@ -103,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   spinner: {
-    transform: [{ rotate: '45deg' }],
+    transform: [{rotate: '45deg'}],
   },
 });
 

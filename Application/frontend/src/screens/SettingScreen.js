@@ -43,6 +43,7 @@ function SettingScreen({navigation}) {
   }
   const fetchData = async () => {
     let email = encodeEmail(userData.email);
+
     try {
       const response = await fetch(
         `https://ce22.onrender.com/singleUser/${email}`,
@@ -67,20 +68,32 @@ function SettingScreen({navigation}) {
   // const [filePath, setFilePath]=useState({});
 
   const postRequest = async () => {
-    if (!name || !tel || !workplace || !expertise || !license) {
+    // let username = userData.email.substring(0, email.indexOf('@'));
+    //   console.log(username);
+    if (!name || !tel || !workplace || !expertise || !license ||!uri) {
       setError('Please fill out all fields');
       console.log('ERROR');
     } else {
       setError('');
+      // let username = userData.email.substring(0, email.indexOf('@'));
+      // console.log(username);
+      const formData = new FormData();
+      formData.append('image', {
+        uri: uri,
+        name: `${name}.jpg`,
+        type: 'image/jpeg',
+      });
       await fetch('https://ce22.onrender.com/requests', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'multipart/form-data'},
         body: JSON.stringify({
           name: name,
           email: userData.email,
           tel: tel,
           workplace: workplace,
           expertise: expertise,
+          medicalNumber : license,
+          formData: formData,
         }),
       })
         .then(res => {
@@ -102,15 +115,28 @@ function SettingScreen({navigation}) {
     }
   };
 
-  const chooseFile = (type) => {
+  const chooseFile = type => {
     let options = {
       mediaType: 'photo',
-      maxWidth: 300,
-      maxHeight: 550,
+      maxWidth: 550,
+      maxHeight: 300,
       quality: 1,
     };
-  launchImageLibrary(options, (response) => {
-    console.log('Response = ', response);
+    launchImageLibrary(options, response => {
+      console.log('Response = ', response);
+      if (response.assets && response.assets.length > 0) {
+        const uri = response.assets[0].uri; // Get the URI from assets array
+        console.log('uri -> ', uri);
+        console.log(response);
+        setUri(uri);
+        // Do something with the uri
+      }
+      console.log('base64 -> ', response.base64);
+      console.log('width -> ', response.width);
+      console.log('height -> ', response.height);
+      console.log('fileSize -> ', response.fileSize);
+      console.log('type -> ', response.type);
+      console.log('fileName -> ', response.fileName);
 
     if (response.didCancel) {
       // alert('User cancelled camera picker');
@@ -169,31 +195,55 @@ function SettingScreen({navigation}) {
 
   return (
     <ScrollView style={styles.container}>
-      <View >
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Account</Text>
-        <TouchableOpacity style={styles.option} onPress={fetchData}>
-          <Text style={styles.optionText}>Edit Profile</Text>
-        </TouchableOpacity>
-        {singleUser == null && (
+      <View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account</Text>
+          <TouchableOpacity style={styles.option} onPress={fetchData}>
+            <Text style={styles.optionText}>Edit Profile</Text>
+          </TouchableOpacity>
+          {singleUser == null && (
+            <TouchableOpacity style={styles.option}>
+              <Text style={styles.optionText}>Loading...</Text>
+            </TouchableOpacity>
+          )}
+          {singleUser != null && singleUser.role !== 'doctor' && (
+            <TouchableOpacity style={styles.option} onPress={togglePopup}>
+              <Text style={styles.optionText}>
+                Request Professional Account
+              </Text>
+            </TouchableOpacity>
+          )}
+          {singleUser != null && singleUser.role === 'doctor' && (
+            <TouchableOpacity
+              style={styles.option}
+              onPress={() => nav.navigate('DocNav')}>
+              <Text style={styles.optionText}>
+                Switch to Professional Account
+              </Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.option}>
-            <Text style={styles.optionText}>Loading...</Text>
+            <Text style={styles.optionText}>Notifications</Text>
           </TouchableOpacity>
-        )}
-        {singleUser != null && singleUser.role !== 'doctor' && (
-          <TouchableOpacity style={styles.option} onPress={togglePopup}>
-            <Text style={styles.optionText}>Request Professional Account</Text>
+          <TouchableOpacity style={styles.option}>
+            <Text style={styles.optionText}>Privacy and Security</Text>
           </TouchableOpacity>
-        )}
-        {singleUser != null && singleUser.role === 'doctor' && (
+          <TouchableOpacity style={styles.option}>
+            <Text style={styles.optionText}>Accounts Center</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.section}>
+          <TouchableOpacity style={styles.option}>
+            <Text style={styles.optionText}>Support</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.option}>
+            <Text style={styles.optionText}>Report a Problem</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.option}
-            onPress={() => nav.navigate('DocNav')}>
-            <Text style={styles.optionText}>
-              Switch to Professional Account
-            </Text>
+            onPress={() => nav.navigate('VideoCall')}>
+            <Text style={styles.optionText}>VideoCall</Text>
           </TouchableOpacity>
-        )}
         <TouchableOpacity style={styles.option}>
           <Text style={styles.optionText}>Notifications</Text>
         </TouchableOpacity>
@@ -310,26 +360,26 @@ function SettingScreen({navigation}) {
                 {/* style={styles.image} // Update with your desired styles */}
                 {/* // source={{uri: filePath.uri}} */}
                 {/* Image source={{ uri }} */}
-              {/* /> */}
-            {/* )} */}
-            {uri && <Image style={styles.ShownImage} source={{ uri }} />}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => chooseFile('photo')}>
-              <Text style={styles.buttonText}>Select Image</Text>
-            </TouchableOpacity>
+                {/* /> */}
+                {/* )} */}
+                {uri && <Image style={styles.ShownImage} source={{uri}} />}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => chooseFile('photo')}>
+                  <Text style={styles.buttonText}>Select Image</Text>
+                </TouchableOpacity>
 
-            {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => postRequest()}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        </ScrollView>
-      </Modal>
-    </View>
+                {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => postRequest()}>
+                  <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScrollView>
+        </Modal>
+      </View>
     </ScrollView>
   );
 }
