@@ -139,8 +139,8 @@ function HomeScreen({navigation, route}) {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'center',
-          margin: 20,
+          justifyContent: 'flex-start',
+          margin: 0,
           borderWidth:0,
           borderColor:'red',
           
@@ -211,6 +211,7 @@ function HomeScreen({navigation, route}) {
             alignItems: 'center',
             justifyContent: 'center',
             margin: 12,
+            maxHeight:400
           }}>
           {isLoading ? (
             <View

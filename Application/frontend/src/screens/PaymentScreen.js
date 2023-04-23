@@ -51,6 +51,7 @@ function PaymentScreen({navigation, route}) {
           console.log('error = ', error);
         },
       );
+    // await navigation.navigate('BottomNav');
     await navigation.goBack();
   };
 
