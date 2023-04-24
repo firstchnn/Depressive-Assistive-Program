@@ -45,7 +45,9 @@ function AuthNavigator() {
         <Stack.Screen name="SetTimeScreen" component={SetTimeScreen} 
         options={{headerShown: false}}
         />
-        <Stack.Screen name="DoctorHomepage" component={DoctorHomepage}/>
+        {/* <Stack.Screen name="DoctorHomepage" component={DoctorHomepage}
+        options={{headerShown: false}}
+        /> */}
         <Stack.Screen name="VideoCallScreen" component={VideoCallScreen} options={{headerShown: false}}/>
         <Stack.Screen name="AppointmentDetail" component={AppointmentDetail} options={{headerShown: false}}/>
     </Stack.Navigator>

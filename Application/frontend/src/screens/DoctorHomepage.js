@@ -82,7 +82,7 @@ function DoctorHomepage({navigation}) {
   });
 
   const fetchData = async () => {
-    console.log('enter Docter Home Page')
+    console.log('enter Docter Home Page');
     console.log(userData);
     setIsLoading(true);
     try {
@@ -112,12 +112,6 @@ function DoctorHomepage({navigation}) {
     // console.log('DoctorHomepage = ',userData)
   }, []);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-    });
-  }, [navigation]);
-
   const backgroundStyle = 'bg-neutral-300 dark:bg-slate-900';
   const style = StyleSheet.create({
     body: {
@@ -139,7 +133,6 @@ function DoctorHomepage({navigation}) {
       alignSelf: 'center',
       width: '70%',
       borderWidth: 0,
-      
     },
     toContent: {
       flexDirection: 'row',
@@ -158,6 +151,12 @@ function DoctorHomepage({navigation}) {
       height: 20,
       resizeMode: 'contain',
     },
+    AppointmentText: {
+      fontFamily: 'Kanit-Bold',
+      color: 'black',
+      fontSize: 18,
+      alignSelf: 'center',
+    },
   });
 
   return (
@@ -167,11 +166,21 @@ function DoctorHomepage({navigation}) {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          margin: 20,
+          margin: 15,
           borderWidth: 0,
           height: 0,
         }}>
-        <View>
+        <Text style={style.AppointmentText}>คำขอเข้ารับการปรึกษา</Text>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 20,
+            borderWidth: 0,
+            height: 0,
+            maxHeight: 450,
+          }}>
           {!appointData ? (
             <View
               style={{
@@ -179,7 +188,7 @@ function DoctorHomepage({navigation}) {
                 justifyContent: 'center',
                 borderColor: 'red',
                 borderWidth: 0,
-                height:450
+                height: 400,
               }}>
               <Text style={{color: 'black', fontFamily: 'Kanit-Regular'}}>
                 ไม่พบการนัดหมาย {appointData}
@@ -190,7 +199,7 @@ function DoctorHomepage({navigation}) {
               data={currData}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
-                <TouchableOpacity style={{maxHeight:450,height:450}}>
+                <TouchableOpacity style={{height: 90}}>
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
                       <Text
@@ -228,7 +237,8 @@ function DoctorHomepage({navigation}) {
           <View style={style.toContent}>
             <Text style={style.toText}>ตั้งค่าเวลา</Text>
           </View>
-        </TouchableOpacity></View>
+        </TouchableOpacity>
+      </View>
     </>
   );
 }

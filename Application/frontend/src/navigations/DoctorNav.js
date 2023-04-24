@@ -44,7 +44,7 @@ function DoctorNav({route, navigation}) {
         component={DoctorHomepage}
         options={{
           tabBarLabel: 'Home', // ชื่อบน Tabbar
-          headerShown:'false',
+          // headerShown:'false',
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('../asset/home-icon.png')}
