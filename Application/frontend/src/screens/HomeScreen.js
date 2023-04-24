@@ -13,6 +13,7 @@ import {
   Dimensions,
   TextInput,
   StyleSheet,
+  AppState,
   // Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -55,8 +56,9 @@ function HomeScreen({navigation, route}) {
   //   setSearch(search);
   // };
   const [data, setData] = useState(null);
-  const [currData, setCurrData] = useState([]);
+  const [currData, setCurrData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [appointData, setAppointmentData] = useState(false);
 
   const styles = StyleSheet.create({
     Search_Bar: {
@@ -90,23 +92,44 @@ function HomeScreen({navigation, route}) {
       const response = await fetch(`https://ce22.onrender.com/singleUser/${userData.email}`);
       const json = await response.json();
       setData(json);
-      setCurrData(json.appointment);
-      console.log(json);
+      // setCurrData(json.appointment);
+      // console.log(json.appointment.length);
+      if(json.appointment.length >= 2){
+        setAppointmentData(true);
+        console.log('there is not appointment data available');
+        json.appointment.shift()
+        setCurrData(json.appointment);
+      }else{
+        console.log(json.appointment.length,' is equal or less than 1')
+      }
     } catch (error) {
       console.error(error);
     }
 
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState === 'active') {
+        // do your function here
+      }
+    };
+    AppState.addEventListener('change', handleAppStateChange);
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, []);
+  
   useEffect(() => {
     fetchData();
   }, []);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-    });
-  }, [navigation]);
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerShown: false,
+  //   });
+  // }, [navigation]);
 
   const backgroundStyle = 'bg-neutral-300 dark:bg-slate-900';
   // const {colorScheme, toggleColorScheme} = useColorScheme();
@@ -214,10 +237,10 @@ function HomeScreen({navigation, route}) {
             margin: 12,
             maxHeight:400
           }}>
-          {(isLoading && currData.length > 1) ? (
+          {!appointData? (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <ActivityIndicator size="large" />
+              <Text>No data {appointData}</Text>
             </View>
           ) : (
             <FlatList
@@ -231,6 +254,7 @@ function HomeScreen({navigation, route}) {
                   >
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
+                    {/* <Text>have data {appointData}</Text> */}
                       {/* <Text>{item._id}</Text> */}
                       <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start'}}>{item.doctorName.length > 15
                       ? item.doctorName.substr(0, 15) + '...'
