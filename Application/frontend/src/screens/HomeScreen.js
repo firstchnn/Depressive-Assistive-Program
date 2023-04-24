@@ -213,7 +213,7 @@ function HomeScreen({navigation, route}) {
             margin: 12,
             maxHeight:400
           }}>
-          {isLoading ? (
+          {(isLoading && currData.length > 1) ? (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               <ActivityIndicator size="large" />

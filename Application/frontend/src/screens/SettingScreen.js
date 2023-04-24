@@ -22,7 +22,6 @@ function SettingScreen({navigation}) {
   const {userData, setUserData} = React.useContext(UserContext);
   const [singleUser, setSingleUser] = useState({});
   const [popupVisible, setPopupVisible] = useState(false);
-  const [imageURL, setImageURL] = useState('');
   const togglePopup = () => {
     setPopupVisible(!popupVisible);
   };
@@ -63,7 +62,7 @@ function SettingScreen({navigation}) {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        postRequest(data);
+        postRequest(data.url);
       })
       .catch(error => {
         console.error('Error uploading image:', error);
