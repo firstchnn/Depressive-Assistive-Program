@@ -109,17 +109,17 @@ function HomeScreen({navigation, route}) {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const handleAppStateChange = (nextAppState) => {
-      if (nextAppState === 'active') {
-        // do your function here
-      }
-    };
-    AppState.addEventListener('change', handleAppStateChange);
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleAppStateChange = (nextAppState) => {
+  //     if (nextAppState === 'active') {
+  //       // do your function here
+  //     }
+  //   };
+  //   AppState.addEventListener('change', handleAppStateChange);
+  //   return () => {
+  //     AppState.removeEventListener('change', handleAppStateChange);
+  //   };
+  // }, []);
   
   useEffect(() => {
     fetchData();

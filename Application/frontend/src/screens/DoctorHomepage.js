@@ -44,7 +44,7 @@ function DoctorHomepage({navigation, route}) {
     );
   const renderItem = ({item}) => (
     <View>
-      <Text style={{color:'black',}}>{item.name}</Text>
+      <Text style={{color: 'black'}}>{item.name}</Text>
     </View>
   );
   const [search, setSearch] = useState('');
@@ -53,6 +53,7 @@ function DoctorHomepage({navigation, route}) {
   const [data, setData] = useState(null);
   const [currData, setCurrData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [appointData, setAppointmentData] = useState(false);
 
   const styles = StyleSheet.create({
     Search_Bar: {
@@ -81,6 +82,8 @@ function DoctorHomepage({navigation, route}) {
   });
 
   const fetchData = async () => {
+    console.log('enter Docter Home Page')
+    console.log(userData);
     setIsLoading(true);
     try {
       const response = await fetch(
@@ -88,7 +91,14 @@ function DoctorHomepage({navigation, route}) {
       );
       const json = await response.json();
       setData(json);
-      setCurrData(json);
+      if (json.appointment.length >= 2) {
+        setAppointmentData(true);
+        console.log('there is not appointment data available');
+        json.appointment.shift();
+        setCurrData(json.appointment);
+      } else {
+        console.log(json.appointment.length, ' is equal or less than 1');
+      }
       console.log(json);
     } catch (error) {
       console.error(error);
@@ -119,7 +129,7 @@ function DoctorHomepage({navigation, route}) {
     },
     text: {
       fontFamily: 'Inter-Regular',
-      color:'black',
+      color: 'black',
     },
     toMngm: {
       alignItems: 'center',
@@ -130,6 +140,8 @@ function DoctorHomepage({navigation, route}) {
       borderRadius: 8,
       alignSelf: 'center',
       width: '70%',
+      borderWidth: 3,
+      
     },
     toContent: {
       flexDirection: 'row',
@@ -141,7 +153,7 @@ function DoctorHomepage({navigation, route}) {
       fontFamily: 'Kanit-Regular',
       // borderWidth: 3,
       marginRight: 10,
-      color:'black',
+      color: 'black',
     },
     calendar: {
       width: 20,
@@ -158,7 +170,56 @@ function DoctorHomepage({navigation, route}) {
           alignItems: 'center',
           justifyContent: 'center',
           margin: 20,
+          borderWidth: 11,
+          height: 0,
         }}>
+        <View>
+          {!appointData ? (
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderColor: 'red',
+                borderWidth: 3,
+                height:450
+              }}>
+              <Text style={{color: 'black', fontFamily: 'Kanit-Regular'}}>
+                ไม่พบการนัดหมาย {appointData}
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              data={currData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item}) => (
+                <TouchableOpacity style={{maxHeight:450,height:450}}>
+                  <CardHome>
+                    <View style={{flexDirection: 'column'}}>
+                      <Text
+                        style={{
+                          fontFamily: 'Kanit-Bold',
+                          alignSelf: 'flex-start',
+                          color: 'black',
+                        }}>
+                        {item.doctorName.length > 15
+                          ? item.doctorName.substr(0, 15) + '...'
+                          : item.doctorName}
+                      </Text>
+                      <Text
+                        style={{fontFamily: 'Kanit-Regular', color: 'black'}}>
+                        {item.day}
+                      </Text>
+                      <Text
+                        style={{fontFamily: 'Kanit-Regular', color: 'black'}}>
+                        {item.time}
+                      </Text>
+                    </View>
+                  </CardHome>
+                </TouchableOpacity>
+              )}
+            />
+          )}
+        </View>
         <TouchableOpacity
           style={style.toMngm}
           onPress={() => navigation.navigate('SetTimeScreen')}>
@@ -169,8 +230,7 @@ function DoctorHomepage({navigation, route}) {
           <View style={style.toContent}>
             <Text style={style.toText}>ตั้งค่าเวลา</Text>
           </View>
-        </TouchableOpacity>
-      </View>
+        </TouchableOpacity></View>
     </>
   );
 }

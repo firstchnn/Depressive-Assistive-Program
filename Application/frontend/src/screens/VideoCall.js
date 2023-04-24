@@ -1,13 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {StyleSheet, View, Text, Button, Image} from 'react-native';
 import {RTCView, mediaDevices} from 'react-native-webrtc';
 import {useNavigation} from '@react-navigation/native';
+import {MediaStream} from 'react-native-webrtc';
+import UserChatScreen from './UserChatScreen';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-function VideoCall(){
+function VideoCall() {
   const nav = useNavigation();
   const [localStream, setLocalStream] = useState(null);
   const [remoteStream, setRemoteStream] = useState(null);
+  // const [localStream, setLocalStream] = useState<MediaStream | null>()
+  // const [remoteStream, setRemoteStream] = useState<MediaStream | null>()
   const [isCalling, setIsCalling] = useState(false);
+  // const pc  = useRef<RTCPeerConnection>();
 
   const startLocalStream = async () => {
     const stream = await mediaDevices.getUserMedia({
@@ -41,7 +47,7 @@ function VideoCall(){
         />
       )}
       <View>
-      <Text>Calling...</Text>
+        <Text>Calling...</Text>
       </View>
       {localStream && (
         <View style={styles.localView}>
@@ -56,13 +62,28 @@ function VideoCall(){
       <View style={styles.buttonContainer}>
         {isCalling && (
           <View style={styles.button}>
-            <Button title="Hang Up" onPress={handleHangUp} />
+            <TouchableOpacity style={styles.HangUpBTN} onPress={handleHangUp}>
+              <Image
+                source={require('../asset/Phone.png')}
+                style={{
+                  resizeMode: 'contain',
+                  alignSelf: 'center',
+                  position: 'absolute',
+                  top: 10,
+                  bottom: 0,
+                  left: 10,
+                  right: 0,
+                  margin: 'auto',
+                  width: 40,
+                  height: 40,
+                }}></Image>
+            </TouchableOpacity>
           </View>
         )}
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -71,6 +92,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor:'red',
+    borderWidth:0,
+  },
+  HangUpBTN: {
+    resizeMode: 'contain',
+    width: 60,
+    height: 60,
+    backgroundColor: '#ea2a2a',
+    borderRadius: 100,
   },
   rtcView: {
     flex: 1,
@@ -108,24 +138,27 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   buttonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    // borderWidth:5,
-    bottom: 0,
-
+    borderWidth:0,
   },
   videoContainer: {
     width: 10,
     height: 10,
-    backgroundColor:'red',
-    borderWidth:5,
+    backgroundColor: 'red',
+    borderWidth: 0,
   },
   button: {
     padding: 10,
-    bottom: 0,
+    borderWidth:0
   },
 });
+
 
 export default VideoCall;
