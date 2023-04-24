@@ -69,7 +69,8 @@ function MainChatScreen({navigation}) {
             paddingStart: 50,
             paddingEnd: 50,
             fontSize:18,
-            fontFamily:'Kanit-Regular'
+            fontFamily:'Kanit-Regular',
+            color:'black',
           }}>
           {currentTextSet}
         </Text>
@@ -96,7 +97,8 @@ function MainChatScreen({navigation}) {
               alignSelf: 'center',
               textAlign:'center',
               marginBottom:80,
-              fontFamily:'Kanit-Regular'
+              fontFamily:'Kanit-Regular',
+              color:'black',
             }}>
             ฉันมีเรื่องที่ {'\n'}อยากจะระบาย
           </Text>
@@ -130,6 +132,7 @@ function MainChatScreen({navigation}) {
               textAlign:'center',
               fontFamily: 'Kanit-Regular',
               marginBottom:80,
+              color:'black',
             }}>
             ฉันพร้อม{'\n'}ที่จะรับฟังผู้อื่น
           </Text>
@@ -152,6 +155,7 @@ function MainChatScreen({navigation}) {
                 // fontWeight: 'bold',
                 fontFamily: 'Kanit-Bold',
                 color: '#242424',
+                color:'black',
               }}>
               รับฟัง
             </Text>

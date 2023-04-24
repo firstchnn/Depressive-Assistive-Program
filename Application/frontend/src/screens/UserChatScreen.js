@@ -74,8 +74,8 @@ function UserChatScreen({navigation, route}) {
           style={styles.disclaimerIcon}
         />
         <Text style={styles.disclaimerText}>
-          เราให้ความสำคัญกับข้อมูลส่วนบุคคลของผู้ใช้งาน{'\n'}
-          กรุณารักษารักษาข้อมูลส่วนบุคคล และอย่ามอบข้อมูล{'\n'}
+          เราให้ความสำคัญกับข้อมูลส่วนบุคคลของผู้ใช้งาน
+          กรุณารักษารักษาข้อมูลส่วนบุคคล {'\n'}และอย่ามอบข้อมูล
           ของท่านแก่บุคคลอื่น
         </Text>
       </View>
@@ -92,7 +92,7 @@ function UserChatScreen({navigation, route}) {
             <Text
               style={[
                 styles.messageText,
-                {alignItems: item.fromSender ? 'flex-end' : 'flex-start'},
+                {alignItems: item.fromSender ? 'flex-end' : 'flex-start',color:'black',},
               ]}>
               {item.text}
             </Text>
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+    alignSelf: 'center',
   },
   disclaimerIcon: {
     width: 24,
@@ -149,9 +150,10 @@ const styles = StyleSheet.create({
   },
   disclaimerText: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 8,
     color: '#777',
     lineHeight: 20,
+    alignSelf: 'center',
   },
   messageContainer: {
     borderRadius: 16,
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   messageText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#000',
   },
   inputContainer: {
@@ -176,7 +178,8 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#f8f8f8',
     paddingHorizontal: 16,
-    borderRadius: 20,
+    borderRadius: 20
+    ,color:'black',
   },
   sendButton: {
     marginLeft: 8,

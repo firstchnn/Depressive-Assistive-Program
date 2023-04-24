@@ -97,7 +97,7 @@ const LoginScreen = ({navigation}) => {
       shadowOpacity: 0.5,
       shadowRadius: 2,
       elevation: 5,
-      width: '50%',
+      width: '60%',
       height: '5.5%',
       marginBottom: 20,
       flexDirection: 'row',
@@ -171,7 +171,7 @@ const LoginScreen = ({navigation}) => {
             source={require('../asset/Google_Login.png')}></Image>
         </View>
         <View style={{flex: 4}}>
-          <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
+          <Text style={{fontWeight: 'bold', textAlign: 'center',color:'black',}}>
             Continue with Google
           </Text>
         </View>

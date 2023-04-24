@@ -105,7 +105,7 @@ function DoctorListScreen({navigation, route}) {
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontFamily:'Kanit-Bold',fontSize:32,marginTop:24,}}>Doctor List</Text>
+      <Text style={{fontFamily:'Kanit-Bold',fontSize:32,marginTop:24,color:'black',}}>Doctor List</Text>
       <View style={styles.Search_Bar}>
         <TextInput
           style={styles.Text_Input}
@@ -128,7 +128,7 @@ function DoctorListScreen({navigation, route}) {
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('DoctorDetail', {id: item.name})
+                navigation.navigate('DoctorDetail', {id: item.email})
               }>
               <CardHome>
                 <View style={{}}>
@@ -136,12 +136,12 @@ function DoctorListScreen({navigation, route}) {
                 </View>
                 <View style={{flexDirection: 'column'}}>
                   {/* <Text>{item._id}</Text> */}
-                  <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start'}}>{item.name.length > 15
+                  <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start',color:'black',}}>{item.name.length > 15
                   ? item.name.substr(0, 15) + '...'
                   : item.name}</Text>
                   {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.tel}</Text> */}
-                  <Text style={{fontFamily:'Kanit-Regular'}}>{item.workplace}</Text>
-                  <Text style={{fontFamily:'Kanit-Regular'}}>{item.expertise}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular',color:'black',}}>{item.workplace}</Text>
+                  <Text style={{fontFamily:'Kanit-Regular',color:'black',}}>{item.expertise}</Text>
                   {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.ovr_rating}</Text> */}
                   {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.consultantNumber}</Text> */}
                 </View>

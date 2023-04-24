@@ -17,6 +17,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import CardHome from '../components/CardHome';
 import {MaterialIcons} from '@expo/vector-icons';
+import {UserContext} from '../components/UserContext';
 // import { Calendar } from 'react-native-calendars';
 
 function DoctorHomepage({navigation, route}) {
@@ -43,12 +44,12 @@ function DoctorHomepage({navigation, route}) {
     );
   const renderItem = ({item}) => (
     <View>
-      <Text>{item.name}</Text>
+      <Text style={{color:'black',}}>{item.name}</Text>
     </View>
   );
   const [search, setSearch] = useState('');
 
-  const [userData, setUserData] = useState({});
+  const {userData, setUserData} = React.useContext(UserContext);
   const [data, setData] = useState(null);
   const [currData, setCurrData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +83,9 @@ function DoctorHomepage({navigation, route}) {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://ce22.onrender.com/all-doctor');
+      const response = await fetch(
+        `https://ce22.onrender.com/singledoc/${userData.email}`,
+      );
       const json = await response.json();
       setData(json);
       setCurrData(json);
@@ -116,6 +119,7 @@ function DoctorHomepage({navigation, route}) {
     },
     text: {
       fontFamily: 'Inter-Regular',
+      color:'black',
     },
     toMngm: {
       alignItems: 'center',
@@ -125,19 +129,19 @@ function DoctorHomepage({navigation, route}) {
       marginVertical: 8,
       borderRadius: 8,
       alignSelf: 'center',
-      width:'70%'
+      width: '70%',
     },
     toContent: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingTop:4,
-      
+      paddingTop: 4,
     },
     toText: {
       fontFamily: 'Kanit-Regular',
       // borderWidth: 3,
       marginRight: 10,
+      color:'black',
     },
     calendar: {
       width: 20,
@@ -156,16 +160,16 @@ function DoctorHomepage({navigation, route}) {
           margin: 20,
         }}>
         <TouchableOpacity
-            style={style.toMngm}
-            onPress={() => navigation.navigate('SetTimeScreen')}>
-            <Image
-              style={style.calendar}
-              source={require('../asset/Calendar.png')}
-            />
-            <View style={style.toContent}>
-              <Text style={style.toText}>ตั้งค่าเวลา</Text>
-            </View>
-          </TouchableOpacity>
+          style={style.toMngm}
+          onPress={() => navigation.navigate('SetTimeScreen')}>
+          <Image
+            style={style.calendar}
+            source={require('../asset/Calendar.png')}
+          />
+          <View style={style.toContent}>
+            <Text style={style.toText}>ตั้งค่าเวลา</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </>
   );

@@ -63,7 +63,7 @@ function SettingScreen({navigation}) {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        postRequest(data);
+        postRequest(data.url);
       })
       .catch(error => {
         console.error('Error uploading image:', error);
@@ -479,7 +479,8 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    fontFamily: 'Kanit-Regular',
+    fontFamily: 'Kanit-Regular'
+    ,color:'black',
   },
   ExitButton: {
     alignSelf: 'center',

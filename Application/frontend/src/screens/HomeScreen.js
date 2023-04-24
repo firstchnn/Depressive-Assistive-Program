@@ -143,7 +143,6 @@ function HomeScreen({navigation, route}) {
           margin: 0,
           borderWidth:0,
           borderColor:'red',
-          
         }}>
         <TouchableOpacity
           style={{
@@ -164,11 +163,12 @@ function HomeScreen({navigation, route}) {
             source={require('../asset/Helping_Hand.png')}></Image>
           <View style={{flexDirection: 'column'}}>
             <Text
-              style={{
+              style={{color:'black',
                 alignSelf: 'center',
                 marginRight: 20,
                 marginBottom: 15,
                 fontFamily:'Kanit-Regular',
+                
               }}>
               เริ่มต้นการสนทนา
             </Text>
@@ -197,7 +197,8 @@ function HomeScreen({navigation, route}) {
             style={{
               fontSize: 20,
               // fontWeight: 'bold',
-              fontFamily:'Kanit-Regular'
+              fontFamily:'Kanit-Regular',
+              color:'black'
             }}>
             นัดหมายของฉัน
           </Text>
@@ -224,7 +225,7 @@ function HomeScreen({navigation, route}) {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <TouchableOpacity
-                  // onPress={() =>
+                  // onPress={() =>      
                   //   navigation.navigate('DoctorDetail', {id: item.name})
                   // }
                   >
