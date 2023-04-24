@@ -167,6 +167,7 @@ function DoctorDetail({navigation, route}) {
 
   useEffect(() => {
     fetchData();
+    console.log('route.params.imageURL', route.params);
     // fetchPickableDates();
   }, []);
 
@@ -183,40 +184,54 @@ function DoctorDetail({navigation, route}) {
       </TouchableOpacity>
       <View style={styles.countContainer_out}>
         {data !== null ? (
-          <View style={styles.countContainer}>
-            <Text
+          <View>
+            <Image
+              source={{uri: data.imageURL}}
               style={{
+                width: 200,
+                height: 200,
                 alignSelf: 'center',
-                fontFamily: 'Kanit-Bold',
-                fontSize: 24,color:'black',
-              }}>
-              {data.name.length > 20
-                ? data.name.substring(0, 20) + '...'
-                : data.name}
-            </Text>
-            <Text
-              style={{
-                alignSelf: 'center',
-                fontFamily: 'Kanit-Regular',
-                fontSize: 16,color:'black',
-              }}>
-              {data.expertise}
-            </Text>
-            {/* <Text>Tel: {data.tel}</Text> */}
-            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
-              workplace: {data.workplace}
-            </Text>
-            {/* <Text></Text> */}
-            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
-              Price: {data.price}
-            </Text>
-            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
-              Work day: {data.workday}
-            </Text>
-            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
-              Work time: {data.worktime.slice(0, 5).replace(',', ':')} -{' '}
-              {data.worktime.slice(5).replace(',', ':')}
-            </Text>
+                resizeMode: 'contain',
+                marginBottom: 16,
+              }} // You can adjust the width and height as needed
+            ></Image>
+            <View style={styles.countContainer}>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  fontFamily: 'Kanit-Bold',
+                  fontSize: 24,
+                  color: 'black',
+                }}>
+                {data.name.length > 20
+                  ? data.name.substring(0, 20) + '...'
+                  : data.name}
+              </Text>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  fontFamily: 'Kanit-Regular',
+                  fontSize: 16,
+                  color: 'black',
+                }}>
+                {data.expertise}
+              </Text>
+              {/* <Text>Tel: {data.tel}</Text> */}
+              <Text style={styles.Docdetail}>
+                Work place: {data.workplace}
+              </Text>
+              {/* <Text></Text> */}
+              <Text style={styles.Docdetail}>
+                Price: {data.price}
+              </Text>
+              <Text style={styles.Docdetail}>
+                Work day: {data.workday}
+              </Text>
+              <Text style={styles.Docdetail}>
+                Work time: {data.worktime.slice(0, 5).replace(',', ':')} -{' '}
+                {data.worktime.slice(5).replace(',', ':')}
+              </Text>
+            </View>
           </View>
         ) : (
           <View>
@@ -234,7 +249,7 @@ function DoctorDetail({navigation, route}) {
       <TouchableOpacity
         style={styles.button_Appointment}
         onPress={() => togglePopup()}>
-        <Text style={{fontWeight: 'bold',color:'black'}}>นัดหมาย</Text>
+        <Text style={{fontWeight: 'bold', color: 'black'}}>นัดหมาย</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
         <View
@@ -311,6 +326,10 @@ const styles = StyleSheet.create({
     // borderWidth:2,
     // borderColor:'red'
   },
+  Docdetail:{
+    fontFamily: 'Kanit-Regular', color: 'black'
+  }
+  ,
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -329,13 +348,15 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: 'Kanit-Regular',
     // textDecorationLine:'underline',
-    textDecorationColor: 'red',color:'black',
+    textDecorationColor: 'red',
+    color: 'black',
   },
   closeText: {
     color: 'red',
     fontFamily: 'Kanit-Regular',
     textDecorationLine: 'underline',
-    textDecorationColor: 'red',color:'black',
+    textDecorationColor: 'red',
+    // color: 'black',
   },
   button_Appointment: {
     alignItems: 'center',
@@ -392,7 +413,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignSelf: 'center',
     padding: 16,
-    width: '100%',
+    width: 350,
   },
   daysContainer: {
     flexDirection: 'row',
@@ -413,7 +434,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'Kanit-Bold',color:'black',
+    fontFamily: 'Kanit-Bold',
+    color: 'black',
   },
 });
 

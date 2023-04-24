@@ -64,7 +64,7 @@ function DoctorHomepage({navigation, route}) {
     },
     Text_Input: {
       borderColor: 'black',
-      borderWidth: 2,
+      borderWidth: 0,
       borderRadius: 32,
       width: 85 * vw,
       paddingLeft: 4 * vw,
@@ -140,7 +140,7 @@ function DoctorHomepage({navigation, route}) {
       borderRadius: 8,
       alignSelf: 'center',
       width: '70%',
-      borderWidth: 3,
+      borderWidth: 0,
       
     },
     toContent: {
@@ -170,7 +170,7 @@ function DoctorHomepage({navigation, route}) {
           alignItems: 'center',
           justifyContent: 'center',
           margin: 20,
-          borderWidth: 11,
+          borderWidth: 0,
           height: 0,
         }}>
         <View>
@@ -180,7 +180,7 @@ function DoctorHomepage({navigation, route}) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderColor: 'red',
-                borderWidth: 3,
+                borderWidth: 0,
                 height:450
               }}>
               <Text style={{color: 'black', fontFamily: 'Kanit-Regular'}}>

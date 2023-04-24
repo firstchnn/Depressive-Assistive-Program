@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  Image
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
@@ -84,6 +85,15 @@ function PaymentScreen({navigation, route}) {
 
   return (
     <View>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}>
+        <Image
+          source={require('../asset/BackBTN.png')}
+          style={styles.backIcon}
+        />
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
       <View style={{alignSelf:'center',marginTop:20}}>
         <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>Payment</Text>
       </View>
@@ -157,6 +167,20 @@ const styles = StyleSheet.create({
   spinner: {
     transform: [{rotate: '45deg'}],
     alignSelf:'center',
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 16,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#007AFF',
   },
 });
 
