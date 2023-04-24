@@ -465,7 +465,7 @@ function EvaluationScreen({navigation, route}) {
                   <Image
                     source={answer.Image}
                     style={{width: 50, height: 50}}></Image>
-                  <Text style={{fontFamily: 'Kanit-Regular'}}>
+                  <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
                     {answer.text}
                   </Text>
                 </View>
@@ -491,22 +491,42 @@ function EvaluationScreen({navigation, route}) {
             {totalScore >= 0 && totalScore <= 4 && (
               <Text style={styles.score}>
                 ผลการทดสอบ PHQ-9 ของคุณ
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 36,
+                    color: 'black',
+                  }}>
                   {'\n'} {totalScore} {'\n'}
                 </Text>
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
-                Normal
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 24,
+                    color: 'black',
+                  }}>
+                  Normal
                 </Text>
               </Text>
             )}
             {totalScore >= 5 && totalScore <= 9 && (
               <Text style={styles.score}>
                 ผลการทดสอบ PHQ-9 ของคุณ
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 36,
+                    color: 'black',
+                  }}>
                   {'\n'} {totalScore} {'\n'}
                 </Text>
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
-                Mild
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 24,
+                    color: 'black',
+                  }}>
+                  Mild
                 </Text>
                 {'\n'}
                 มีความผิดปกติเล็กน้อย อาจมีภาวะซึมเศร้า
@@ -515,11 +535,22 @@ function EvaluationScreen({navigation, route}) {
             {totalScore >= 10 && totalScore <= 14 && (
               <Text style={styles.score}>
                 ผลการทดสอบ PHQ-9 ของคุณ
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 36,
+                    color: 'black',
+                  }}>
                   {'\n'} {totalScore} {'\n'}
                 </Text>
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
-                Moderate </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 24,
+                    color: 'black',
+                  }}>
+                  Moderate{' '}
+                </Text>
                 {'\n'}
                 มีภาวะซึมเศร้าเล็กน้อย
               </Text>
@@ -527,11 +558,22 @@ function EvaluationScreen({navigation, route}) {
             {totalScore >= 15 && totalScore <= 19 && (
               <Text style={styles.score}>
                 ผลการทดสอบ PHQ-9 ของคุณ
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 36,
+                    color: 'black',
+                  }}>
                   {'\n'} {totalScore} {'\n'}
                 </Text>
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24}}>
-                Morderate to severe </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 24,
+                    color: 'black',
+                  }}>
+                  Morderate to severe{' '}
+                </Text>
                 {'\n'}
                 มีภาวะซึมเศร้าปานกลาง
               </Text>
@@ -539,11 +581,21 @@ function EvaluationScreen({navigation, route}) {
             {totalScore >= 20 && (
               <Text style={styles.score}>
                 ผลการทดสอบ PHQ-9 ของคุณ
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 36}}>
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 36,
+                    color: 'black',
+                  }}>
                   {'\n'} {totalScore} {'\n'}
                 </Text>
-                <Text style={{fontFamily: 'Kanit-Bold', fontSize: 24,}}>
-                Severe {'\n'}
+                <Text
+                  style={{
+                    fontFamily: 'Kanit-Bold',
+                    fontSize: 24,
+                    color: 'black',
+                  }}>
+                  Severe {'\n'}
                 </Text>
                 มีภาวะซึมเศร้ารุนแรง
               </Text>
@@ -569,6 +621,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     alignItems: 'center',
+    color: 'black',
   },
   container: {
     flex: 1,
@@ -624,6 +677,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     textAlign: 'center',
     fontFamily: 'Kanit-Regular',
+    color: 'black',
   },
   textStart: {
     color: 'white',
@@ -631,6 +685,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.1,
     fontFamily: 'Kanit-Bold',
     alignSelf: 'center',
+    color: 'white',
   },
   buttonStart: {
     backgroundColor: '#008CBA',
@@ -651,6 +706,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'white',
     // fontFamily:'Kanit-Bold',
   },
   EvaluateText: {
@@ -658,6 +714,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     textAlign: 'center',
     fontFamily: 'Kanit-Bold',
+    color: 'black',
   },
   IndexNumber: {
     marginLeft: 15,
@@ -665,6 +722,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     textAlign: 'left',
     fontFamily: 'Kanit-Regular',
+    color: 'black',
   },
   ExitButton: {
     alignSelf: 'center',

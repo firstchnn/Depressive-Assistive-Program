@@ -20,7 +20,7 @@ import {
   TimePicker,
   DatePicker,
 } from 'react-native-wheel-picker-android';
-import { UserContext } from '../components/UserContext';
+import {UserContext} from '../components/UserContext';
 
 function DoctorDetail({navigation, route}) {
   const [doctorID, setDoctorID] = useState({});
@@ -61,13 +61,13 @@ function DoctorDetail({navigation, route}) {
   };
   const paymentContinue = () => {
     setPopupVisible(!popupVisible);
-    navigation.navigate('PaymentScreen',{
+    navigation.navigate('PaymentScreen', {
       email: userData.email,
       day: selectedDate,
       time: timeArray[selectedTime],
-      doctorName : data.name,
-      amount: data.price*100,
-     });
+      doctorName: data.name,
+      amount: data.price * 100,
+    });
   };
 
   const fetchData = async () => {
@@ -87,7 +87,7 @@ function DoctorDetail({navigation, route}) {
       await createTimeArray(
         json.worktime.slice(0, 5).replace(',', ':'),
         json.worktime.slice(5).replace(',', ':'),
-        json.appointment
+        json.appointment,
       );
       await fetchPickableDates(json.workday.split(','));
     } catch (error) {
@@ -106,11 +106,11 @@ function DoctorDetail({navigation, route}) {
     while (current < end) {
       const hours = current.getHours().toString().padStart(2, '0');
       const minutes = current.getMinutes().toString().padStart(2, '0');
-      result.push(`${hours}:${minutes}`);     
+      result.push(`${hours}:${minutes}`);
       current.setTime(current.getTime() + 30 * 60 * 1000); // add 30 minutes
     }
     for (let i = 0; i < appointment.length - 1; i++) {
-      temp1.push(appointment[i+1].time);
+      temp1.push(appointment[i + 1].time);
     }
     const temp2 = result.filter(item => !temp1.includes(item));
     setTimeArray(temp2);
@@ -188,7 +188,7 @@ function DoctorDetail({navigation, route}) {
               style={{
                 alignSelf: 'center',
                 fontFamily: 'Kanit-Bold',
-                fontSize: 24,
+                fontSize: 24,color:'black',
               }}>
               {data.name.length > 20
                 ? data.name.substring(0, 20) + '...'
@@ -198,43 +198,43 @@ function DoctorDetail({navigation, route}) {
               style={{
                 alignSelf: 'center',
                 fontFamily: 'Kanit-Regular',
-                fontSize: 16,
+                fontSize: 16,color:'black',
               }}>
               {data.expertise}
             </Text>
             {/* <Text>Tel: {data.tel}</Text> */}
-            <Text style={{fontFamily: 'Kanit-Regular'}}>
+            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
               workplace: {data.workplace}
             </Text>
             {/* <Text></Text> */}
-            <Text style={{fontFamily: 'Kanit-Regular'}}>
+            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
               Price: {data.price}
             </Text>
-            <Text style={{fontFamily: 'Kanit-Regular'}}>
+            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
               Work day: {data.workday}
             </Text>
-            <Text style={{fontFamily: 'Kanit-Regular'}}>
+            <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>
               Work time: {data.worktime.slice(0, 5).replace(',', ':')} -{' '}
               {data.worktime.slice(5).replace(',', ':')}
             </Text>
           </View>
         ) : (
           <View>
-                            <ActivityIndicator
-        size="large"
-        color="#00ff00"
-        style={styles.spinner}
-        animating={true}
-        transform={[{rotate: '45deg'}]}
-      />
-          <Text style={{alignSelf: 'center'}}>Loading...</Text>
+            <ActivityIndicator
+              size="large"
+              color="#00ff00"
+              style={styles.spinner}
+              animating={true}
+              transform={[{rotate: '45deg'}]}
+            />
+            <Text style={{alignSelf: 'center'}}>Loading...</Text>
           </View>
         )}
       </View>
       <TouchableOpacity
         style={styles.button_Appointment}
         onPress={() => togglePopup()}>
-        <Text style={{fontWeight: 'bold'}}>นัดหมาย</Text>
+        <Text style={{fontWeight: 'bold',color:'black',}}>นัดหมาย</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
         <View
@@ -243,7 +243,7 @@ function DoctorDetail({navigation, route}) {
             justifyContent: 'center',
             // alignItems: 'center',
             padding: 10,
-            borderWidth:0,
+            borderWidth: 0,
           }}>
           <Text
             style={{
@@ -329,13 +329,13 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: 'Kanit-Regular',
     // textDecorationLine:'underline',
-    textDecorationColor: 'red',
+    textDecorationColor: 'red',color:'black',
   },
   closeText: {
     color: 'red',
     fontFamily: 'Kanit-Regular',
     textDecorationLine: 'underline',
-    textDecorationColor: 'red',
+    textDecorationColor: 'red',color:'black',
   },
   button_Appointment: {
     alignItems: 'center',
@@ -362,8 +362,9 @@ const styles = StyleSheet.create({
   },
   spinner: {
     transform: [{rotate: '45deg'}],
-    marginBottom:4,
-    alignSelf:'center',
+    marginBottom: 4,
+    alignSelf: 'center',
+    alignItems: 'center',
   },
   buttonCls: {
     alignItems: 'center',
@@ -412,7 +413,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'Kanit-Bold',
+    fontFamily: 'Kanit-Bold',color:'black',
   },
 });
 

@@ -85,7 +85,7 @@ function PaymentScreen({navigation, route}) {
   return (
     <View>
       <View style={{alignSelf:'center',marginTop:20}}>
-        <Text style={{fontFamily: 'Kanit-Regular'}}>Payment</Text>
+        <Text style={{fontFamily: 'Kanit-Regular',color:'black',}}>Payment</Text>
       </View>
       <View style={styles.circle}>
         <View style={{borderWidth: 0, borderColor: 'red'}}>
