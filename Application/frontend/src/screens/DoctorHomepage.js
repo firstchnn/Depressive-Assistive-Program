@@ -20,7 +20,7 @@ import {MaterialIcons} from '@expo/vector-icons';
 import {UserContext} from '../components/UserContext';
 // import { Calendar } from 'react-native-calendars';
 
-function DoctorHomepage({navigation, route}) {
+function DoctorHomepage({navigation}) {
   const {width: viewportWidth} = Dimensions.get('window');
   const {height: viewportHeight} = Dimensions.get('window');
   const vw = viewportWidth / 100;
@@ -106,12 +106,10 @@ function DoctorHomepage({navigation, route}) {
 
     setIsLoading(false);
   };
-  useEffect(() => {
-    setUserData(route.params);
-  }, []);
 
   useEffect(() => {
     fetchData();
+    // console.log('DoctorHomepage = ',userData)
   }, []);
 
   useLayoutEffect(() => {
@@ -201,9 +199,9 @@ function DoctorHomepage({navigation, route}) {
                           alignSelf: 'flex-start',
                           color: 'black',
                         }}>
-                        {item.doctorName.length > 15
-                          ? item.doctorName.substr(0, 15) + '...'
-                          : item.doctorName}
+                        {item.email.length > 15
+                          ? item.email.substr(0, 15) + '...'
+                          : item.email}
                       </Text>
                       <Text
                         style={{fontFamily: 'Kanit-Regular', color: 'black'}}>
