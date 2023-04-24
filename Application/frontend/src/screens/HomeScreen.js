@@ -16,7 +16,7 @@ import {
   AppState,
   // Pressable,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 import CardHome from '../components/CardHome';
 import {MaterialIcons} from '@expo/vector-icons';
 import { UserContext } from '../components/UserContext';
@@ -28,63 +28,11 @@ function HomeScreen({navigation, route}) {
 
   const [searchText, setSearchText] = useState('');
   const {userData} = React.useContext(UserContext);
-  // const filteredData = data.filtered((item) =>
-  //   item.name.toLowerCase().includes(searchText.toLowerCase())
-  // );
-  const handleTextChange = text => {
-    setSearchText(text);
-    let temp = [];
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].name.includes(text)) {
-        temp.push(data[i]);
-      }
-    }
-    setCurrData(temp);
-  };
-  const filteredData =
-    data &&
-    data.filter(item =>
-      item.name.toLowerCase().includes(searchText.toLowerCase()),
-    );
-  const renderItem = ({item}) => (
-    <View>
-      <Text>{item.name}</Text>
-    </View>
-  );
-  const [search, setSearch] = useState('');
-  // const updateSearch = () => {
-  //   setSearch(search);
-  // };
   const [data, setData] = useState(null);
   const [currData, setCurrData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [appointData, setAppointmentData] = useState(false);
-
-  const styles = StyleSheet.create({
-    Search_Bar: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 2 * vh,
-      height: 6 * vh,
-    },
-    Text_Input: {
-      borderColor: 'black',
-      borderWidth: 0,
-      borderRadius: 32,
-      width: 85 * vw,
-      paddingLeft: 4 * vw,
-      paddingRight: 13 * vw,
-      marginTop: 1 * vh,
-      fontFamily:'Kanit-Regular',
-    },
-    search_Icon: {
-      position: 'absolute',
-      right: 50,
-      top: 15,
-      height: 20,
-      width: 20,
-    },
-  });
+  const isFocused = useIsFocused();
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -109,55 +57,16 @@ function HomeScreen({navigation, route}) {
     setIsLoading(false);
   };
 
-  // useEffect(() => {
-  //   const handleAppStateChange = (nextAppState) => {
-  //     if (nextAppState === 'active') {
-  //       // do your function here
-  //     }
-  //   };
-  //   AppState.addEventListener('change', handleAppStateChange);
-  //   return () => {
-  //     AppState.removeEventListener('change', handleAppStateChange);
-  //   };
-  // }, []);
-  
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerShown: false,
-  //   });
-  // }, [navigation]);
-
-  const backgroundStyle = 'bg-neutral-300 dark:bg-slate-900';
-  // const {colorScheme, toggleColorScheme} = useColorScheme();
-  const style = StyleSheet.create({
-    body: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    text: {
-      fontFamily: 'Inter-Regular',
-    },
-  });
+    if (isFocused) {
+      // user has returned to this screen
+      console.log('User returned to this screen');
+      fetchData();
+    }
+  }, [isFocused]);
 
   return (
     <>
-    {/* -------------------------------------------------------------------------------------------- */}
-      {/* <View style={styles.Search_Bar}>
-        <TextInput
-          style={styles.Text_Input}
-          placeholder="ค้นหา"
-          onChangeText={text => handleTextChange(text)}
-          value={searchText}></TextInput>
-        <Image
-          style={styles.search_Icon}
-          source={require('../asset/Search.png')}></Image>
-      </View> */}
-      {/* -------------------------------------------------------------------------------------------- */}
       <View
         style={{
           flex: 1,
@@ -199,10 +108,6 @@ function HomeScreen({navigation, route}) {
             <Image
               style={{alignSelf: 'center'}}
               source={require('../asset/arrow_right.png')}></Image>
-            {/* <Button
-              title="Start Chatting"
-              
-            /> */}
           </View>
         </TouchableOpacity>
 
@@ -216,7 +121,6 @@ function HomeScreen({navigation, route}) {
             borderColor: 'blue',
             borderWidth: 0,
           }}>
-          {/* <Text style={{marginRight: 20, fontSize: 20}}>ปรึกษาแพทย์</Text> */}
           <Text
             style={{
               fontSize: 20,
@@ -249,9 +153,9 @@ function HomeScreen({navigation, route}) {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <TouchableOpacity
-                  // onPress={() =>      
-                  //   navigation.navigate('DoctorDetail', {id: item.name})
-                  // }
+                  onPress={() =>      
+                    navigation.navigate('AppointmentDetail', {name : item.doctorName, day: item.day, time : item.time})
+                  }
                   >
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>

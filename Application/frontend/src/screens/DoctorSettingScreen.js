@@ -52,6 +52,7 @@ function DoctorSettingScreen({navigation}) {
   };
 
   useEffect(() => {
+    // console.log('DoctorSetting = ',userData)
     fetchUserData();
     // fetchDoctorData();
   }, []);
