@@ -234,7 +234,7 @@ function DoctorDetail({navigation, route}) {
       <TouchableOpacity
         style={styles.button_Appointment}
         onPress={() => togglePopup()}>
-        <Text style={{fontWeight: 'bold',color:'black',}}>นัดหมาย</Text>
+        <Text style={{fontWeight: 'bold',color:'black'}}>นัดหมาย</Text>
       </TouchableOpacity>
       <Modal visible={popupVisible} animationType="slide">
         <View

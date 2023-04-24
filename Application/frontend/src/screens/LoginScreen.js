@@ -147,7 +147,7 @@ const LoginScreen = ({navigation}) => {
         backgroundColor: '#E5EFE9',
       }}>
         <Image
-        style={{marginBottom:30}}
+        style={{marginBottom:30,resizeMode:'contain'}}
           source={require('../asset/Big-logo.png')}></Image>
       {/* <Text style={{paddingBottom: 20}}>Login Screen</Text> */}
       <View style={{paddingBottom: 20}}></View>
