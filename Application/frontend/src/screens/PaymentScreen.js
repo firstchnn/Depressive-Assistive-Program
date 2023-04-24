@@ -109,7 +109,7 @@ function PaymentScreen({navigation, route}) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => makeAppointment(data)}>
-          <Text style={{fontFamily: 'Kanit-Regular'}}>Confirm Payment</Text>
+          <Text style={{fontFamily: 'Kanit-Regular',color:'black'}}>Confirm Payment</Text>
         </TouchableOpacity>
       </View>
     </View>

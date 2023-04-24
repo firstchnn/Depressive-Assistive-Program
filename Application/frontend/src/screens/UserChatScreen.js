@@ -106,6 +106,7 @@ function UserChatScreen({navigation, route}) {
           value={newMessage}
           onChangeText={setNewMessage}
           placeholder="Type your message here"
+          placeholderTextColor={'gray'}
         />
         <TouchableOpacity
           style={styles.sendButton}

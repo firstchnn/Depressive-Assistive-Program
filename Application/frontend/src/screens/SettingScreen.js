@@ -499,6 +499,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Kanit-Bold',
     marginTop: 0,
+    color: 'black',
   },
   labelHead2: {
     fontSize: 16,
@@ -515,6 +516,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     fontFamily: 'Kanit-Regular',
+    color:'black'
   },
   formContainer: {
     flex: 1,

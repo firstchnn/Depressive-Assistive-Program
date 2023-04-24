@@ -163,7 +163,7 @@ function HomeScreen({navigation, route}) {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'flex-start',
-          margin: 0,
+          marginTop: 0,
           borderWidth:0,
           borderColor:'red',
         }}>
@@ -172,6 +172,7 @@ function HomeScreen({navigation, route}) {
             alignItems: 'center',
             flexDirection: 'row',
             margin: 10,
+            marginTop:20,
             borderColor: 'green',
             borderWidth: 0,
           }}
@@ -240,7 +241,7 @@ function HomeScreen({navigation, route}) {
           {!appointData? (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Text>No data {appointData}</Text>
+              <Text style={{color:'black' ,fontFamily:'Kanit-Regular'}}>ไม่พบการนัดหมาย {appointData}</Text>
             </View>
           ) : (
             <FlatList
@@ -256,12 +257,12 @@ function HomeScreen({navigation, route}) {
                     <View style={{flexDirection: 'column'}}>
                     {/* <Text>have data {appointData}</Text> */}
                       {/* <Text>{item._id}</Text> */}
-                      <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start'}}>{item.doctorName.length > 15
+                      <Text style={{fontFamily:'Kanit-Bold',alignSelf:'flex-start',color:'black'}}>{item.doctorName.length > 15
                       ? item.doctorName.substr(0, 15) + '...'
                       : item.doctorName}</Text>
                       {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.tel}</Text> */}
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.day}</Text>
-                      <Text style={{fontFamily:'Kanit-Regular'}}>{item.time}</Text>
+                      <Text style={{fontFamily:'Kanit-Regular',color:'black'}}>{item.day}</Text>
+                      <Text style={{fontFamily:'Kanit-Regular',color:'black'}}>{item.time}</Text>
                       {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.doctorName}</Text> */}
                       {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.ovr_rating}</Text> */}
                       {/* <Text style={{fontFamily:'Kanit-Regular'}}>{item.consultantNumber}</Text> */}

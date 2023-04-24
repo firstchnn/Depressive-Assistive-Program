@@ -166,7 +166,7 @@ function SetTimeScreen({navigation, route}) {
           marginTop: 20,
         }}>
         <View style={{flex: 1, marginRight: 10}}>
-          <Text style={{textAlign: 'left', marginLeft: '10%'}}>From:</Text>
+          <Text style={{textAlign: 'left', marginLeft: '10%',color: 'black',}}>From:</Text>
           {/* <View style={{borderBottomWidth:1}}> */}
           <Picker selectedValue={selectedFrom} onValueChange={onFromChange}>
             {times.map((time, index) => (
@@ -174,26 +174,34 @@ function SetTimeScreen({navigation, route}) {
                 key={index}
                 label={time.replace(',', ':')}
                 value={time}
+                style={{
+                  color: selectedFrom === time ? 'black' : 'white', // Set different text color for selected item and other items
+                  backgroundColor: 'transparent'
+                }}
               />
             ))}
           </Picker>
           {/* </View> */}
         </View>
         <View style={{flex: 1, marginLeft: 10}}>
-          <Text style={{textAlign: 'left', marginLeft: '10%'}}>To:</Text>
+          <Text style={{textAlign: 'left', marginLeft: '10%',color: 'black',}}>To:</Text>
           <Picker selectedValue={selectedTo} onValueChange={onToChange}>
             {times.map((time, index) => (
               <Picker.Item
                 key={index}
                 label={time.replace(',', ':')}
                 value={time}
+                style={{
+                  color: selectedTo === time ? 'black' : 'white', // Set different text color for selected item and other items
+                  backgroundColor: 'transparent'
+                }}
               />
             ))}
           </Picker>
         </View>
       </View>
       <View style={{marginTop: 20}}>
-        <Text>
+        <Text style={{color: 'black',}}>
           You will be available from {selectedFrom.replace(',', ':')} to{' '}
           {selectedTo.replace(',', ':')}
         </Text>
@@ -228,19 +236,19 @@ function SetTimeScreen({navigation, route}) {
           </TouchableOpacity>
         </View>
         <View style={styles.daysContainer}>
-          <Text>Price : {currentPrice.toString()} THB</Text>
+          <Text style={{color: 'black',}}>Price : {currentPrice.toString()} THB</Text>
         </View>
         <View>
           <TouchableOpacity
             style={styles.resetBtn}
             onPress={() => handleCurrentPrice(0)}>
-            <Text>Reset</Text>
+            <Text style={{color: 'black',}}>Reset</Text>
           </TouchableOpacity>
         </View>
       </View>
       <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 20}}>
         <TouchableOpacity style={styles.button} onPress={updateDoctor}>
-          <Text style={{fontFamily: 'Kanit-Regular'}}>Update</Text>
+          <Text style={{fontFamily: 'Kanit-Regular',color: 'black',}}>Update</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -263,6 +271,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit-Bold',
     fontSize: 24,
     marginTop: 8,
+    color: 'black',
   },
   backButton: {
     flexDirection: 'row',
@@ -298,6 +307,7 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     textAlign: 'center',
     fontFamily: 'Kanit-Bold',
+    color: 'black',
   },
   timeButton: {
     flex: 1,
@@ -310,9 +320,11 @@ const styles = StyleSheet.create({
   timeText: {
     textAlign: 'center',
     fontSize: 16,
+    color: 'black',
   },
   selectedTimeText: {
     color: '#fff',
+    color: 'black',
   },
   button: {
     alignItems: 'center',
