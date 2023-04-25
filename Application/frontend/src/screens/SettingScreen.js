@@ -298,7 +298,7 @@ function SettingScreen({navigation}) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.option}
-            onPress={() => nav.navigate('VideoCall')}>
+            onPress={() => nav.navigate('VideoCallScreen')}>
             <Text style={styles.optionText}>VideoCall</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.option} onPress={handleLogout}>
