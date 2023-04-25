@@ -200,7 +200,14 @@ function DoctorHomepage({navigation}) {
               data={currData}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
-                <TouchableOpacity style={{height: 90}}>
+                <TouchableOpacity style={{height: 90}} onPress={() =>
+                  navigation.navigate('DoctorAppointmentDetail', {
+                    name: item.email,
+                    day: item.day,
+                    time: item.time,
+                    // profile: item.imageURL,
+                  })
+                }>
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
                       <Text

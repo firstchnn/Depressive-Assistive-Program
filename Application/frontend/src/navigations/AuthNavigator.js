@@ -13,6 +13,7 @@ import SetTimeScreen from '../screens/SetTimeScreen';
 import DoctorHomepage from '../screens/DoctorHomepage';
 import VideoCallScreen from '../screens/VideoCallScreen';
 import AppointmentDetail from '../screens/AppointmentDetail';
+import DoctorAppointmentDetail from '../screens/DoctorAppointmentDetail';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ function AuthNavigator() {
         /> */}
         <Stack.Screen name="VideoCallScreen" component={VideoCallScreen} options={{headerShown: false}}/>
         <Stack.Screen name="AppointmentDetail" component={AppointmentDetail} options={{headerShown: false}}/>
+        <Stack.Screen name="DoctorAppointmentDetail" component={DoctorAppointmentDetail} options={{headerShown: false}}/>
     </Stack.Navigator>
   )
 }
