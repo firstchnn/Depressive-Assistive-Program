@@ -21,6 +21,8 @@ function AppointmentDetail({navigation, route}) {
     console.log(`appointmentTime : ${appointmentTime}`);
     console.log(`appointmentDate : ${appointmentDate}`);
 
+    let temp = appointmentDate.split('-')[1] +'/'+ appointmentDate.split('-')[2] + '/' + appointmentDate.split('-')[0];
+    appointmentDate = temp;
     const [currentHours, currentMinutes] = currentDateTime
       .split(' ')[1]
       .split(':');
@@ -29,6 +31,7 @@ function AppointmentDetail({navigation, route}) {
     const currentDate = currentDateTime.split(',')[0];
     const appointmentDateObj = new Date(appointmentDate);
     const isSameDate = currentDate === appointmentDate;
+    console.log('Current date : ',currentDate, ' and appointment date : ', appointmentDate);
 
     // Convert hours and minutes to numbers
     const currentHoursNum = parseInt(currentHours, 10);
@@ -54,6 +57,8 @@ function AppointmentDetail({navigation, route}) {
         `The date is not the same. Current date: ${currentDate}, Appointment date: ${appointmentDate}`,
       );
     }
+    console.log('time difference ',timeDifference,' is more than 10' )
+    console.log(!isSameDate || timeDifference > 10);
     return !isSameDate || timeDifference > 10;
   };
 
@@ -140,7 +145,7 @@ function AppointmentDetail({navigation, route}) {
         </View>
       </View>
 
-      {handleTime?
+      {/* {handleTime?
         (<TouchableOpacity
           style={styles.button_Appointment_Disable}
           disabled={handleTime(
@@ -151,7 +156,7 @@ function AppointmentDetail({navigation, route}) {
         >
           <Text
             style={{color: 'black', fontFamily: 'Kanit-Bold', color: 'white'}}>
-            นัดหมาย
+            เข้ารับคำปรึกษา
           </Text>
         </TouchableOpacity>):(
           <TouchableOpacity
@@ -160,10 +165,20 @@ function AppointmentDetail({navigation, route}) {
         >
           <Text
             style={{color: 'black', fontFamily: 'Kanit-Bold', color: 'white'}}>
-            นัดหมาย
+            เข้ารับคำปรึกษา
           </Text>
         </TouchableOpacity>
-        )}
+        )} */}
+
+<TouchableOpacity
+          style={styles.button_Appointment}
+          onPress={() => navigation.navigate('VideoCallScreen')}
+        >
+          <Text
+            style={{color: 'black', fontFamily: 'Kanit-Bold', color: 'white'}}>
+            เข้ารับคำปรึกษา
+          </Text>
+        </TouchableOpacity>
 
       
     </View>
