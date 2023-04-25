@@ -33,7 +33,7 @@ function HomeScreen({navigation, route}) {
   const [isLoading, setIsLoading] = useState(false);
   const [appointData, setAppointmentData] = useState(false);
   const isFocused = useIsFocused();
-  
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -162,12 +162,22 @@ function HomeScreen({navigation, route}) {
                       name: item.doctorName,
                       day: item.day,
                       time: item.time,
+                      // profile: item.imageURL,
                     })
                   }
                   // disabled={item.time <= new Date.now()}
-                  >
+                >
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
+                      {/* <Image
+                        source={{uri: item.imageURL}}
+                        style={{
+                          width: 80,
+                          height: 80,
+                          resizeMode: 'cover',
+                          marginRight: 8,
+                        }}
+                      /> */}
                       <Text
                         style={{
                           fontFamily: 'Kanit-Bold',

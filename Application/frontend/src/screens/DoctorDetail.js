@@ -55,6 +55,18 @@ function DoctorDetail({navigation, route}) {
     // console.log(timeArray[time]);
   };
 
+  // const handleSelectTime = time => {
+  //   setSelectedTime(time);
+  //   // Pass the selected date along with the selected time
+  //   updateTimeArray(selectedDate, time);
+  // };
+
+  // const handleSelectTime = time => {
+  //   setSelectedTime(time);
+  //   // Call the updated createTimeArray function with the selected date and time
+  //   createTimeArray(startTime, endTime, appointment, selectedDate);
+  // };
+
   const [popupVisible, setPopupVisible] = useState(false);
   const togglePopup = () => {
     setPopupVisible(!popupVisible);
@@ -96,7 +108,7 @@ function DoctorDetail({navigation, route}) {
 
     setIsLoading(false);
   };
-
+  createTimeArray;
   function createTimeArray(startTime, endTime, appointment) {
     const result = [];
     // console.log(appointment);
@@ -114,8 +126,37 @@ function DoctorDetail({navigation, route}) {
     }
     const temp2 = result.filter(item => !temp1.includes(item));
     setTimeArray(temp2);
+    // Filter timeArray to only include items not present in the appointment array
+
+    // const temp2 = result.filter(item => {
+    //   // Construct the time string for the current item in timeArray
+    //   // const timeString = `${item.getHours().toString().padStart(2, '0')}:${item
+    //   //   .getMinutes()
+    //   //   .toString()
+    //   //   .padStart(2, '0')}`;
+    //   const timeString =
+    //     item && item.getHours && item.getMinutes
+    //       ? `${item.getHours().toString().padStart(2, '0')}:${item
+    //           .getMinutes()
+    //           .toString()
+    //           .padStart(2, '0')}`
+    //       : '';
+
+    //   // Only include items from timeArray that are not present in the appointment array for the selected date
+    //   return !appointment.find(
+    //     item => item.date === selectedDate && item.time === timeString,
+    //   );
+    // });
+
     // return result;
   }
+
+  // const handleSelectDate = date => {
+  //   setSelectedDate(date.dateString);
+  //   const availableTimes = getAvailableTimesForDate(date.dateString); // Replace with your logic to get available times for the selected date
+  //   setTimeArray(availableTimes);
+  // };
+  
 
   const fetchPickableDates = async daysArray => {
     const days = daysArray;
@@ -217,16 +258,10 @@ function DoctorDetail({navigation, route}) {
                 {data.expertise}
               </Text>
               {/* <Text>Tel: {data.tel}</Text> */}
-              <Text style={styles.Docdetail}>
-                Work place: {data.workplace}
-              </Text>
+              <Text style={styles.Docdetail}>Work place: {data.workplace}</Text>
               {/* <Text></Text> */}
-              <Text style={styles.Docdetail}>
-                Price: {data.price}
-              </Text>
-              <Text style={styles.Docdetail}>
-                Work day: {data.workday}
-              </Text>
+              <Text style={styles.Docdetail}>Price: {data.price}</Text>
+              <Text style={styles.Docdetail}>Work day: {data.workday}</Text>
               <Text style={styles.Docdetail}>
                 Work time: {data.worktime.slice(0, 5).replace(',', ':')} -{' '}
                 {data.worktime.slice(5).replace(',', ':')}
@@ -326,10 +361,10 @@ const styles = StyleSheet.create({
     // borderWidth:2,
     // borderColor:'red'
   },
-  Docdetail:{
-    fontFamily: 'Kanit-Regular', color: 'black'
-  }
-  ,
+  Docdetail: {
+    fontFamily: 'Kanit-Regular',
+    color: 'black',
+  },
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',

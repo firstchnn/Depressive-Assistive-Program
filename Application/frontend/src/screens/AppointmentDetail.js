@@ -115,14 +115,29 @@ function AppointmentDetail({navigation, route}) {
         />
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
-      <Text>Current Date and Time: {currentDateTime}</Text>
-      <Text>
+      {/* <Text>Current Date and Time: {currentDateTime}</Text> */}
+      {/* <Text>
         Work Time: {workFrom} - {workTo}
-      </Text>
+      </Text> */}
       <View style={styles.countContainer_out}>
-        <Text style={{color: 'black', fontFamily: 'Kanit-Regular'}}>
+      <Image
+              // source={{uri: data.imageURL}}
+              style={{
+                width: 200,
+                height: 200,
+                alignSelf: 'center',
+                resizeMode: 'contain',
+                marginBottom: 16,
+              }} // You can adjust the width and height as needed
+            ></Image>
+            <Text style={{color: 'black', fontFamily: 'Kanit-Bold'}}>
           {route.params.name}
         </Text>
+            <View style={{alignItems:'flex-start'}}>
+        
+        <Text style={{color: 'black', fontFamily: 'Kanit-Regular'}}>วันนัดหมาย : {route.params.day}</Text>
+        <Text style={{color: 'black', fontFamily: 'Kanit-Regular'}}>เวลานัดหมาย : {route.params.time}</Text>
+        </View>
       </View>
 
       {handleTime?
