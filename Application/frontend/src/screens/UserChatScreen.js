@@ -59,15 +59,18 @@ function UserChatScreen({navigation, route}) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}>
-        <Image
-          source={require('../asset/BackBTN.png')}
-          style={styles.backIcon}
-        />
-        <Text style={styles.backButtonText}>Back</Text>
-      </TouchableOpacity>
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}>
+          <Image
+            source={require('../asset/BackBTN.png')}
+            style={styles.backIcon}
+          />
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+        {/* <Text style={{marginRight:80}}>{role}</Text> */}
+      </View>
       <View style={styles.disclaimerContainer}>
         <Image
           source={require('../asset/Exclamation.png')}
@@ -92,7 +95,10 @@ function UserChatScreen({navigation, route}) {
             <Text
               style={[
                 styles.messageText,
-                {alignItems: item.fromSender ? 'flex-end' : 'flex-start',color:'black',},
+                {
+                  alignItems: item.fromSender ? 'flex-end' : 'flex-start',
+                  color: 'black',
+                },
               ]}>
               {item.text}
             </Text>
@@ -179,8 +185,8 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#f8f8f8',
     paddingHorizontal: 16,
-    borderRadius: 20
-    ,color:'black',
+    borderRadius: 20,
+    color: 'black',
   },
   sendButton: {
     marginLeft: 8,

@@ -156,6 +156,7 @@ function DoctorHomepage({navigation}) {
       color: 'black',
       fontSize: 18,
       alignSelf: 'center',
+      
     },
   });
 
@@ -166,7 +167,7 @@ function DoctorHomepage({navigation}) {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          margin: 15,
+          margin: 0,
           borderWidth: 0,
           height: 0,
         }}>
@@ -179,7 +180,7 @@ function DoctorHomepage({navigation}) {
             margin: 20,
             borderWidth: 0,
             height: 0,
-            maxHeight: 450,
+            maxHeight: 430,
           }}>
           {!appointData ? (
             <View

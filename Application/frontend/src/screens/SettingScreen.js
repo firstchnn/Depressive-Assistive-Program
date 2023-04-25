@@ -252,7 +252,9 @@ function SettingScreen({navigation}) {
     <ScrollView style={styles.container}>
       <View>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Account</Text>
+          <Text style={styles.sectionTitle}>Account      
+          {/* {userData.email} */}
+          </Text>
           <TouchableOpacity style={styles.option} onPress={fetchData}>
             <Text style={styles.optionText}>Edit Profile</Text>
           </TouchableOpacity>

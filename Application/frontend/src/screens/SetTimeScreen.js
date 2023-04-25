@@ -242,7 +242,7 @@ function SetTimeScreen({navigation, route}) {
           <TouchableOpacity
             style={styles.resetBtn}
             onPress={() => handleCurrentPrice(0)}>
-            <Text style={{color: 'black',}}>Reset</Text>
+            <Text style={{color: 'black',}}>Reset Price</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -332,6 +332,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: '6%',
     borderRadius: 8,
+    height:40,
+    width:160
   },
   resetBtn: {
     alignItems: 'center',
