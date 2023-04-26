@@ -14,6 +14,8 @@ import {UserContext} from '../components/UserContext';
 function DoctorAppointmentDetail({navigation, route}) {
   const [workFrom, setWorkFrom] = useState('');
   const [workTo, setWorkTo] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({});
   const currentDate = new Date();
 
   const handleTime = (currentDateTime, appointmentTime, appointmentDate) => {
@@ -79,23 +81,23 @@ function DoctorAppointmentDetail({navigation, route}) {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      setDoctorID(route.params);
+      // setDoctorID(route.params);
       const response = await fetch(
-        `https://ce22.onrender.com/singleDoc/${route.params.id}`,
+        `https://ce22.onrender.com/singleDoc/${userData.email}`,
       );
       const json = await response.json();
       setData(json);
-      setWorkDay(json.workday.split(','));
-      setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
-      setWorkTo(json.worktime.slice(5).replace(',', ':'));
-      // json.appointment.pop(0);
-      // console.log(json.appointment[0])
-      await createTimeArray(
-        json.worktime.slice(0, 5).replace(',', ':'),
-        json.worktime.slice(5).replace(',', ':'),
-        json.appointment,
-      );
-      await fetchPickableDates(json.workday.split(','));
+      // setWorkDay(json.workday.split(','));
+      // setWorkFrom(json.worktime.slice(0, 5).replace(',', ':'));
+      // setWorkTo(json.worktime.slice(5).replace(',', ':'));
+      // // json.appointment.pop(0);
+      // // console.log(json.appointment[0])
+      // await createTimeArray(
+      //   json.worktime.slice(0, 5).replace(',', ':'),
+      //   json.worktime.slice(5).replace(',', ':'),
+      //   json.appointment,
+      // );
+      // await fetchPickableDates(json.workday.split(','));
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +106,7 @@ function DoctorAppointmentDetail({navigation, route}) {
   };
 
   useEffect(() => {
-    // fetchData();
+    fetchData();
     // fetchPickableDates();
     // console.log(route.params.name);
   }, []);
@@ -145,34 +147,9 @@ function DoctorAppointmentDetail({navigation, route}) {
         </View>
       </View>
 
-      {/* {handleTime?
-        (<TouchableOpacity
-          style={styles.button_Appointment_Disable}
-          disabled={handleTime(
-            currentDateTime,
-            route.params.time,
-            route.params.day,
-          )}
-        >
-          <Text
-            style={{color: 'black', fontFamily: 'Kanit-Bold', color: 'white'}}>
-            เข้ารับคำปรึกษา
-          </Text>
-        </TouchableOpacity>):(
-          <TouchableOpacity
-          style={styles.button_Appointment}
-          onPress={() => navigation.navigate('VideoCallScreen')}
-        >
-          <Text
-            style={{color: 'black', fontFamily: 'Kanit-Bold', color: 'white'}}>
-            เข้ารับคำปรึกษา
-          </Text>
-        </TouchableOpacity>
-        )} */}
-
 <TouchableOpacity
           style={styles.button_Appointment}
-          onPress={() => navigation.navigate('VideoCallScreen')}
+          onPress={() => navigation.navigate('VideoCallScreen',{userEmail : route.params.name, doctorName: data.name})}
         >
           <Text
             style={{color: 'black', fontFamily: 'Kanit-Bold'}}>

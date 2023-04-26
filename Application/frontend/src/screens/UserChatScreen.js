@@ -19,7 +19,7 @@ function UserChatScreen({navigation, route}) {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io('https://ce22.onrender.com/');
+    const newSocket = io('https://ce22.onrender.com/', { query: { role: `${route.params.role}`} });
     setSocket(newSocket);
     console.log('Connected to socket');
 

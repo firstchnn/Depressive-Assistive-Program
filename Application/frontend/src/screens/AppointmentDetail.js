@@ -172,7 +172,7 @@ function AppointmentDetail({navigation, route}) {
 
 <TouchableOpacity
           style={styles.button_Appointment}
-          onPress={() => navigation.navigate('VideoCallScreen')}
+          onPress={() => navigation.navigate('VideoCallScreen',{userEmail : userData.email, doctorName : route.params.doctorName})}
         >
           <Text
             style={{color: 'black', fontFamily: 'Kanit-Bold', color: 'white'}}>
