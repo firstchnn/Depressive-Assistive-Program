@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useLayoutEffect} from 'react';
+import React, {useEffect, useState, useLayoutEffect, version} from 'react';
 import {
   Button,
   View,
@@ -33,6 +33,14 @@ function HomeScreen({navigation, route}) {
   const [isLoading, setIsLoading] = useState(false);
   const [appointData, setAppointmentData] = useState(false);
   const isFocused = useIsFocused();
+
+  const banner = [
+    'https://images.pexels.com/photos/1655166/pexels-photo-1655166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/415368/pexels-photo-415368.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/1126379/pexels-photo-1126379.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  ];
+
+  const {width} = Dimensions.get('window');
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -77,6 +85,7 @@ function HomeScreen({navigation, route}) {
           marginTop: 0,
           borderWidth: 0,
           borderColor: 'red',
+          flexDirection: 'column',
         }}>
         <TouchableOpacity
           style={{
@@ -112,30 +121,96 @@ function HomeScreen({navigation, route}) {
               source={require('../asset/arrow_right.png')}></Image>
           </View>
         </TouchableOpacity>
-
         <View
           style={{
             alignItems: 'flex-start',
-            // alignSelf:'auto',
-            // flexDirection: 'row',
             margin: 1,
-
             borderColor: 'blue',
             borderWidth: 0,
+            flexDirection: 'row',
+            marginBottom: 8,
           }}>
-          <Text
-            style={{
-              fontSize: 20,
-              // fontWeight: 'bold',
-              fontFamily: 'Kanit-Regular',
-              color: 'black',
-            }}>
-            นัดหมายของฉัน
-          </Text>
-
-          <View style={{width: '30%'}}></View>
+          <View style={{marginVertical: 0, borderWidth: 0}}>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              contentContainerStyle={{alignItems: 'center'}}>
+              {/* {banner.map((image, index) => (
+                <View
+                  key={index}
+                  style={{
+                    marginHorizontal: Math.floor(14 * vw),
+                    alignContent: 'center',
+                  }}> */}
+                  <View
+                    style={{
+                      width: Math.floor(70 * vw),
+                      height: 120,
+                      borderRadius: 8,
+                      overflow: 'hidden',
+                      marginLeft:15*vw,
+                      marginRight:30*vw,
+                    }}>
+                    <Image
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        borderRadius: 8,
+                      }}
+                      source={{uri: banner[0]}}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      width: Math.floor(70 * vw),
+                      height: 120,
+                      borderRadius: 8,
+                      overflow: 'hidden',
+                    }}>
+                    <Image
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        borderRadius: 8,
+                      }}
+                      source={{uri: banner[1]}}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      width: Math.floor(70 * vw),
+                      height: 120,
+                      borderRadius: 8,
+                      overflow: 'hidden',
+                      marginLeft:30*vw,
+                      marginRight:15*vw,
+                    }}>
+                    <Image
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        borderRadius: 8,
+                      }}
+                      source={{uri: banner[2]}}
+                    />
+                  </View>
+                  
+                {/* </View> */}
+              {/* ))} */}
+            </ScrollView>
+          </View>
         </View>
-
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: 'Kanit-Regular',
+            color: 'black',
+          }}>
+          นัดหมายของฉัน
+        </Text>
         <View
           style={{
             flex: 1,
@@ -143,6 +218,7 @@ function HomeScreen({navigation, route}) {
             justifyContent: 'center',
             margin: 12,
             maxHeight: 400,
+            borderWidth: 0,
           }}>
           {!appointData ? (
             <View
@@ -162,22 +238,10 @@ function HomeScreen({navigation, route}) {
                       name: item.doctorName,
                       day: item.day,
                       time: item.time,
-                      // profile: item.imageURL,
                     })
-                  }
-                  // disabled={item.time <= new Date.now()}
-                >
+                  }>
                   <CardHome>
                     <View style={{flexDirection: 'column'}}>
-                      {/* <Image
-                        source={{uri: item.imageURL}}
-                        style={{
-                          width: 80,
-                          height: 80,
-                          resizeMode: 'cover',
-                          marginRight: 8,
-                        }}
-                      /> */}
                       <Text
                         style={{
                           fontFamily: 'Kanit-Bold',
