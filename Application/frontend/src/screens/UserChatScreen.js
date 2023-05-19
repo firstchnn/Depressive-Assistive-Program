@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 import io from 'socket.io-client';
 
@@ -61,7 +62,27 @@ function UserChatScreen({navigation, route}) {
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            Alert.alert(
+              'Confirmation',
+              'Are you sure you want to go back?',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'OK', onPress: () => navigation.goBack() },
+              ],
+              {
+                cancelable: false,
+                style: 'default',
+                titleStyle: { fontSize: 20 },
+                messageStyle: { fontSize: 16 },
+                containerStyle: { backgroundColor: '#dddddd' },
+                buttonStyle: { backgroundColor: '#007AFF' },
+                buttonTextStyle: { color: '#ffffff' },
+              }
+              
+              
+            );
+          }}
           style={styles.backButton}>
           <Image
             source={require('../asset/BackBTN.png')}
