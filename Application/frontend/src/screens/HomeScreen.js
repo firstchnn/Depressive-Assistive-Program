@@ -40,7 +40,14 @@ function HomeScreen({navigation, route}) {
     'https://images.pexels.com/photos/1126379/pexels-photo-1126379.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   ];
 
-  const {width} = Dimensions.get('window');
+  const {width} = Dimensions.get('window').width;
+  const {height} = Dimensions.get('window').height;
+  const [imgActive, setimgActive] = useState(0);
+  const handleScroll = event => {
+    const contentOffset = event.nativeEvent.contentOffset;
+    const imageIndex = Math.floor(contentOffset.x / (70 * vw));
+    setimgActive(imageIndex);
+  };
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -66,6 +73,8 @@ function HomeScreen({navigation, route}) {
 
     setIsLoading(false);
   };
+
+  onchange = nativeEvent => {};
 
   useEffect(() => {
     if (isFocused) {
@@ -134,73 +143,129 @@ function HomeScreen({navigation, route}) {
             <ScrollView
               horizontal
               pagingEnabled
-              contentContainerStyle={{alignItems: 'center'}}>
-              {/* {banner.map((image, index) => (
-                <View
-                  key={index}
+              contentContainerStyle={{alignItems: 'center'}}
+              onScroll={handleScroll}>
+              <View
+                style={{
+                  width: Math.floor(70 * vw),
+                  height: 120,
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                  marginLeft: 15 * vw,
+                  marginRight: 30 * vw,
+                }}>
+                <Image
                   style={{
-                    marginHorizontal: Math.floor(14 * vw),
-                    alignContent: 'center',
-                  }}> */}
-                  <View
-                    style={{
-                      width: Math.floor(70 * vw),
-                      height: 120,
-                      borderRadius: 8,
-                      overflow: 'hidden',
-                      marginLeft:15*vw,
-                      marginRight:30*vw,
-                    }}>
-                    <Image
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                        borderRadius: 8,
-                      }}
-                      source={{uri: banner[0]}}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      width: Math.floor(70 * vw),
-                      height: 120,
-                      borderRadius: 8,
-                      overflow: 'hidden',
-                    }}>
-                    <Image
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                        borderRadius: 8,
-                      }}
-                      source={{uri: banner[1]}}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      width: Math.floor(70 * vw),
-                      height: 120,
-                      borderRadius: 8,
-                      overflow: 'hidden',
-                      marginLeft:30*vw,
-                      marginRight:15*vw,
-                    }}>
-                    <Image
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                        borderRadius: 8,
-                      }}
-                      source={{uri: banner[2]}}
-                    />
-                  </View>
-                  
-                {/* </View> */}
-              {/* ))} */}
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    borderRadius: 8,
+                  }}
+                  source={{uri: banner[0]}}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: '30%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    borderBottomLeftRadius: 8,
+                    borderBottomRightRadius: 8,
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  width: Math.floor(70 * vw),
+                  height: 120,
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                }}>
+                <Image
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    borderRadius: 8,
+                  }}
+                  source={{uri: banner[1]}}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: '30%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    borderBottomLeftRadius: 8,
+                    borderBottomRightRadius: 8,
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  width: Math.floor(70 * vw),
+                  height: 120,
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                  marginLeft: 30 * vw,
+                  marginRight: 15 * vw,
+                }}>
+                <Image
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    borderRadius: 8,
+                  }}
+                  source={{uri: banner[2]}}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: '30%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    borderBottomLeftRadius: 8,
+                    borderBottomRightRadius: 8,
+                  }}
+                />
+              </View>
             </ScrollView>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                flexDirection: 'row',
+                alignSelf: 'center',
+              }}>
+              {banner.map((e, index) => (
+                <Text
+                  key={e}
+                  style={
+                    imgActive == index
+                      ? {
+                          margin: 3,
+                          color: '#CCCCCC',
+                          fontSize: 24,
+                          alignSelf: 'center',
+                        }
+                      : {
+                          margin: 3,
+                          color: '#333333',
+                          fontSize: 18,
+                          alignSelf: 'center',
+                        }
+                  }>
+                  •
+                </Text>
+              ))}
+            </View>
           </View>
         </View>
         <Text
