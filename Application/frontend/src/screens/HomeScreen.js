@@ -144,7 +144,9 @@ function HomeScreen({navigation, route}) {
               horizontal
               pagingEnabled
               contentContainerStyle={{alignItems: 'center'}}
-              onScroll={handleScroll}>
+              onScroll={handleScroll}
+              showsHorizontalScrollIndicator={false}>
+                
               <View
                 style={{
                   width: Math.floor(70 * vw),

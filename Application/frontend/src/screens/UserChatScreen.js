@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Image,
   Alert,
+  Modal,
 } from 'react-native';
 import io from 'socket.io-client';
 
@@ -18,6 +19,18 @@ function UserChatScreen({navigation, route}) {
   const [newMessage, setNewMessage] = useState('');
   const flatListRef = useRef(null);
   const [socket, setSocket] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleConfirm = () => {
+    // Perform the desired action upon confirmation
+    navigation.goBack();
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    // Handle cancel action or simply close the modal
+    setShowModal(false);
+  };
 
   useEffect(() => {
     const newSocket = io('https://ce22.onrender.com/', { query: { role: `${route.params.role}`} });
@@ -62,27 +75,7 @@ function UserChatScreen({navigation, route}) {
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
-          onPress={() => {
-            Alert.alert(
-              'Confirmation',
-              'Are you sure you want to go back?',
-              [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'OK', onPress: () => navigation.goBack() },
-              ],
-              {
-                cancelable: false,
-                style: 'default',
-                titleStyle: { fontSize: 20 },
-                messageStyle: { fontSize: 16 },
-                containerStyle: { backgroundColor: '#dddddd' },
-                buttonStyle: { backgroundColor: '#007AFF' },
-                buttonTextStyle: { color: '#ffffff' },
-              }
-              
-              
-            );
-          }}
+          onPress={() => setShowModal(true)}
           style={styles.backButton}>
           <Image
             source={require('../asset/BackBTN.png')}
@@ -91,6 +84,32 @@ function UserChatScreen({navigation, route}) {
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
         {/* <Text style={{marginRight:80}}>{role}</Text> */}
+        <Modal
+        visible={showModal}
+        animationType="fade"
+        transparent
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Confirmation</Text>
+            <Text style={styles.modalMessage}>Are you sure you want to go back?</Text>
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity
+                onPress={handleCancel}
+                style={[styles.modalButton, styles.cancelButton]}
+              >
+                <Text style={styles.modalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleConfirm}
+                style={[styles.modalButton, styles.confirmButton]}
+              >
+                <Text style={styles.modalButtonText}>OK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
       </View>
       <View style={styles.disclaimerContainer}>
         <Image
@@ -216,6 +235,53 @@ const styles = StyleSheet.create({
   sendButtonText: {
     fontSize: 16,
     color: '#007AFF',
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // Add your desired styles
+  },
+  // Rest of your styles
+
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 8,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  modalMessage: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  modalButton: {
+    flex : 1,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 4,
+    marginLeft: 10,
+  },
+  cancelButton: {
+    backgroundColor: '#dddddd',
+  },
+  confirmButton: {
+    backgroundColor: '#007AFF',
+  },
+  modalButtonText: {
+    color: '#ffffff',
   },
 });
 
