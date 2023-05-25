@@ -33,7 +33,9 @@ function UserChatScreen({navigation, route}) {
   };
 
   useEffect(() => {
-    const newSocket = io('https://ce22.onrender.com/', { query: { role: `${route.params.role}`} });
+    const newSocket = io('https://ce22.onrender.com/', {
+      query: {role: `${route.params.role}`},
+    });
     setSocket(newSocket);
     console.log('Connected to socket');
 
@@ -84,32 +86,28 @@ function UserChatScreen({navigation, route}) {
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
         {/* <Text style={{marginRight:80}}>{role}</Text> */}
-        <Modal
-        visible={showModal}
-        animationType="fade"
-        transparent
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Confirmation</Text>
-            <Text style={styles.modalMessage}>Are you sure you want to go back?</Text>
-            <View style={styles.modalButtonContainer}>
-              <TouchableOpacity
-                onPress={handleCancel}
-                style={[styles.modalButton, styles.cancelButton]}
-              >
-                <Text style={styles.modalButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handleConfirm}
-                style={[styles.modalButton, styles.confirmButton]}
-              >
-                <Text style={styles.modalButtonText}>OK</Text>
-              </TouchableOpacity>
+        <Modal visible={showModal} animationType="fade" transparent>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Confirmation</Text>
+              <Text style={styles.modalMessage}>
+                Are you sure you want to go back?
+              </Text>
+              <View style={styles.modalButtonContainer}>
+                <TouchableOpacity
+                  onPress={handleConfirm}
+                  style={[styles.modalButton, styles.confirmButton]}>
+                  <Text style={styles.modalButtonText}>Confirm</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={handleCancel}
+                  style={[styles.modalButton, styles.cancelButton]}>
+                  <Text style={styles.modalButtonTextCancel}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
       </View>
       <View style={styles.disclaimerContainer}>
         <Image
@@ -258,30 +256,41 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     marginBottom: 10,
+    fontFamily: 'Kanit-Bold',
   },
   modalMessage: {
     fontSize: 16,
     marginBottom: 20,
+    fontFamily: 'Kanit-Regular',
   },
   modalButtonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   modalButton: {
-    flex : 1,
+    flex: 1,
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 4,
     marginLeft: 10,
   },
   cancelButton: {
-    backgroundColor: '#dddddd',
+    // backgroundColor: '#dddddd',
   },
   confirmButton: {
     backgroundColor: '#007AFF',
   },
   modalButtonText: {
     color: '#ffffff',
+    alignSelf: 'center',
+    fontFamily: 'Kanit-Regular',
+  },
+  modalButtonTextCancel: {
+    color: 'red',
+    alignSelf: 'center',
+    textDecorationLine: 'underline',
+    fontFamily: 'Kanit-Regular',
   },
 });
 
